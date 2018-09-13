@@ -1,5 +1,5 @@
 // Exercise 1 - Moving pictures
-// Pippin Barr
+// Hazel Thexton
 //
 // Starter code for exercise 1.
 // It moves two pictures around on the canvas.
@@ -13,6 +13,12 @@ var clownImage;
 var clownImageX;
 var clownImageY;
 
+// The image of a gator
+var gatorImage;
+// The current position of the gator
+var gatorImageX;
+var gatorImageY;
+
 // The transparent image of "felt" that wipes down the canvas
 var feltTextureImage;
 // The current position of the transparent image of "felt"
@@ -22,11 +28,12 @@ var feltTextureImageY;
 
 // preload()
 //
-// Load the two images we're using before the program starts
+// Load the three images we're using before the program starts
 
 function preload() {
   clownImage = loadImage("assets/images/clown.png");
   feltTextureImage = loadImage("assets/images/black-felt-texture.png");
+  gatorImage = loadImage("assets/images/gator.png");
 }
 
 
@@ -45,6 +52,10 @@ function setup() {
   // Start the felt image perfectly off screen above the canvas
   feltTextureImageX = width/2;
   feltTextureImageY = 0 - feltTextureImage.height/2;
+
+  // Start the gator image at the top left
+  gatorImageX = 0;
+  gatorImageY = width/2;
 
   // We'll use imageMode CENTER for this script
   imageMode(CENTER);
@@ -75,4 +86,11 @@ function draw() {
 
   // Display the clown image
   image(clownImage,clownImageX,clownImageY);
+
+  // Move the gator image right by increasing its x position
+  gatorImageX += 2;
+
+  // Display the gator image
+  image(gatorImage,gatorImageX,gatorImageY);
+
 }
