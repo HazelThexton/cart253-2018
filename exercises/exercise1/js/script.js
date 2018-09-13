@@ -19,6 +19,12 @@ var gatorImage;
 var gatorImageX;
 var gatorImageY;
 
+// The image of my cat Furie
+var furieImage;
+// The current position of Furie
+var furieImageX;
+var furieImageY;
+
 // The transparent image of "felt" that wipes down the canvas
 var feltTextureImage;
 // The current position of the transparent image of "felt"
@@ -34,6 +40,7 @@ function preload() {
   clownImage = loadImage("assets/images/clown.png");
   feltTextureImage = loadImage("assets/images/black-felt-texture.png");
   gatorImage = loadImage("assets/images/gator.png");
+  furieImage = loadImage("assets/images/furie.png");
 }
 
 
@@ -92,5 +99,12 @@ function draw() {
 
   // Display the gator image
   image(gatorImage,gatorImageX,gatorImageY);
+
+  // Define the coordinates of the furie image as the mouse coordinates
+  furieImageX = mouseX;
+  furieImageY = mouseY;
+
+  // Display the furie image at mouse coordinates
+  image(furieImage,furieImageX,furieImageY);
 
 }
