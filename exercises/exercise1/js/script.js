@@ -19,17 +19,23 @@ var gatorImage;
 var gatorImageX;
 var gatorImageY;
 
+// The transparent image of "felt" that wipes down the canvas
+var feltTextureImage;
+// The current position of the transparent image of "felt"
+var feltTextureImageX;
+var feltTextureImageY;
+
 // The image of my cat Furie
 var furieImage;
 // The current position of Furie
 var furieImageX;
 var furieImageY;
 
-// The transparent image of "felt" that wipes down the canvas
-var feltTextureImage;
-// The current position of the transparent image of "felt"
-var feltTextureImageX;
-var feltTextureImageY;
+// The image of my cat Peanut
+var peanutImage;
+// The current position of Peanut
+var peanutImageX;
+var peanutImageY;
 
 
 // preload()
@@ -41,8 +47,8 @@ function preload() {
   feltTextureImage = loadImage("assets/images/black-felt-texture.png");
   gatorImage = loadImage("assets/images/gator.png");
   furieImage = loadImage("assets/images/furie.png");
+  peanutImage = loadImage("assets/images/peanut.png");
 }
-
 
 // setup()
 //
@@ -63,6 +69,10 @@ function setup() {
   // Start the gator image at the top left
   gatorImageX = 0;
   gatorImageY = width/2;
+
+  // Start the peanut image at the centre of the canvas
+  peanutImageX = width/2;
+  peanutImageY = height/2;
 
   // We'll use imageMode CENTER for this script
   imageMode(CENTER);
@@ -106,5 +116,17 @@ function draw() {
 
   // Display the furie image at mouse coordinates
   image(furieImage,furieImageX,furieImageY);
+
+  // Move the peanut image by moving it 1/50th of its current distance from the mouse
+
+  // Calculate the distance in X and in Y
+  var xDistance = mouseX - peanutImageX;
+  var yDistance = mouseY - peanutImageY;
+  // Add 1/50th of the x and y distance to the peanut image's current (x,y) location
+  peanutImageX = peanutImageX + xDistance/50;
+  peanutImageY = peanutImageY + yDistance/50;
+
+  // Display the peanut image
+  image(peanutImage,peanutImageX,peanutImageY);
 
 }
