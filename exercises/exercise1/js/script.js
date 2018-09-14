@@ -1,7 +1,7 @@
 // Exercise 1 - Moving pictures
 // Hazel Thexton
 //
-// 
+//
 // It moves six pictures around on the canvas.
 // One moves linearly down the screen.
 // One moves toward the mouse cursor.
@@ -78,7 +78,7 @@ function preload() {
 
 function setup() {
   // Create our canvas
-  createCanvas(640,640);
+  createCanvas(windowWidth,windowHeight);
 
   // Start the clown image at the centre of the canvas
   clownImageX = width/2;
@@ -99,7 +99,7 @@ function setup() {
   // Start the demon image at the upper left of the canvas
   demonImageX = 0;
   demonImageY = width/3;
-  
+
 
   // We'll use imageMode CENTER for this script
   imageMode(CENTER);
