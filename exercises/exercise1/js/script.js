@@ -1,11 +1,14 @@
 // Exercise 1 - Moving pictures
 // Hazel Thexton
 //
-// Starter code for exercise 1.
-// It moves two pictures around on the canvas.
+// 
+// It moves six pictures around on the canvas.
 // One moves linearly down the screen.
 // One moves toward the mouse cursor.
-
+// One moves linearly across the screen from left to right.
+// One is always under the mouse cursor.
+// One also follows the cursor, but slower.
+// Finally, one moves across the screen from left to right in a sine wave.
 
 // The image of a clown face
 var clownImage;
@@ -58,7 +61,7 @@ var frequency = 0.2;
 
 // preload()
 //
-// Load the three images we're using before the program starts
+// Load the six images we're using before the program starts
 
 function preload() {
   clownImage = loadImage("assets/images/clown.png");
@@ -85,7 +88,7 @@ function setup() {
   feltTextureImageX = width/2;
   feltTextureImageY = 0 - feltTextureImage.height/2;
 
-  // Start the gator image at the center left
+  // Start the gator image at the center left of the canvas
   gatorImageX = 0;
   gatorImageY = width/2;
 
@@ -93,11 +96,10 @@ function setup() {
   peanutImageX = width/2;
   peanutImageY = height/2;
 
-  // Start the demon image at the upper left
+  // Start the demon image at the upper left of the canvas
   demonImageX = 0;
   demonImageY = width/3;
-
-
+  
 
   // We'll use imageMode CENTER for this script
   imageMode(CENTER);
@@ -108,6 +110,10 @@ function setup() {
 //
 // Moves the felt image linearly
 // Moves the clown face toward the current mouse location
+// Moves the gator image linearly
+// Moves the furie image to the current mouse location
+// Moves the peanut image towards the current mouse location but slower
+// Moves the demon image across the screen in a sine wave
 
 function draw() {
 
