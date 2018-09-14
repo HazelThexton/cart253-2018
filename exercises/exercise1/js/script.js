@@ -90,7 +90,7 @@ function setup() {
 
   // Start the gator image at the center left of the canvas
   gatorImageX = 0;
-  gatorImageY = width/2;
+  gatorImageY = height/2;
 
   // Start the peanut image at the centre of the canvas
   peanutImageX = width/2;
