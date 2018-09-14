@@ -37,6 +37,24 @@ var peanutImage;
 var peanutImageX;
 var peanutImageY;
 
+// The image of a demon girl
+var demonImage;
+// The current position of demon
+var demonImageX;
+var demonImageY;
+
+// Sine wave variables. Based on experimentation I think it is possible to
+// achieve a sine wave with simply sin * time, however adding frequency
+// and amplitude variables offer more control.
+
+// Tracks how many times draw has run. Used to inform the frequency of
+// the demon's sine wave.
+var time = 0;
+// The amplitude of the sine wave, or its maximum height
+var amplitude = 5;
+// The frequency of the sine wave, or how many cycles there are per unit of time
+var frequency = 0.2;
+
 
 // preload()
 //
@@ -48,6 +66,7 @@ function preload() {
   gatorImage = loadImage("assets/images/gator.png");
   furieImage = loadImage("assets/images/furie.png");
   peanutImage = loadImage("assets/images/peanut.png");
+  demonImage = loadImage("assets/images/demon.png");
 }
 
 // setup()
@@ -66,13 +85,19 @@ function setup() {
   feltTextureImageX = width/2;
   feltTextureImageY = 0 - feltTextureImage.height/2;
 
-  // Start the gator image at the top left
+  // Start the gator image at the center left
   gatorImageX = 0;
   gatorImageY = width/2;
 
   // Start the peanut image at the centre of the canvas
   peanutImageX = width/2;
   peanutImageY = height/2;
+
+  // Start the demon image at the upper left
+  demonImageX = 0;
+  demonImageY = width/3;
+
+
 
   // We'll use imageMode CENTER for this script
   imageMode(CENTER);
@@ -128,5 +153,17 @@ function draw() {
 
   // Display the peanut image
   image(peanutImage,peanutImageX,peanutImageY);
+
+  // Moves the demon image right by increasing its x position
+  demonImageX += 1;
+
+  // Tracks the advancement of time each time the draw function runs
+  time += 1;
+
+  // Moves the demon image along the defined sine wave on the Y axis
+  demonImageY = amplitude * sin(time * frequency);
+
+  // Display the demon image
+  image(demonImage,demonImageX,demonImageY + 100);
 
 }
