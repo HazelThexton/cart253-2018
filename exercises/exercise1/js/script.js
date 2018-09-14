@@ -1,11 +1,14 @@
 // Exercise 1 - Moving pictures
 // Hazel Thexton
 //
-// Starter code for exercise 1.
-// It moves two pictures around on the canvas.
+// 
+// It moves six pictures around on the canvas.
 // One moves linearly down the screen.
 // One moves toward the mouse cursor.
-
+// One moves linearly across the screen from left to right.
+// One is always under the mouse cursor.
+// One also follows the cursor, but slower.
+// Finally, one moves across the screen from left to right in a sine wave.
 
 // The image of a clown face
 var clownImage;
@@ -45,7 +48,7 @@ var demonImageY;
 
 // Sine wave variables. Based on experimentation I think it is possible to
 // achieve a sine wave with simply sin * time, however adding frequency
-// and amplitude variables offers more control.
+// and amplitude variables offer more control.
 
 // Tracks how many times draw has run. Used to inform the frequency of
 // the demon's sine wave.
@@ -96,8 +99,7 @@ function setup() {
   // Start the demon image at the upper left of the canvas
   demonImageX = 0;
   demonImageY = width/3;
-
-
+  
 
   // We'll use imageMode CENTER for this script
   imageMode(CENTER);
@@ -108,6 +110,10 @@ function setup() {
 //
 // Moves the felt image linearly
 // Moves the clown face toward the current mouse location
+// Moves the gator image linearly
+// Moves the furie image to the current mouse location
+// Moves the peanut image towards the current mouse location but slower
+// Moves the demon image across the screen in a sine wave
 
 function draw() {
 
