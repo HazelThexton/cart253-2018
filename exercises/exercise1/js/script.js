@@ -45,7 +45,7 @@ var demonImageY;
 
 // Sine wave variables. Based on experimentation I think it is possible to
 // achieve a sine wave with simply sin * time, however adding frequency
-// and amplitude variables offer more control.
+// and amplitude variables offers more control.
 
 // Tracks how many times draw has run. Used to inform the frequency of
 // the demon's sine wave.
@@ -58,7 +58,7 @@ var frequency = 0.2;
 
 // preload()
 //
-// Load the three images we're using before the program starts
+// Load the six images we're using before the program starts
 
 function preload() {
   clownImage = loadImage("assets/images/clown.png");
@@ -85,7 +85,7 @@ function setup() {
   feltTextureImageX = width/2;
   feltTextureImageY = 0 - feltTextureImage.height/2;
 
-  // Start the gator image at the center left
+  // Start the gator image at the center left of the canvas
   gatorImageX = 0;
   gatorImageY = width/2;
 
@@ -93,7 +93,7 @@ function setup() {
   peanutImageX = width/2;
   peanutImageY = height/2;
 
-  // Start the demon image at the upper left
+  // Start the demon image at the upper left of the canvas
   demonImageX = 0;
   demonImageY = width/3;
 
