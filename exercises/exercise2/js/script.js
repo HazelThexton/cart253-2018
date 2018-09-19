@@ -48,11 +48,15 @@ var dodgeText = "Dodges: ";
 // The background image
 var backgroundImage
 
+// The win screen image
+var winImage
+
 // Preloads the images of the background, avatar and enemy
 function preload() {
   avatarImage = loadImage("assets/images/avatar.png");
   enemyImage = loadImage("assets/images/enemy.png");
   backgroundImage = loadImage("assets/images/background.jpg");
+  winImage = loadImage("assets/images/win.png");
 }
 
 // setup()
@@ -178,5 +182,10 @@ function draw() {
 
   // Display the image of the enemy
   image(enemyImage,enemyX,enemyY,enemySize,enemySize);
+
+  // Check if the player has successfully dodged 20 times
+  if (dodges > 10) {
+    image(winImage,0,0,height,width);
+  }
 
 }
