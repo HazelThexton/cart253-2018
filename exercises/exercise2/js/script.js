@@ -5,6 +5,9 @@ Hazel Thexton
 
 Exercise 2.
 
+free-to-use background image found at
+https://pixabay.com/en/background-art-abstract-watercolor-2687925/
+
 *********************************************************/
 
 // The position and size of our avatar circle
@@ -42,10 +45,14 @@ var dodges = 0;
 // Text displaying the number of successful dodges
 var dodgeText = "Dodges: ";
 
-// Preloads the images of the avatar and enemy
+// The background image
+var backgroundImage
+
+// Preloads the images of the background, avatar and enemy
 function preload() {
   avatarImage = loadImage("assets/images/avatar.png");
   enemyImage = loadImage("assets/images/enemy.png");
+  backgroundImage = loadImage("assets/images/background.jpg");
 }
 
 // setup()
@@ -73,7 +80,7 @@ function setup() {
 // game over situations.
 function draw() {
   // A pink background
-  background(255,220,220);
+  background(backgroundImage);
 
   // Default the avatar's velocity to 0 in case no key is pressed this frame
   avatarVX = 0;
@@ -157,22 +164,19 @@ function draw() {
   // Display the current number of successful dodges in the console
   console.log(dodges);
 
-  // Places text in the middle of the screen, in the Impact font,
-  // and sets the text size to 64
+  // Text modifiers. Places text in the middle of the screen,
+  // in the Impact font, and sets the text size to 64 and color to pink
   textAlign(CENTER);
   textFont("Impact");
   textSize(64);
+  fill(13,70,163);
   // Display the current number of succesful dodges on the screen
   text(dodgeText + dodges, width/2, height/7);
 
-  // The player is black
-  fill(0);
-  // Draw the player as a circle
+  // Display the image of the avatar
   image(avatarImage,avatarX,avatarY,avatarSize,avatarSize);
 
-  // The enemy is red
-  fill(255,0,0);
-  // Draw the enemy as a circle
+  // Display the image of the enemy
   image(enemyImage,enemyX,enemyY,enemySize,enemySize);
 
 }
