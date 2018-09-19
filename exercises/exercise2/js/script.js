@@ -1,9 +1,9 @@
 /*********************************************************
 
 Exercise 2 - The Artful Dodger
-Pippin Barr
+Hazel Thexton
 
-Starter code for exercise 2.
+Exercise 2.
 
 *********************************************************/
 
@@ -32,6 +32,9 @@ var enemySpeedIncrease = 0.5;
 
 // How many dodges the player has made
 var dodges = 0;
+
+// Text displaying the number of successful dodges
+var dodgeText = "Dodges: ";
 
 // setup()
 //
@@ -139,8 +142,14 @@ function draw() {
     enemySize = enemySize + enemySizeIncrease;
   }
 
-  // Display the current number of successful in the console
+  // Display the current number of successful dodges in the console
   console.log(dodges);
+
+  textAlign(CENTER, TOP);
+  textFont("Impact");
+  textSize(64);
+  // Display the current number of succesful dodges on the screen
+  text(dodgeText + dodges, width/2, height/7);
 
   // The player is black
   fill(0);
