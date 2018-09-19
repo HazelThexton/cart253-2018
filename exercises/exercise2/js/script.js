@@ -17,6 +17,9 @@ var avatarSpeed = 10;
 var avatarVX = 0;
 var avatarVY = 0;
 
+// The image of our avatar
+var avatarImage;
+
 // The position and size of the enemy circle
 var enemyX;
 var enemyY;
@@ -30,11 +33,20 @@ var enemyVX = 5;
 // How much bigger the enemy circle gets with each successful dodge
 var enemySpeedIncrease = 0.5;
 
+// The image of our enemy
+var enemyImage;
+
 // How many dodges the player has made
 var dodges = 0;
 
 // Text displaying the number of successful dodges
 var dodgeText = "Dodges: ";
+
+// Preloads the images of the avatar and enemy
+function preload() {
+  avatarImage = loadImage("assets/images/avatar.png");
+  enemyImage = loadImage("assets/images/enemy.png");
+}
 
 // setup()
 //
@@ -145,7 +157,9 @@ function draw() {
   // Display the current number of successful dodges in the console
   console.log(dodges);
 
-  textAlign(CENTER, TOP);
+  // Places text in the middle of the screen, in the Impact font,
+  // and sets the text size to 64
+  textAlign(CENTER);
   textFont("Impact");
   textSize(64);
   // Display the current number of succesful dodges on the screen
@@ -154,11 +168,11 @@ function draw() {
   // The player is black
   fill(0);
   // Draw the player as a circle
-  ellipse(avatarX,avatarY,avatarSize,avatarSize);
+  image(avatarImage,avatarX,avatarY,avatarSize,avatarSize);
 
   // The enemy is red
   fill(255,0,0);
   // Draw the enemy as a circle
-  ellipse(enemyX,enemyY,enemySize,enemySize);
+  image(enemyImage,enemyX,enemyY,enemySize,enemySize);
 
 }
