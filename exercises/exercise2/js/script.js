@@ -3,9 +3,9 @@
 Exercise 2 - The Artful Dodger
 Hazel Thexton
 
-Exercise 2. A game where your arrow key controlled avatar avoids an enemy, both
-change size and speed depending on when the avatar dodges. The game tracks
-the number of dodges and you can win by dodging 10 times.
+Exercise 2. A game where your arrow key/touch controlled avatar avoids an enemy,
+both avatar and enemy change size and speed depending on when the avatar dodges.
+The game tracks the number of dodges and you can win by dodging 10 times.
 
 free-to-use background image found at
 https://pixabay.com/en/background-art-abstract-watercolor-2687925/
