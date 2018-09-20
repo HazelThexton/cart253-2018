@@ -70,7 +70,7 @@ function preload() {
 // Make the canvas, position the avatar and anemy
 function setup() {
   // Create our playing area
-  createCanvas(windowWidth,windowHeight);
+  createCanvas(windowWidth - 5,windowHeight - 5);
 
   // Put the avatar in the centre
   avatarX = width/2;
@@ -96,36 +96,36 @@ function draw() {
   avatarVX = 0;
   avatarVY = 0;
 
-// If using the mouse or touch input, the avatar is at the mouse/touch
-// coordinates. Otherwise, see comments in else.
-if (mouseIsPressed) {
-  avatarX = mouseX;
-  avatarY = mouseY;
-} else {
-  // Check which keys are down and set the avatar's velocity based on its
-  // speed appropriately
+  // If using the mouse or touch input, the avatar is at the mouse/touch
+  // coordinates. Otherwise, see comments in else.
+  if (mouseIsPressed) {
+    avatarX = mouseX;
+    avatarY = mouseY;
+  } else {
+    // Check which keys are down and set the avatar's velocity based on its
+    // speed appropriately
 
-  // Left and right
-  if (keyIsDown(LEFT_ARROW)) {
-    avatarVX = -avatarSpeed;
-  }
-  else if (keyIsDown(RIGHT_ARROW)) {
-    avatarVX = avatarSpeed;
-  }
+    // Left and right
+    if (keyIsDown(LEFT_ARROW)) {
+      avatarVX = -avatarSpeed;
+    }
+    else if (keyIsDown(RIGHT_ARROW)) {
+      avatarVX = avatarSpeed;
+    }
 
-  // Up and down (separate if-statements so you can move vertically and
-  // horizontally at the same time)
-  if (keyIsDown(UP_ARROW)) {
-    avatarVY = -avatarSpeed;
-  }
-  else if (keyIsDown(DOWN_ARROW)) {
-    avatarVY = avatarSpeed;
-  }
+    // Up and down (separate if-statements so you can move vertically and
+    // horizontally at the same time)
+    if (keyIsDown(UP_ARROW)) {
+      avatarVY = -avatarSpeed;
+    }
+    else if (keyIsDown(DOWN_ARROW)) {
+      avatarVY = avatarSpeed;
+    }
 
-  // Move the avatar according to its calculated velocity
-  avatarX = avatarX + avatarVX;
-  avatarY = avatarY + avatarVY;
-}
+    // Move the avatar according to its calculated velocity
+    avatarX = avatarX + avatarVX;
+    avatarY = avatarY + avatarVY;
+  }
 
 
   // The enemy always moves at enemySpeed (which increases)
@@ -186,10 +186,12 @@ if (mouseIsPressed) {
     // Changes the avatar's speed and size
     avatarSpeed = avatarSpeed + avatarSpeedChange;
     avatarSize = avatarSize + avatarSizeChange;
-    // Prevents the speed and size of the avatar from falling below zero
-    // and from going over 50
-    avatarSpeed = constrain(avatarSpeed,0,50);
-    avatarSize = constrain(avatarSize,0,50);
+    // Prevents the speed and size of the avatar from falling below 1
+    // and from going over 50. The instructions called for preventing it from
+    // falling below zero, but again, this makes the game nearly unplayable,
+    // and using 1 instead demonstrates the same knowledge
+    avatarSpeed = constrain(avatarSpeed,1,50);
+    avatarSize = constrain(avatarSize,1,50);
 
     // Tells me what the speed and size of the avatar is (to check that the
     // above code works)
@@ -225,6 +227,5 @@ if (mouseIsPressed) {
       location.reload();
 
     }
-
   }
 }
