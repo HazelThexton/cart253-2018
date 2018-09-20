@@ -221,11 +221,16 @@ function draw() {
     // Stops the avatar and enemy from moving
     avatarSpeed = 0;
     enemySpeed = 0;
-    // Reloads the page if the player pressed enter OR
-    // presses the mouse button/touches the screen
-    if (keyIsDown(ENTER) || mouseIsPressed) {
+    // Reloads the page if the player pressed enter
+    if (keyIsDown(ENTER)) {
       location.reload();
-
     }
+  }
+}
+// Reloads the page if the player double clicks
+// after getting 10 dodges (winning)
+function doubleClicked() {
+  if (dodges >= 10) {
+    location.reload();
   }
 }
