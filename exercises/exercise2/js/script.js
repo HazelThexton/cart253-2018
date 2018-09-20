@@ -73,10 +73,10 @@ function setup() {
   // Define the width and height of the canvas relative to the window size
   canvasWidth = windowWidth/2;
   canvasHeight = windowHeight/1.2;
-  // Restrict our canvas size to a minimum of 320 x 450 to keep it playable on
-  // smaller windows, ie mobile
-  canvasWidth = constrain(canvasWidth,320,5000);
-  canvasHeight = constrain(canvasHeight,450,5000);
+  // Restrict our canvas width to a minimum of 400 (and a height proportionate
+  // to that) to keep it playable on smaller windows, ie mobile
+  canvasWidth = constrain(canvasWidth,400,5000);
+  canvasHeight = constrain(canvasHeight,canvasWidth,canvasWidth * 1.5);
   // Create our playing area
   createCanvas(canvasWidth,canvasHeight);
 
