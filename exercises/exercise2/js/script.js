@@ -10,15 +10,19 @@ https://pixabay.com/en/background-art-abstract-watercolor-2687925/
 
 *********************************************************/
 
-// The position and size of our avatar circle
+// The position and size of our avatar
 var avatarX;
 var avatarY;
 var avatarSize = 50;
+// How much bigger the avatar gets with each successful dodge
+var avatarSizeChange;
 
-// The speed and velocity of our avatar circle
-var avatarSpeed = 10;
+// The speed and velocity of our avatar
 var avatarVX = 0;
 var avatarVY = 0;
+var avatarSpeed = 10;
+// How much faster the avatar gets with each successful dodge
+var avatarSpeedChange;
 
 // The image of our avatar
 var avatarImage;
@@ -163,10 +167,23 @@ function draw() {
     // Increase the enemy's speed and size to make the game harder
     enemySpeed = enemySpeed + enemySpeedIncrease;
     enemySize = enemySize + enemySizeIncrease;
-  }
 
-  // Display the current number of successful dodges in the console
-  console.log(dodges);
+    // Makes the amount the size and speed of the avatar changes a random
+    // number between -20 and 20
+    avatarSizeChange = random(-20,20);
+    avatarSpeedChange = random(-20,20);
+    // Changes the avatar's speed and size
+    avatarSpeed = avatarSpeed + avatarSpeedChange;
+    avatarSize = avatarSize + avatarSizeChange;
+    // Prevents the speed and size of the avatar from falling below zero
+    // and from going over 50
+    avatarSpeed = constrain(avatarSpeed,0,50);
+    avatarSize = constrain(avatarSize,0,50);
+
+    // Tells me what the speed and size of the avatar is (to check that the
+    // above code works)
+    console.log("avatar speed: " + avatarSpeed + "avatar size: " + avatarSize);
+  }
 
   // Text modifiers. Places text in the middle of the screen,
   // in the Impact font, and sets the text size to 64 and color to pink
@@ -184,7 +201,7 @@ function draw() {
   image(enemyImage,enemyX,enemyY,enemySize,enemySize);
 
   // Check if the player has successfully dodged 20 times
-  if (dodges > 10) {
+  if (dodges > 15) {
     image(winImage,0,0,height,width);
   }
 
