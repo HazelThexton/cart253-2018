@@ -96,6 +96,12 @@ function draw() {
   avatarVX = 0;
   avatarVY = 0;
 
+// If using the mouse or touch input, the avatar is at the mouse/touch
+// coordinates. Otherwise, see comments in else.
+if (mouseIsPressed) {
+  avatarX = mouseX;
+  avatarY = mouseY;
+} else {
   // Check which keys are down and set the avatar's velocity based on its
   // speed appropriately
 
@@ -119,6 +125,8 @@ function draw() {
   // Move the avatar according to its calculated velocity
   avatarX = avatarX + avatarVX;
   avatarY = avatarY + avatarVY;
+}
+
 
   // The enemy always moves at enemySpeed (which increases)
   enemyVX = enemySpeed;
@@ -171,7 +179,8 @@ function draw() {
     enemySize = enemySize + enemySizeIncrease;
 
     // Makes the amount that the size and speed of the avatar changes a random
-    // number between -20 and 20
+    // number between -20 and 20. If it was completely random the game would be
+    // unplayable
     avatarSizeChange = random(-20,20);
     avatarSpeedChange = random(-20,20);
     // Changes the avatar's speed and size
@@ -210,7 +219,9 @@ function draw() {
     // Stops the avatar and enemy from moving
     avatarSpeed = 0;
     enemySpeed = 0;
-    if (keyIsDown(ENTER)) {
+    // Reloads the page if the player pressed enter OR
+    // presses the mouse button/touches the screen
+    if (keyIsDown(ENTER) || mouseIsPressed) {
       location.reload();
 
     }
