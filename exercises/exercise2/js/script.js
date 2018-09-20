@@ -15,7 +15,7 @@ https://pixabay.com/en/background-art-abstract-watercolor-2687925/
 // The position and size of our avatar
 var avatarX;
 var avatarY;
-var avatarSize = 50;
+var avatarSize = 70;
 // How much bigger the avatar gets with each successful dodge
 var avatarSizeChange;
 
@@ -32,7 +32,7 @@ var avatarImage;
 // The position and size of the enemy circle
 var enemyX;
 var enemyY;
-var enemySize = 50;
+var enemySize = 70;
 // How much bigger the enemy circle gets with each successful dodge
 var enemySizeIncrease = 5;
 
