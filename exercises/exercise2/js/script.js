@@ -3,7 +3,9 @@
 Exercise 2 - The Artful Dodger
 Hazel Thexton
 
-Exercise 2.
+Exercise 2. A game where your arrow key controlled avatar avoids an enemy, both
+change size and speed depending on when the avatar dodges. The game tracks
+the number of dodges and you can win by dodging 10 times.
 
 free-to-use background image found at
 https://pixabay.com/en/background-art-abstract-watercolor-2687925/
@@ -68,7 +70,7 @@ function preload() {
 // Make the canvas, position the avatar and anemy
 function setup() {
   // Create our playing area
-  createCanvas(500,500);
+  createCanvas(windowWidth,windowHeight);
 
   // Put the avatar in the centre
   avatarX = width/2;
@@ -187,7 +189,7 @@ function draw() {
   }
 
   // Text modifiers. Places text in the middle of the screen,
-  // in the Impact font, and sets the text size to 64 and color to pink
+  // in the Impact font, and sets the text size to 64 and color to blue
   textAlign(CENTER);
   textFont("Impact");
   textSize(64);
@@ -202,15 +204,14 @@ function draw() {
   image(enemyImage,enemyX,enemyY,enemySize,enemySize);
 
   // Check if the player has successfully dodged 15 times
-  if (dodges > 10) {
+  if (dodges >= 10) {
     // Displays a win screen over everything else
-    image(winImage,0,0,height,width);
+    image(winImage,0,0,width,height);
     // Stops the avatar and enemy from moving
     avatarSpeed = 0;
     enemySpeed = 0;
     if (keyIsDown(ENTER)) {
       location.reload();
-
 
     }
 
