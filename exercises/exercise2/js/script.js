@@ -168,7 +168,7 @@ function draw() {
     enemySpeed = enemySpeed + enemySpeedIncrease;
     enemySize = enemySize + enemySizeIncrease;
 
-    // Makes the amount the size and speed of the avatar changes a random
+    // Makes the amount that the size and speed of the avatar changes a random
     // number between -20 and 20
     avatarSizeChange = random(-20,20);
     avatarSpeedChange = random(-20,20);
@@ -182,7 +182,8 @@ function draw() {
 
     // Tells me what the speed and size of the avatar is (to check that the
     // above code works)
-    console.log("avatar speed: " + avatarSpeed + "avatar size: " + avatarSize);
+    console.log("avatar speed: " + avatarSpeed);
+    console.log("avatar size: " + avatarSize);
   }
 
   // Text modifiers. Places text in the middle of the screen,
@@ -200,9 +201,18 @@ function draw() {
   // Display the image of the enemy
   image(enemyImage,enemyX,enemyY,enemySize,enemySize);
 
-  // Check if the player has successfully dodged 20 times
-  if (dodges > 15) {
+  // Check if the player has successfully dodged 15 times
+  if (dodges > 10) {
+    // Displays a win screen over everything else
     image(winImage,0,0,height,width);
-  }
+    // Stops the avatar and enemy from moving
+    avatarSpeed = 0;
+    enemySpeed = 0;
+    if (keyIsDown(ENTER)) {
+      location.reload();
 
+
+    }
+
+  }
 }
