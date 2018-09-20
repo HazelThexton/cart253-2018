@@ -49,10 +49,14 @@ var dodges = 0;
 var dodgeText = "Dodges: ";
 
 // The background image
-var backgroundImage
+var backgroundImage;
 
 // The win screen image
-var winImage
+var winImage;
+
+// The canvas dimensions
+var canvasWidth;
+var canvasHeight;
 
 // Preloads the images of the background, avatar and enemy
 function preload() {
@@ -66,8 +70,16 @@ function preload() {
 //
 // Make the canvas, position the avatar and anemy
 function setup() {
+  // Define the width and height of the canvas relative to the window size
+  canvasWidth = windowWidth/2;
+  canvasHeight = windowHeight/1.2;
+  // Restrict our canvas size to a minimum of 320 x 450 to keep it playable on
+  // smaller windows, ie mobile
+  canvasWidth = constrain(canvasWidth,320,5000);
+  canvasHeight = constrain(canvasHeight,450,5000);
   // Create our playing area
-  createCanvas(windowWidth - 5,windowHeight - 5);
+  createCanvas(canvasWidth,canvasHeight);
+
 
   // Put the avatar in the centre
   avatarX = width/2;
@@ -86,7 +98,7 @@ function setup() {
 // Handle moving the avatar and enemy and checking for dodges and
 // game over situations.
 function draw() {
-  // A pink background
+  // A background
   background(backgroundImage);
 
   // Default the avatar's velocity to 0 in case no key is pressed this frame
@@ -123,7 +135,6 @@ function draw() {
     avatarX = avatarX + avatarVX;
     avatarY = avatarY + avatarVY;
   }
-
 
   // The enemy always moves at enemySpeed (which increases)
   enemyVX = enemySpeed;
