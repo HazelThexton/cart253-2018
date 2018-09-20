@@ -31,13 +31,13 @@ var enemyX;
 var enemyY;
 var enemySize = 70;
 // How much bigger the enemy circle gets with each successful dodge
-var enemySizeIncrease = 5;
+var enemySizeIncrease = 7;
 
 // The speed and velocity of our enemy circle
 var enemySpeed = 5;
 var enemyVX = 5;
-// How much bigger the enemy circle gets with each successful dodge
-var enemySpeedIncrease = 0.5;
+// How much faster the enemy circle gets with each successful dodge
+var enemySpeedIncrease = 1;
 
 // The image of our enemy
 var enemyImage;
