@@ -7,9 +7,6 @@ Exercise 2. A game where your arrow key/touch controlled avatar avoids an enemy,
 both avatar and enemy change size and speed depending on when the avatar dodges.
 The game tracks the number of dodges and you can win by dodging 10 times.
 
-free-to-use background image found at
-https://pixabay.com/en/background-art-abstract-watercolor-2687925/
-
 *********************************************************/
 
 // The position and size of our avatar
@@ -61,7 +58,7 @@ var winImage
 function preload() {
   avatarImage = loadImage("assets/images/avatar.png");
   enemyImage = loadImage("assets/images/enemy.png");
-  backgroundImage = loadImage("assets/images/background.jpg");
+  backgroundImage = loadImage("assets/images/background.png");
   winImage = loadImage("assets/images/win.png");
 }
 
@@ -200,11 +197,11 @@ function draw() {
   }
 
   // Text modifiers. Places text in the middle of the screen,
-  // in the Impact font, and sets the text size to 64 and color to blue
+  // in the Impact font, and sets the text size to 64 and color to purple
   textAlign(CENTER);
   textFont("Impact");
   textSize(64);
-  fill(13,70,163);
+  fill(48,10,91);
   // Display the current number of succesful dodges on the screen
   text(dodgeText + dodges, width/2, height/7);
 
