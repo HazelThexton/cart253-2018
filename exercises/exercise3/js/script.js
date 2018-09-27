@@ -27,6 +27,9 @@ var decoyImage8;
 var decoyImage9;
 var decoyImage10;
 
+// The background of the ui element displaying the target
+var targetBackground;
+
 // The number of decoys to show on the screen, randomly
 // chosen from the decoy images
 var numDecoys = 100;
@@ -50,6 +53,8 @@ function preload() {
   decoyImage8 = loadImage("assets/images/animals-08.png");
   decoyImage9 = loadImage("assets/images/animals-09.png");
   decoyImage10 = loadImage("assets/images/animals-10.png");
+
+  targetBackground = loadImage("assets/images/target-background.png");
 }
 
 // setup()
@@ -108,6 +113,9 @@ function setup() {
   targetY = random(0,height);
   // And draw it (this means it will always be on top)
   image(targetImage,targetX,targetY);
+
+  imageMode(CORNER);
+  image(targetBackground, windowWidth - 230, 10);
 }
 
 function draw() {
