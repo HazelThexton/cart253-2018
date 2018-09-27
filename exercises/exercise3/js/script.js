@@ -61,6 +61,8 @@ var targetSize = 1;
 // How much the target size increases by
 var targetSizeIncrease = 2;
 
+var d
+
 // preload()
 //
 // Loads the target and decoy images before the program starts
@@ -146,13 +148,16 @@ function setup() {
   // The position of the lost poster background
   var lostPosterX = windowWidth - 230;
   var lostPosterY = 10;
+  // Distance between target image and poster
+  var d = dist(targetX,targetY,lostPosterX,lostPosterY);
 
   // Once we've displayed all decoys, we choose a location for the target
   targetX = random(0,width);
   targetY = random(0,height);
-  // While the target is located under the lost poster, this loop randomizes
+
+  // While the target is overlapping the lost poster, this loop randomizes
   // the target location until it's no longer under the lost poster
-  while (targetX > lostPosterX - 200 && targetY < lostPosterY + 315){
+  while (d < targetImage.width){
     targetX = random(0,width);
     targetY = random(0,height);
   }
