@@ -189,7 +189,9 @@ function draw() {
     noStroke();
     fill(random(255));
     // Tell them they won!
-    text("YOU WINNED!",width/2,height/2);
+    text("YOU WINNED!",width/2,height/3);
+    textSize(65);
+    text("PRESS ENTER TO PLAY AGAIN",width/2,height/2);
 
     // Moves the target image according to its velocity
     targetX += vx;
@@ -203,21 +205,30 @@ function draw() {
     // Moves the target image along the defined sine wave on the Y axis
     targetY = (amplitude * sin(time * frequency)) + sineCenter;
 
+    // Moves the origin to the target image location
+    translate(targetX, targetY);
+    // Rotates the image around the new origin (so, it rotates on itself)
+    rotate(0.1 * time);
     // Displays the target image on the game over screen
-    image(targetImage, targetX, targetY, targetImage.width + targetSize, targetImage.height + targetSize);
+    image(targetImage, 0, 0, targetImage.width + targetSize, targetImage.height + targetSize);
     // Displays a circle around the target
     noFill();
     stroke(random(255));
     strokeWeight(10);
-    ellipse(targetX,targetY,targetImage.width + targetSize, targetImage.height + targetSize);
-  }
-  // Makes the target image turn around when it hits the edge
-  if (targetX >= windowWidth || targetX <= 0) {
-    vx = -vx;
-  }
-  // Makes the target image shrink/grow back when it reaches a certain size
-  if (targetSize <= -20 || targetSize >= 200) {
-    targetSizeIncrease = -targetSizeIncrease;
+    ellipse(0,0,targetImage.width + targetSize, targetImage.height + targetSize);
+
+    // Makes the target image turn around when it hits the edge
+    if (targetX >= windowWidth || targetX <= 0) {
+      vx = -vx;
+    }
+    // Makes the target image shrink/grow back when it reaches a certain size
+    if (targetSize <= -20 || targetSize >= 200) {
+      targetSizeIncrease = -targetSizeIncrease;
+    }
+    // Reloads the page if the player pressed enter
+    if (keyIsDown(ENTER)) {
+      location.reload();
+    }
   }
 }
 
