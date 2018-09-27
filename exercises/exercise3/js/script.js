@@ -11,8 +11,8 @@ https://creativenerds.co.uk/freebies/80-free-wildlife-icons-the-best-ever-animal
 ******************************************************************************/
 
 // Position and image of the sausage dog we're searching for
-var targetX;
-var targetY;
+var targetX = 0;
+var targetY = 0;
 var targetImage;
 
 // The ten decoy images
@@ -111,19 +111,29 @@ function setup() {
     }
   }
 
-  // Once we've displayed all decoys, we choose a location for the target
-  targetX = random(0,width);
-  targetY = random(0,height);
-  // And draw it (this means it will always be on top)
-  image(targetImage,targetX,targetY);
-
   // The position of the lost poster background
   var lostPosterX = windowWidth - 230;
   var lostPosterY = 10;
+
+  // Once we've displayed all decoys, we choose a location for the target
+  targetX = random(0,width);
+  targetY = random(0,height);
+  // While the target is located under the lost poster, this loop randomizes
+  // the target location until it's no longer under the lost poster
+  while (targetX > lostPosterX - 200 && targetY < lostPosterY + 315){
+    targetX = random(0,width);
+    targetY = random(0,height);
+  }
+  // And draw it (this means it will always be on top)
+  image(targetImage,targetX,targetY);
+
   // Display the lost poster (background, target image, and text) over everything
   imageMode(CORNER);
+  // Display the poster background
   image(lostPoster, lostPosterX, lostPosterY);
+  // Display the target image on the poster
   image(targetImage,lostPosterX + 35, lostPosterY + 80);
+  // Display and format the text
   fill(200, 0, 0);
   textSize(40);
   textFont("Helvetica");
