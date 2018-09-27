@@ -44,15 +44,19 @@ var gameOver = false;
 // the target's sine wave on game over.
 var time = 0;
 // The amplitude of the sine wave, or its maximum height
-var amplitude = 50;
+var amplitude = 100;
 // The frequency of the sine wave, or how many cycles there are per unit of time
 var frequency = 0.2;
+// Allows me to make the sine wave center on the target
+var sineCenter;
 
 // Velocity variable
 var vx = 8;
 
 // Size of the target
 var targetSize = 1;
+// How much the target size increases by
+var targetSizeIncrease = 2;
 
 // preload()
 //
@@ -141,6 +145,9 @@ function setup() {
   // And draw it (this means it will always be on top)
   image(targetImage,targetX,targetY);
 
+  // This makes the sine's center equivalent to the target's vertical position
+  sineCenter = targetY - amplitude/2;
+
   // Display the lost poster (background, target image, and text) over everything
   imageMode(CORNER);
   // Display the poster background
@@ -177,11 +184,13 @@ function draw() {
     time += 1;
 
     // Increases the target size every frame
-    targetSize += 1;
+    targetSize += targetSizeIncrease;
 
     // Moves the target image along the defined sine wave on the Y axis
-    targetY += amplitude * sin(time * frequency);
-    
+    targetY = (amplitude * sin(time * frequency)) + sineCenter;
+
+    console.log("here: " + sineCenter);
+
     // Displays the target image on the game over screen
     image(targetImage, targetX, targetY, targetImage.width + targetSize, targetImage.height + targetSize);
     // Displays a circle around the target
@@ -193,6 +202,10 @@ function draw() {
   // Makes the target image turn around when it hits the edge
   if (targetX >= windowWidth || targetX <= 0) {
     vx = -vx;
+  }
+  // Makes the target image shrink/grow back when it reaches a certain size
+  if (targetSize <= -20 || targetSize >= 200) {
+    targetSizeIncrease = -targetSizeIncrease;
   }
 }
 
