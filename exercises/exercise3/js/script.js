@@ -96,46 +96,50 @@ function setup() {
   // Makes the number of decoys larger or smaller depending on screen size
   // so the difficulty scales accordingly
   numDecoys = windowWidth/12;
-  console.log(numDecoys);
+  // Check number of decoys
+  console.log("Decoys: " + numDecoys);
+
   // Use a for loop to draw as many decoys as we need
   for (var i = 0; i < numDecoys; i++) {
     // Choose a random location for this decoy
     var x = random(0,width);
     var y = random(0,height);
+    // Adds a random positive or negative size variation of 50% relative to
+    // default decoy size
+    var decoySize = random(0.5, 1.5);
     // Generate a random number we can use for probability
     var r = random();
     // Use the random number to display one of the ten decoy
     // images, each with a 10% chance of being shown
-    // We'll talk more about this nice quality of random soon enough
     if (r < 0.1) {
-      image(decoyImage1,x,y);
+      image(decoyImage1,x,y,decoyImage1.width * decoySize,decoyImage1.height * decoySize);
     }
     else if (r < 0.2) {
-      image(decoyImage2,x,y);
+      image(decoyImage2,x,y,decoyImage2.width * decoySize,decoyImage2.height * decoySize);
     }
     else if (r < 0.3) {
-      image(decoyImage3,x,y);
+      image(decoyImage3,x,y,decoyImage3.width * decoySize,decoyImage3.height * decoySize);
     }
     else if (r < 0.4) {
-      image(decoyImage4,x,y);
+      image(decoyImage4,x,y,decoyImage4.width * decoySize,decoyImage4.height * decoySize);
     }
     else if (r < 0.5) {
-      image(decoyImage5,x,y);
+      image(decoyImage5,x,y,decoyImage5.width * decoySize,decoyImage5.height * decoySize);
     }
     else if (r < 0.6) {
-      image(decoyImage6,x,y);
+      image(decoyImage6,x,y,decoyImage6.width * decoySize,decoyImage6.height * decoySize);
     }
     else if (r < 0.7) {
-      image(decoyImage7,x,y);
+      image(decoyImage7,x,y,decoyImage7.width * decoySize,decoyImage7.height * decoySize);
     }
     else if (r < 0.8) {
-      image(decoyImage8,x,y);
+      image(decoyImage8,x,y,decoyImage8.width * decoySize,decoyImage8.height * decoySize);
     }
     else if (r < 0.9) {
-      image(decoyImage9,x,y);
+      image(decoyImage9,x,y,decoyImage9.width * decoySize,decoyImage9.height * decoySize);
     }
     else if (r < 1.0) {
-      image(decoyImage10,x,y);
+      image(decoyImage10,x,y,decoyImage10.width * decoySize,decoyImage10.height * decoySize);
     }
   }
 
