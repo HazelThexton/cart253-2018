@@ -35,7 +35,7 @@ var lost = "LOST";
 
 // The number of decoys to show on the screen, randomly
 // chosen from the decoy images
-var numDecoys = 100;
+var numDecoys;
 
 // Keep track of whether they've won
 var gameOver = false;
@@ -45,13 +45,16 @@ var gameOver = false;
 var time = 0;
 // The amplitude of the sine wave, or its maximum height
 var amplitude = 100;
-// The frequency of the sine wave, or how many cycles there are per unit of time
+// The frequency of the sine wave, or how many cycles there are per unit of time.
+// This is the same as velocity.
 var frequency = 0.2;
-// Allows me to make the sine wave center on the target
+// Allows me to make the sine wave center on the target's vertical position
 var sineCenter;
 
-// Velocity variable
-var vx = 8;
+// Velocity variable for X. The Y's velocity is equivalent to frequency here.
+var vx;
+// Speed variable
+var speed = 10;
 
 // Size of the target
 var targetSize = 1;
@@ -87,6 +90,13 @@ function setup() {
   background("#ffff00");
   imageMode(CENTER);
 
+  // Define velocity
+  vx = speed;
+
+  // Makes the number of decoys larger or smaller depending on screen size
+  // so the difficulty scales accordingly
+  numDecoys = windowWidth/12;
+  console.log(numDecoys);
   // Use a for loop to draw as many decoys as we need
   for (var i = 0; i < numDecoys; i++) {
     // Choose a random location for this decoy
@@ -188,8 +198,6 @@ function draw() {
 
     // Moves the target image along the defined sine wave on the Y axis
     targetY = (amplitude * sin(time * frequency)) + sineCenter;
-
-    console.log("here: " + sineCenter);
 
     // Displays the target image on the game over screen
     image(targetImage, targetX, targetY, targetImage.width + targetSize, targetImage.height + targetSize);
