@@ -40,6 +40,20 @@ var numDecoys = 100;
 // Keep track of whether they've won
 var gameOver = false;
 
+// Tracks how many times draw has run. Used to inform the frequency of
+// the target's sine wave on game over.
+var time = 0;
+// The amplitude of the sine wave, or its maximum height
+var amplitude = 50;
+// The frequency of the sine wave, or how many cycles there are per unit of time
+var frequency = 0.2;
+
+// Velocity variable
+var vx = 8;
+
+// Size of the target
+var targetSize = 1;
+
 // preload()
 //
 // Loads the target and decoy images before the program starts
@@ -138,10 +152,15 @@ function setup() {
   textSize(40);
   textFont("Helvetica");
   text(lost, lostPosterX + 45, lostPosterY + 50);
+
 }
 
 function draw() {
   if (gameOver) {
+    // Clear the canvas
+    createCanvas(windowWidth,windowHeight);
+    background("#ffff00");
+    imageMode(CENTER);
     // Prepare our typography
     textFont("Helvetica");
     textSize(128);
@@ -151,10 +170,29 @@ function draw() {
     // Tell them they won!
     text("YOU WINNED!",width/2,height/2);
 
+    // Moves the target image according to its velocity
+    targetX += vx;
+
+    // Tracks the advancement of time each time the draw function runs
+    time += 1;
+
+    // Increases the target size every frame
+    targetSize += 1;
+
+    // Moves the target image along the defined sine wave on the Y axis
+    targetY += amplitude * sin(time * frequency);
+    
+    // Displays the target image on the game over screen
+    image(targetImage, targetX, targetY, targetImage.width + targetSize, targetImage.height + targetSize);
+    // Displays a circle around the target
     noFill();
     stroke(random(255));
     strokeWeight(10);
-    ellipse(targetX,targetY,targetImage.width,targetImage.height);
+    ellipse(targetX,targetY,targetImage.width + targetSize, targetImage.height + targetSize);
+  }
+  // Makes the target image turn around when it hits the edge
+  if (targetX >= windowWidth || targetX <= 0) {
+    vx = -vx;
   }
 }
 
