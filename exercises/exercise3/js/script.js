@@ -27,8 +27,11 @@ var decoyImage8;
 var decoyImage9;
 var decoyImage10;
 
-// The background of the ui element displaying the target
-var targetBackground;
+// Image of the lost poster background
+var lostPoster;
+
+// The text on the lost poster
+var lost = "LOST";
 
 // The number of decoys to show on the screen, randomly
 // chosen from the decoy images
@@ -54,7 +57,7 @@ function preload() {
   decoyImage9 = loadImage("assets/images/animals-09.png");
   decoyImage10 = loadImage("assets/images/animals-10.png");
 
-  targetBackground = loadImage("assets/images/target-background.png");
+  lostPoster = loadImage("assets/images/target-background.png");
 }
 
 // setup()
@@ -114,8 +117,17 @@ function setup() {
   // And draw it (this means it will always be on top)
   image(targetImage,targetX,targetY);
 
+  // The position of the lost poster background
+  var lostPosterX = windowWidth - 230;
+  var lostPosterY = 10;
+  // Display the lost poster (background, target image, and text) over everything
   imageMode(CORNER);
-  image(targetBackground, windowWidth - 230, 10);
+  image(lostPoster, lostPosterX, lostPosterY);
+  image(targetImage,lostPosterX + 35, lostPosterY + 80);
+  fill(200, 0, 0);
+  textSize(40);
+  textFont("Helvetica");
+  text(lost, lostPosterX + 45, lostPosterY + 50);
 }
 
 function draw() {
