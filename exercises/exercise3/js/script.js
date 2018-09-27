@@ -61,8 +61,6 @@ var targetSize = 1;
 // How much the target size increases by
 var targetSizeIncrease = 2;
 
-var d
-
 // preload()
 //
 // Loads the target and decoy images before the program starts
@@ -146,8 +144,8 @@ function setup() {
   }
 
   // The position of the lost poster background
-  var lostPosterX = windowWidth - 230;
-  var lostPosterY = 10;
+  var lostPosterX = windowWidth * 0.9;
+  var lostPosterY = windowHeight * 0.25;
   // Distance between target image and poster
   var d = dist(targetX,targetY,lostPosterX,lostPosterY);
 
@@ -168,16 +166,16 @@ function setup() {
   sineCenter = targetY - amplitude/2;
 
   // Display the lost poster (background, target image, and text) over everything
-  imageMode(CORNER);
-  // Display the poster background
+    // Display the poster background
   image(lostPoster, lostPosterX, lostPosterY);
   // Display the target image on the poster
-  image(targetImage,lostPosterX + 35, lostPosterY + 80);
+  image(targetImage,lostPosterX, lostPosterY - 10);
   // Display and format the text
   fill(200, 0, 0);
   textSize(40);
   textFont("Helvetica");
-  text(lost, lostPosterX + 45, lostPosterY + 50);
+  textAlign(CENTER);
+  text(lost, lostPosterX, lostPosterY - 110);
 
 }
 
