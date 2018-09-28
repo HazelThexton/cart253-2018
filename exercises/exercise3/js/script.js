@@ -1,22 +1,34 @@
 /******************************************************************************
-Where's Sausage Dog?
-by Pippin Barr
+Where's [INSERT ANIMAL HERE]?
+by Hazel Thexton
 
 An algorithmic version of a Where's Wally searching game where you
-need to click on the sausage dog you're searching for in amongst all
+need to click on the animal you're searching for in amongst all
 the visual noise of other animals.
 
 Animal images from:
 https://creativenerds.co.uk/freebies/80-free-wildlife-icons-the-best-ever-animal-icon-set/
 ******************************************************************************/
 
-// Position and image of the sausage dog we're searching for
+// Position of the animal we're searching for
 var targetX = 0;
 var targetY = 0;
-var targetImage;
 
-// The decoy image array
-var animals = [0,1,2,3,4,5,6,7,8,9,10]
+// The images of the animals
+var daschund;
+var lion;
+var panther;
+var tiger;
+var leopard;
+var hyena;
+var bear;
+var polarBear;
+var panda;
+var dog;
+var cat;
+// The animal image array. Please note I have no idea what those last two
+// animals are so I named them at random.
+var animals = [daschund, lion, panther, tiger, leopard, hyena, bear, polarBear, panda, dog, cat];
 
 // Image of the lost poster background
 var lostPoster;
@@ -56,24 +68,26 @@ var targetSizeIncrease = 2;
 //
 // Loads the target and decoy images before the program starts
 function preload() {
-
-  var r = random(animals);
-  var targetImageValue = r
-
-  targetImage = loadImage("assets/images/" + targetImageValue + ".png");
-
+  // Assigns each of the animal variables to its corresponding image
   for (var i = 0; i < 11; i++) {
-  decoyImage1 = loadImage("assets/images/" + i + ".png");
-  decoyImage2 = loadImage("assets/images/" + i + ".png");
-  decoyImage3 = loadImage("assets/images/" + i + ".png");
-  decoyImage4 = loadImage("assets/images/" + i + ".png");
-  decoyImage5 = loadImage("assets/images/" + i + ".png");
-  decoyImage6 = loadImage("assets/images/" + i + ".png");
-  decoyImage7 = loadImage("assets/images/" + i + ".png");
-  decoyImage8 = loadImage("assets/images/" + i + ".png");
-  decoyImage9 = loadImage("assets/images/" + i + ".png");
-  decoyImage10 = loadImage("assets/images/" + i + ".png");
-}
+    animals[i] = loadImage("assets/images/" + i + ".png");
+  }
+  // Shuffles the animal array
+  var shuffledAnimals = shuffle(animals);
+  // Assigns a randomly determined animal to each decoy or target variable
+  var targetImage = shuffledAnimals[0];
+  var decoyImage1 = shuffledAnimals[1];
+  var decoyImage2 = shuffledAnimals[2];
+  var decoyImage3 = shuffledAnimals[3];
+  var decoyImage4 = shuffledAnimals[4];
+  var decoyImage5 = shuffledAnimals[5];
+  var decoyImage6 = shuffledAnimals[6];
+  var decoyImage7 = shuffledAnimals[7];
+  var decoyImage8 = shuffledAnimals[8];
+  var decoyImage9 = shuffledAnimals[9];
+  var decoyImage10 = shuffledAnimals[10];
+
+  //Preloads the lost poster image
   lostPoster = loadImage("assets/images/target-background.png");
 }
 
@@ -92,8 +106,6 @@ function setup() {
   // Makes the number of decoys larger or smaller depending on screen size
   // so the difficulty scales accordingly
   numDecoys = windowWidth/12;
-  // Check number of decoys
-  console.log("Decoys: " + numDecoys);
 
   // Use a for loop to draw as many decoys as we need
   for (var i = 0; i < numDecoys; i++) {
@@ -162,7 +174,7 @@ function setup() {
   sineCenter = targetY - amplitude/2;
 
   // Display the lost poster (background, target image, and text) over everything
-    // Display the poster background
+  // Display the poster background
   image(lostPoster, lostPosterX, lostPosterY);
   // Display the target image on the poster
   image(targetImage,lostPosterX, lostPosterY - 10);
@@ -187,7 +199,7 @@ function draw() {
     textAlign(CENTER,CENTER);
     noStroke();
     fill(random(255));
-    // Tell them they won!
+    // Tell them they won and how to play again!
     text("YOU WINNED!",width/2,height/3);
     textSize(65);
     text("PRESS ENTER TO PLAY AGAIN",width/2,height/2);
@@ -224,7 +236,7 @@ function draw() {
     if (targetSize <= -20 || targetSize >= 200) {
       targetSizeIncrease = -targetSizeIncrease;
     }
-    // Reloads the page if the player pressed enter
+    // Reloads the page if the player presses enter
     if (keyIsDown(ENTER)) {
       location.reload();
     }
