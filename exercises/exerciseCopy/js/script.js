@@ -58,12 +58,10 @@ var targetSizeIncrease = 2;
 //
 // Loads the target and decoy images before the program starts
 function preload() {
-console.log("array: " + animals[1]);
   // Assigns each of the animal variables to its corresponding image
   for (var i = 0; i < 11; i++) {
     animals[i] = loadImage("assets/images/" + i + ".png");
   }
-console.log("array: " + animals[1]);
   // Shuffles the animal array
   shuffledAnimals = shuffle(animals);
   // Assigns a randomly determined animal to the target
@@ -88,19 +86,18 @@ function setup() {
   // Makes the number of decoys larger or smaller depending on screen size
   // so the difficulty scales accordingly
   numDecoys = windowWidth/12;
-
+var decoyImage;
   // Use a for loop to draw as many decoys as we need
   for (var i = 0; i < numDecoys; i++) {
     // Choose a random location for this decoy
     var x = random(0,width);
     var y = random(0,height);
+    var r = int(random(1,11));
     // Adds a random positive or negative size variation of 50% relative to
     // default decoy size
     var decoySize = random(0.5, 1.5);
-    var decoyImage = shuffledAnimals[i];
-    console.log(decoyImage);
-    console.log(shuffledAnimals[i]);
-    image(decoyImage,x,y,decoyImage.width * decoySize,decoyImage.height * decoySize);
+    decoyImage = shuffledAnimals[r];
+    image(decoyImage,x,y,128 * decoySize,128 * decoySize);
   }
 
   // The position of the lost poster background
