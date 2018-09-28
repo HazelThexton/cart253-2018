@@ -15,9 +15,10 @@ var targetX = 0;
 var targetY = 0;
 var targetImage;
 
-// The animal image array.
+// The initial animal image array.
 var animals = [];
 
+// The animal image array once shuffled
 var shuffledAnimals = [];
 
 // Image of the lost poster background
@@ -64,7 +65,8 @@ function preload() {
   }
   // Shuffles the animal array
   shuffledAnimals = shuffle(animals);
-  // Assigns a randomly determined animal to the target
+
+  // Assigns a random animal, located first in the array, to the target
   targetImage = shuffledAnimals[0];
 
   //Preloads the lost poster image
@@ -86,21 +88,26 @@ function setup() {
   // Makes the number of decoys larger or smaller depending on screen size
   // so the difficulty scales accordingly
   numDecoys = windowWidth/12;
-var decoyImage;
   // Use a for loop to draw as many decoys as we need
   for (var i = 0; i < numDecoys; i++) {
     // Choose a random location for this decoy
     var x = random(0,width);
     var y = random(0,height);
-    var r = int(random(1,11));
     // Adds a random positive or negative size variation of 50% relative to
     // default decoy size
     var decoySize = random(0.5, 1.5);
-    decoyImage = shuffledAnimals[r];
+    // Creates a variable that is a random integer from one to 10
+    var r = int(random(1,11));
+    // Uses the r variable to choose a random animal in the array each time,
+    // except the animal at index 0 which is already the target
+    var decoyImage = shuffledAnimals[r];
+    // Displays the chosen animal at the chosen location with the chosen size
+    // modifiers, all randomized
     image(decoyImage,x,y,128 * decoySize,128 * decoySize);
   }
 
-  // The position of the lost poster background
+  // The position of the lost poster background in the top right,
+  // with a 20 pixel buffer
   var lostPosterX = windowWidth - lostPoster.width/2 - 20;
   var lostPosterY = lostPoster.height/2 + 20;
 
@@ -118,7 +125,7 @@ var decoyImage;
     // Checks distance between target image and poster again
     var d = dist(lostPosterX,lostPosterY, targetX, targetY);
   }
-  // And draw it (this means it will always be on top)
+  // And draw the target image (this means it will always be on top)
   image(targetImage,targetX,targetY);
 
   // This makes the sine's center equivalent to the target's vertical position
