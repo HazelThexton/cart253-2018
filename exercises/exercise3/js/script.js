@@ -167,20 +167,22 @@ function setup() {
   }
 
   // The position of the lost poster background
-  var lostPosterX = windowWidth * 0.9;
-  var lostPosterY = windowHeight * 0.25;
-  // Distance between target image and poster
-  var d = dist(targetX,targetY,lostPosterX,lostPosterY);
+  var lostPosterX = windowWidth * 0.91;
+  var lostPosterY = windowHeight * 0.24;
 
   // Once we've displayed all decoys, we choose a location for the target
   targetX = random(0,width);
   targetY = random(0,height);
+  // Distance between target image and poster
+  var d = dist(lostPosterX,lostPosterY, targetX, targetY);
 
   // While the target is overlapping the lost poster, this loop randomizes
   // the target location until it's no longer under the lost poster
-  while (d < targetImage.width/2 + lostPoster.height/2){
+  while (d < targetImage.width/2 + lostPoster.width/2 && d < targetImage.height/2 + lostPoster.height/2){
     targetX = random(0,width);
     targetY = random(0,height);
+    // Checks distance between target image and poster again
+    var d = dist(lostPosterX,lostPosterY, targetX, targetY);
   }
   // And draw it (this means it will always be on top)
   image(targetImage,targetX,targetY);
