@@ -14,7 +14,21 @@ https://creativenerds.co.uk/freebies/80-free-wildlife-icons-the-best-ever-animal
 var targetX = 0;
 var targetY = 0;
 
-// The images of the animals
+// Variables we will assign randomized images to later
+var targetImage;
+var decoyImage1;
+var decoyImage2;
+var decoyImage3;
+var decoyImage4;
+var decoyImage5;
+var decoyImage6;
+var decoyImage7;
+var decoyImage8;
+var decoyImage9;
+var decoyImage10;
+
+// The animal images we will assign to the above variables. Please note I have
+// no idea what those last two animals are so I named them at random.
 var daschund;
 var lion;
 var panther;
@@ -26,8 +40,7 @@ var polarBear;
 var panda;
 var dog;
 var cat;
-// The animal image array. Please note I have no idea what those last two
-// animals are so I named them at random.
+// The animal image array.
 var animals = [daschund, lion, panther, tiger, leopard, hyena, bear, polarBear, panda, dog, cat];
 
 // Image of the lost poster background
@@ -68,24 +81,26 @@ var targetSizeIncrease = 2;
 //
 // Loads the target and decoy images before the program starts
 function preload() {
+
   // Assigns each of the animal variables to its corresponding image
   for (var i = 0; i < 11; i++) {
     animals[i] = loadImage("assets/images/" + i + ".png");
   }
+
   // Shuffles the animal array
   var shuffledAnimals = shuffle(animals);
-  // Assigns a randomly determined animal to each decoy or target variable
-  var targetImage = shuffledAnimals[0];
-  var decoyImage1 = shuffledAnimals[1];
-  var decoyImage2 = shuffledAnimals[2];
-  var decoyImage3 = shuffledAnimals[3];
-  var decoyImage4 = shuffledAnimals[4];
-  var decoyImage5 = shuffledAnimals[5];
-  var decoyImage6 = shuffledAnimals[6];
-  var decoyImage7 = shuffledAnimals[7];
-  var decoyImage8 = shuffledAnimals[8];
-  var decoyImage9 = shuffledAnimals[9];
-  var decoyImage10 = shuffledAnimals[10];
+  // Assigns a randomly determined animal to each variable including the target
+  targetImage = shuffledAnimals[0];
+  decoyImage1 = shuffledAnimals[1];
+  decoyImage2 = shuffledAnimals[2];
+  decoyImage3 = shuffledAnimals[3];
+  decoyImage4 = shuffledAnimals[4];
+  decoyImage5 = shuffledAnimals[5];
+  decoyImage6 = shuffledAnimals[6];
+  decoyImage7 = shuffledAnimals[7];
+  decoyImage8 = shuffledAnimals[8];
+  decoyImage9 = shuffledAnimals[9];
+  decoyImage10 = shuffledAnimals[10];
 
   //Preloads the lost poster image
   lostPoster = loadImage("assets/images/target-background.png");
