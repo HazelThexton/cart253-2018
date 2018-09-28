@@ -15,17 +15,8 @@ var targetX = 0;
 var targetY = 0;
 var targetImage;
 
-// The ten decoy images
-var decoyImage1;
-var decoyImage2;
-var decoyImage3;
-var decoyImage4;
-var decoyImage5;
-var decoyImage6;
-var decoyImage7;
-var decoyImage8;
-var decoyImage9;
-var decoyImage10;
+// The decoy image array
+var animals = [0,1,2,3,4,5,6,7,8,9,10]
 
 // Image of the lost poster background
 var lostPoster;
@@ -65,19 +56,24 @@ var targetSizeIncrease = 2;
 //
 // Loads the target and decoy images before the program starts
 function preload() {
-  targetImage = loadImage("assets/images/animals-target.png");
 
-  decoyImage1 = loadImage("assets/images/animals-01.png");
-  decoyImage2 = loadImage("assets/images/animals-02.png");
-  decoyImage3 = loadImage("assets/images/animals-03.png");
-  decoyImage4 = loadImage("assets/images/animals-04.png");
-  decoyImage5 = loadImage("assets/images/animals-05.png");
-  decoyImage6 = loadImage("assets/images/animals-06.png");
-  decoyImage7 = loadImage("assets/images/animals-07.png");
-  decoyImage8 = loadImage("assets/images/animals-08.png");
-  decoyImage9 = loadImage("assets/images/animals-09.png");
-  decoyImage10 = loadImage("assets/images/animals-10.png");
+  var r = random(animals);
+  var targetImageValue = r
 
+  targetImage = loadImage("assets/images/" + targetImageValue + ".png");
+
+  for (var i = 0; i < 11; i++) {
+  decoyImage1 = loadImage("assets/images/" + i + ".png");
+  decoyImage2 = loadImage("assets/images/" + i + ".png");
+  decoyImage3 = loadImage("assets/images/" + i + ".png");
+  decoyImage4 = loadImage("assets/images/" + i + ".png");
+  decoyImage5 = loadImage("assets/images/" + i + ".png");
+  decoyImage6 = loadImage("assets/images/" + i + ".png");
+  decoyImage7 = loadImage("assets/images/" + i + ".png");
+  decoyImage8 = loadImage("assets/images/" + i + ".png");
+  decoyImage9 = loadImage("assets/images/" + i + ".png");
+  decoyImage10 = loadImage("assets/images/" + i + ".png");
+}
   lostPoster = loadImage("assets/images/target-background.png");
 }
 
