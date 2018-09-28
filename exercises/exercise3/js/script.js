@@ -167,8 +167,8 @@ function setup() {
   }
 
   // The position of the lost poster background
-  var lostPosterX = windowWidth * 0.91;
-  var lostPosterY = windowHeight * 0.24;
+  var lostPosterX = windowWidth - lostPoster.width/2 - 20;
+  var lostPosterY = lostPoster.height/2 + 20;
 
   // Once we've displayed all decoys, we choose a location for the target
   targetX = random(0,width);
