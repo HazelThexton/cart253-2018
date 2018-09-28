@@ -178,7 +178,7 @@ function setup() {
 
   // While the target is overlapping the lost poster, this loop randomizes
   // the target location until it's no longer under the lost poster
-  while (d < targetImage.width){
+  while (d < targetImage.width + lostPoster.width){
     targetX = random(0,width);
     targetY = random(0,height);
   }
