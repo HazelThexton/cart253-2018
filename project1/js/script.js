@@ -19,14 +19,14 @@ var playerY;
 var playerRadius = 25;
 var playerVX = 0;
 var playerVY = 0;
-var playerMaxSpeed = 3;
+var playerMaxSpeed = 4;
 // Player health
 var playerHealth;
 var playerMaxHealth = 255;
 // Player fill color
 var playerFill = 50;
 
-// Prey position, size, velocity, perlin noise time value
+// Prey position, size, velocity
 var preyX;
 var preyY;
 var preyRadius = 25;
@@ -61,7 +61,7 @@ function setup() {
 
 // setupPrey()
 //
-// Initialises prey's position, velocity, health, and perlin noise time value
+// Initialises prey's position, velocity, initial noise values, and health
 function setupPrey() {
   preyX = width/5;
   preyY = height/2;
@@ -133,6 +133,8 @@ function handleInput() {
   else {
     playerVY = 0;
   }
+<<<<<<< HEAD
+=======
 
   // Checks for sprinting
   if (keyIsDown(SHIFT)) {
@@ -144,6 +146,7 @@ function handleInput() {
   else {
     playerMaxSpeed = constrain(playerMaxSpeed - 1,3,5);
   }
+>>>>>>> parent of acfcade... P1: Added restart UI
 }
 
 // movePlayer()
