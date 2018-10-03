@@ -19,14 +19,14 @@ var playerY;
 var playerRadius = 25;
 var playerVX = 0;
 var playerVY = 0;
-var playerMaxSpeed = 4;
+var playerMaxSpeed = 3;
 // Player health
 var playerHealth;
 var playerMaxHealth = 255;
 // Player fill color
 var playerFill = 50;
 
-// Prey position, size, velocity
+// Prey position, size, velocity, perlin noise time value
 var preyX;
 var preyY;
 var preyRadius = 25;
@@ -61,7 +61,7 @@ function setup() {
 
 // setupPrey()
 //
-// Initialises prey's position, velocity, initial noise values, and health
+// Initialises prey's position, velocity, health, and perlin noise time value
 function setupPrey() {
   preyX = width/5;
   preyY = height/2;
@@ -104,6 +104,8 @@ function draw() {
     drawPlayer();
   }
   else {
+    gameOverInput();
+
     showGameOver();
   }
 }
@@ -133,8 +135,6 @@ function handleInput() {
   else {
     playerVY = 0;
   }
-<<<<<<< HEAD
-=======
 
   // Checks for sprinting
   if (keyIsDown(SHIFT)) {
@@ -145,8 +145,18 @@ function handleInput() {
   }
   else {
     playerMaxSpeed = constrain(playerMaxSpeed - 1,3,5);
+    preyY -= height;
   }
->>>>>>> parent of acfcade... P1: Added restart UI
+}
+
+// gameOverInput()
+//
+// Handles input on the game over screen
+function gameOverInput() {
+  // Reloads the page if the player presses enter
+  if (keyIsDown(ENTER)) {
+    location.reload();
+  }
 }
 
 // movePlayer()
@@ -218,20 +228,20 @@ function checkEating() {
 //
 // Moves the prey based on random velocity changes
 function movePrey() {
-    // Set velocity based on random noise values to get a new direction
-    // and speed of movement
-    // Use map() to convert from the 0-1 range of the noise() function
-    // to the appropriate range of velocities for the prey
-    preyVX = map(noise(tx),0,1,-preyMaxSpeed,preyMaxSpeed);
+  // Set velocity based on random noise values to get a new direction
+  // and speed of movement
+  preyVX = map(noise(tx),0,1,-preyMaxSpeed,preyMaxSpeed);
+  // Use map() to convert from the 0-1 range of the noise() function
+  // to the appropriate range of velocities for the prey
+  preyVY = map(noise(ty),0,1,-preyMaxSpeed,preyMaxSpeed);
 
-    preyVY = map(noise(ty),0,1,-preyMaxSpeed,preyMaxSpeed);
+// Update prey position based on velocity
+preyX += preyVX;
+preyY += preyVY;
 
-  // Update prey position based on velocity
-  preyX += preyVX;
-  preyY += preyVY;
+tx +=0.1;
+ty +=0.1;
 
-  tx +=0.1;
-  ty +=0.1;
 
   // Screen wrapping
   if (preyX < 0) {
@@ -274,6 +284,7 @@ function showGameOver() {
   fill(0);
   var gameOverText = "GAME OVER\n";
   gameOverText += "You ate " + preyEaten + " prey\n";
-  gameOverText += "before you died."
+  gameOverText += "before you died.\n";
+  gameOverText += "Press ENTER to try again."
   text(gameOverText,width/2,height/2);
 }
