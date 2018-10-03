@@ -19,14 +19,14 @@ var playerY;
 var playerRadius = 25;
 var playerVX = 0;
 var playerVY = 0;
-var playerMaxSpeed = 4;
+var playerMaxSpeed = 3;
 // Player health
 var playerHealth;
 var playerMaxHealth = 255;
 // Player fill color
 var playerFill = 50;
 
-// Prey position, size, velocity
+// Prey position, size, velocity, perlin noise time value
 var preyX;
 var preyY;
 var preyRadius = 25;
@@ -61,7 +61,7 @@ function setup() {
 
 // setupPrey()
 //
-// Initialises prey's position, velocity, initial noise values, and health
+// Initialises prey's position, velocity, health, and perlin noise time value
 function setupPrey() {
   preyX = width/5;
   preyY = height/2;
@@ -132,6 +132,17 @@ function handleInput() {
   }
   else {
     playerVY = 0;
+  }
+
+  // Checks for sprinting
+  if (keyIsDown(SHIFT)) {
+    playerMaxSpeed = constrain(playerMaxSpeed + 1,3,5);
+    // Reduce player health, constrain to reasonable range (in addition to base reduction)
+    playerHealth = constrain(playerHealth - 0.2,0,playerMaxHealth);
+
+  }
+  else {
+    playerMaxSpeed = constrain(playerMaxSpeed - 1,3,5);
   }
 }
 
