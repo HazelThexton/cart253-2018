@@ -55,12 +55,6 @@ var eatHealth = 10;
 // Number of prey eaten during the game
 var preyEaten = 0;
 
-// Directions
-var right = "right";
-var left = "left";
-var up = "up";
-var down = "down";
-
 
 // setup()
 //
@@ -179,16 +173,16 @@ function gameOverInput() {
 // Determines the direction the player is going
 function determinePlayerDirection(){
   if (Math.sign(playerVX) == -1){
-    playerXDirection = left;
+    playerXDirection = true;
   }
   else {
-    playerXDirection = right;
+    playerXDirection = false;
   }
   if (Math.sign(playerVY) == -1){
-    playerYDirection = up;
+    playerYDirection = true;
   }
   else {
-    playerYDirection = down;
+    playerYDirection = false;
   }
 }
 
@@ -263,16 +257,16 @@ function checkEating() {
 // Determines the direction the prey is going
 function determinePreyDirection(){
   if (Math.sign(preyVX) == -1){
-    preyXDirection = left;
+    preyXDirection = true;
   }
   else {
-    preyXDirection = right;
+    preyXDirection = false;
   }
   if (Math.sign(preyVY) == -1){
-    preyYDirection = up;
+    preyYDirection = true;
   }
   else {
-    preyYDirection = down;
+    preyYDirection = false;
   }
 }
 
