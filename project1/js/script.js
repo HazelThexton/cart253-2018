@@ -22,7 +22,8 @@ var playerVY = 0;
 var playerMinSpeed = 3;
 var playerMaxSpeed = 6;
 var playerSpeed = playerMinSpeed;
-var playerDirection;
+var playerXDirection;
+var playerYDirection;
 // Player health
 var playerHealth;
 var playerMaxHealth = 255;
@@ -36,9 +37,10 @@ var preyRadius = 25;
 var preyVX;
 var preyVY;
 var preyMinSpeed = 4;
-var preyMaxSpeed = 5;
+var preyMaxSpeed = 10;
 var preySpeed = preyMinSpeed;
-var preyDirection;
+var preyXDirection;
+var preyYDirection;
 var tx;
 var ty;
 
@@ -53,42 +55,12 @@ var eatHealth = 10;
 // Number of prey eaten during the game
 var preyEaten = 0;
 
+// Directions
+var right = "right";
+var left = "left";
+var up = "up";
+var down = "down";
 
-// playerDirection()
-//
-// Determines the direction the player is going
-function determinePlayerDirection(){
-  if (Math.sign(playerVX) == -1){
-    playerDirection = "left";
-  }
-  else if (Math.sign(playerVX) == 1){
-    playerDirection = "right";
-  }
-  else if (Math.sign(playerVY) == -1){
-    playerDirection = "up";
-  }
-  else if (Math.sign(playerVY) == 1){
-    playerDirection = "down";
-  }
-}
-
-// preyDirection()
-//
-// Determines the direction the prey is going
-function determinePreyDirection(){
-  if (Math.sign(preyVX) == -1){
-    preyDirection = "left";
-  }
-  else if (Math.sign(preyVX) == 1){
-    preyDirection = "right";
-  }
-  else if (Math.sign(preyVY) == -1){
-    preyDirection = "up";
-  }
-  else if (Math.sign(preyVY) == 1){
-    preyDirection = "down";
-  }
-}
 
 // setup()
 //
@@ -101,6 +73,8 @@ function setup() {
   setupPrey();
   setupPlayer();
 }
+
+
 
 // setupPrey()
 //
@@ -200,13 +174,30 @@ function gameOverInput() {
     location.reload();
   }
 }
+// playerDirection()
+//
+// Determines the direction the player is going
+function determinePlayerDirection(){
+  if (Math.sign(playerVX) == -1){
+    playerXDirection = left;
+  }
+  else {
+    playerXDirection = right;
+  }
+  if (Math.sign(playerVY) == -1){
+    playerYDirection = up;
+  }
+  else {
+    playerYDirection = down;
+  }
+}
 
 // movePlayer()
 //
 // Updates player position based on velocity,
 // wraps around the edges.
 function movePlayer() {
-
+  determinePlayerDirection();
   // Update position
   playerX += playerVX;
   playerY += playerVY;
@@ -225,10 +216,8 @@ function movePlayer() {
   else if (playerY > height) {
     playerY -= height;
   }
-
-  determinePlayerDirection();
-console.log(playerDirection);
 }
+
 
 // updateHealth()
 //
@@ -269,12 +258,60 @@ function checkEating() {
     }
   }
 }
+// preyDirection()
+//
+// Determines the direction the prey is going
+function determinePreyDirection(){
+  if (Math.sign(preyVX) == -1){
+    preyXDirection = left;
+  }
+  else {
+    preyXDirection = right;
+  }
+  if (Math.sign(preyVY) == -1){
+    preyYDirection = up;
+  }
+  else {
+    preyYDirection = down;
+  }
+}
 
+// preyRunAway()
+//
+// Makes the prey move fast in the opposite direction from the player
+function preyRunAway(){
+
+  // Increase the speed of the prey's "jitter"
+  preySpeed = constrain(preySpeed + 1,preyMinSpeed,preyMaxSpeed);
+
+  // Update prey position based on velocity (added to base movement- so
+  // makes it moves away faster)
+  preyX += preyVX/2;
+  preyY += preyVY/2;
+  // Makes the prey go the opposite direction of the player by matching
+  // the sign (positive or negative) of the player and prey's velocities
+  if (preyXDirection != playerXDirection){
+    if (Math.sign(playerVX) <= 0){
+      preyVX = -Math.abs(preyVX);
+    }
+    else {
+      preyVX = Math.abs(preyVX);
+    }
+  }
+  if (preyYDirection != playerYDirection){
+    if (Math.sign(playerVY) <= 0){
+      preyVY = -Math.abs(preyVY);
+    }
+    else {
+      preyVY = Math.abs(preyVY);
+    }
+  }
+}
 // movePrey()
 //
 // Moves the prey based on random velocity changes
 function movePrey() {
-
+  determinePreyDirection();
   // Set velocity based on random noise values to get a new direction
   // and speed of movement
   preyVX = map(noise(tx),0,1,-preySpeed,preySpeed);
@@ -282,11 +319,10 @@ function movePrey() {
   // to the appropriate range of velocities for the prey
   preyVY = map(noise(ty),0,1,-preySpeed,preySpeed);
 
-  if (dist(preyX,preyY,playerX,playerY) <= 50){
-    // Increase the speed of the prey when it gets scared (too close to the player)
-    preySpeed = constrain(preySpeed + 1,preyMinSpeed,preyMaxSpeed);
+  // Behavior when the prey "panics" from being near the player
+  if (dist(preyX,preyY,playerX,playerY) <= 150){
+    preyRunAway();
   }
-
   else {
     // Reduce the speed of the prey back to normal
     preySpeed = constrain(preySpeed - 1,preyMinSpeed,preyMaxSpeed);
@@ -314,8 +350,9 @@ function movePrey() {
     preyY -= height;
   }
 
-  determinePreyDirection();
 }
+
+
 
 // drawPrey()
 //
