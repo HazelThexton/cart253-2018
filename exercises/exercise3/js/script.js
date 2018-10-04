@@ -21,8 +21,10 @@ var animals = [];
 // The animal image array once shuffled
 var shuffledAnimals = [];
 
-// Image of the lost poster background
+// Image and position of the lost poster background
 var lostPoster;
+var lostPosterX;
+var lostPosterY;
 
 // The text on the lost poster
 var lost = "LOST";
@@ -82,9 +84,37 @@ function setup() {
   background("#ffff00");
   imageMode(CENTER);
 
+  drawDecoys();
+  drawPoster();
+  drawTarget();
+
   // Define velocity
   vx = speed;
+  // This makes the sine's center equivalent to the target's vertical position
+  sineCenter = targetY - amplitude/2;
+}
 
+function draw() {
+  gameOverScreen();
+}
+
+// mousePressed()
+//
+// Checks if the player clicked on the target and if so tells them they won
+function mousePressed() {
+  // Check if the mouse is in the x range of the target
+  if (mouseX > targetX - targetImage.width/2 && mouseX < targetX + targetImage.width/2) {
+    // Check if the mouse is also in the y range of the target
+    if (mouseY > targetY - targetImage.height/2 && mouseY < targetY + targetImage.height/2) {
+      gameOver = true;
+    }
+  }
+}
+
+// drawDecoy()
+//
+// Determines how many decoys to draw and then draws them all over the screen
+function drawDecoys() {
   // Makes the number of decoys larger or smaller depending on screen size
   // so the difficulty scales accordingly
   numDecoys = windowWidth/12;
@@ -105,18 +135,41 @@ function setup() {
     // modifiers, all randomized
     image(decoyImage,x,y,128 * decoySize,128 * decoySize);
   }
+}
 
+// drawPoster()
+//
+// Selects a location for the poster and draws it
+function drawPoster(){
   // The position of the lost poster background in the top right,
   // with a 20 pixel buffer
-  var lostPosterX = windowWidth - lostPoster.width/2 - 20;
-  var lostPosterY = lostPoster.height/2 + 20;
+  lostPosterX = windowWidth - lostPoster.width/2 - 20;
+  lostPosterY = lostPoster.height/2 + 20;
 
-  // Once we've displayed all decoys, we choose a location for the target
+  // Display the lost poster (background, target image, and text) over everything
+  // Display the poster background
+  image(lostPoster, lostPosterX, lostPosterY);
+  // Display the target image on the poster
+  image(targetImage,lostPosterX, lostPosterY - 10);
+
+  // Display and format the text
+  fill(200, 0, 0);
+  textSize(40);
+  textFont("Helvetica");
+  textAlign(CENTER);
+  text(lost, lostPosterX, lostPosterY - 110);
+}
+
+// drawTarget()
+//
+// Selects a location for the target, makes sure it isn't overlapping
+// the poster, and draws it
+function drawTarget(){
+  // Choose a location for the target
   targetX = random(0,width);
   targetY = random(0,height);
   // Distance between target image and poster
   var d = dist(lostPosterX,lostPosterY, targetX, targetY);
-
   // While the target is overlapping the lost poster, this loop randomizes
   // the target location until it's no longer under the lost poster
   while (d < targetImage.width/2 + lostPoster.width/2 && d < targetImage.height/2 + lostPoster.height/2){
@@ -127,25 +180,13 @@ function setup() {
   }
   // And draw the target image (this means it will always be on top)
   image(targetImage,targetX,targetY);
-
-  // This makes the sine's center equivalent to the target's vertical position
-  sineCenter = targetY - amplitude/2;
-
-  // Display the lost poster (background, target image, and text) over everything
-  // Display the poster background
-  image(lostPoster, lostPosterX, lostPosterY);
-  // Display the target image on the poster
-  image(targetImage,lostPosterX, lostPosterY - 10);
-  // Display and format the text
-  fill(200, 0, 0);
-  textSize(40);
-  textFont("Helvetica");
-  textAlign(CENTER);
-  text(lost, lostPosterX, lostPosterY - 110);
-
 }
 
-function draw() {
+// gameOverScreen()
+//
+// Checks if the game is over, and if so, displays the text and animated images of
+// the game over screen and permits the player to restart the game
+function gameOverScreen(){
   if (gameOver) {
     // Clear the canvas
     createCanvas(windowWidth,windowHeight);
@@ -197,19 +238,6 @@ function draw() {
     // Reloads the page if the player presses enter
     if (keyIsDown(ENTER)) {
       location.reload();
-    }
-  }
-}
-
-// mousePressed()
-//
-// Checks if the player clicked on the target and if so tells them they won
-function mousePressed() {
-  // Check if the mouse is in the x range of the target
-  if (mouseX > targetX - targetImage.width/2 && mouseX < targetX + targetImage.width/2) {
-    // Check if the mouse is also in the y range of the target
-    if (mouseY > targetY - targetImage.height/2 && mouseY < targetY + targetImage.height/2) {
-      gameOver = true;
     }
   }
 }
