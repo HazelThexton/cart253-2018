@@ -30,6 +30,7 @@ var playerHealth;
 var playerMaxHealth = 255;
 // Player image
 var playerImage;
+var playerRotate;
 
 // Prey position, size, velocity, perlin noise time value, and direction
 var preyX;
@@ -147,12 +148,31 @@ function handleInput() {
   // Check for vertical movement
   if (keyIsDown(UP_ARROW)) {
     playerVY = -playerSpeed;
-  }
+    }
   else if (keyIsDown(DOWN_ARROW)) {
     playerVY = playerSpeed;
+
   }
   else {
     playerVY = 0;
+  }
+
+  // Check for rotation
+  if (keyIsDown(LEFT_ARROW)) {
+    playerRotate = constrain(playerRotate - 0.1,-1.5,0);
+  }
+  else if (keyIsDown(RIGHT_ARROW)) {
+    playerRotate = constrain(playerRotate + 0.1,0,1.5);
+  }
+
+  else if (keyIsDown(UP_ARROW)) {
+    playerRotate = constrain(playerRotate - 0.1,0, 1.5);
+    }
+  else if (keyIsDown(DOWN_ARROW)) {
+    playerRotate = constrain(playerRotate + 0.1,-1.5,3);
+  }
+  else {
+ playerRotate = 0;
   }
 
   // Checks for sprinting
@@ -380,15 +400,17 @@ if (preySize <= 40 || preySize >= 60) {
 //
 // Draw the player as an ellipse with alpha based on health
 function drawPlayer() {
-  // Tracks the advancement of time each time the draw function runs
-time += 1;
+
+push();
 // Moves the origin to the target image location
 translate(playerX, playerY);
-// Rotates the image around the new origin (so, it rotates on itself)
-rotate(0.1 * time);
 
+// Rotates the image around the new origin (so, it rotates on itself)
+rotate(playerRotate);
+imageMode(CENTER);
   tint(255,playerHealth);
-  image(playerImage,playerX,playerY,playerSize,playerSize + 20);
+  image(playerImage,0,0,playerSize,playerSize + 20);
+  pop();
 }
 
 // showGameOver()
