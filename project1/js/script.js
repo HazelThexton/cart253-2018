@@ -316,7 +316,7 @@ function movePrey() {
   preyVY = map(noise(ty),0,1,-preySpeed,preySpeed);
 
   // Behavior when the prey "panics" from being near the player
-  if (dist(preyX,preyY,playerX,playerY) <= 150){
+  if (dist(preyX,preyY,playerX,playerY) <= 200){
     preyRunAway();
   }
   else {
@@ -325,9 +325,9 @@ function movePrey() {
 
   }
 
-  // Update prey position based on velocity
-  preyX += preyVX;
-  preyY += preyVY;
+  // Update prey position based on velocity AND number of fish eaten (gets harder)
+  preyX += preyVX * preyEaten/15;
+  preyY += preyVY * preyEaten/15;
 
   tx +=0.1;
   ty +=0.1;
@@ -431,6 +431,7 @@ imageMode(CENTER);
   image(playerImage,0,0,playerSize,playerSize + 20);
   pop();
 }
+
 // showStartScreen()
 //
 // Display text about the game instructions!
