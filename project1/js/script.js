@@ -52,7 +52,7 @@ var ty;
 
 // Prey health
 var preyHealth;
-var preyMaxHealth = 255;
+var preyMaxHealth = 200;
 // Prey image
 var preyImage;
 
@@ -130,6 +130,8 @@ if (startScreen) {
 
     drawPrey();
     drawPlayer();
+
+    showScore();
   }
   else {
     gameOverInput();
@@ -167,16 +169,16 @@ function handleInput() {
 
   // Check for rotation
   if (keyIsDown(LEFT_ARROW)) {
-    playerRotate = constrain(playerRotate - 0.1,-1.5,0);
+    playerRotate = constrain(playerRotate - 0.3,-1.5,0);
   }
   else if (keyIsDown(RIGHT_ARROW)) {
-    playerRotate = constrain(playerRotate + 0.1,0,1.5);
+    playerRotate = constrain(playerRotate + 0.3,0,1.5);
   }
   else if (keyIsDown(UP_ARROW)) {
-    playerRotate = constrain(playerRotate - 0.1,0,1.5);
+    playerRotate = constrain(playerRotate - 0.3,0,1.5);
     }
   else if (keyIsDown(DOWN_ARROW)) {
-    playerRotate = constrain(playerRotate + 0.1,-1.5,3);
+    playerRotate = constrain(playerRotate + 0.3,-1.5,3);
   }
   else {
  playerRotate = 0;
@@ -442,7 +444,16 @@ function showStartScreen() {
   startScreenText += "Press ENTER to start.";
   text(startScreenText,width/2,height/2);
 }
-
+// showScore()
+//
+// Display the score
+function showScore() {
+  textSize(32);
+  textAlign(LEFT,TOP);
+  fill(0);
+  var scoreText = preyEaten + " fish eaten!";
+  text(scoreText,20,20);
+}
 // showGameOver()
 //
 // Display text about the game being over!
