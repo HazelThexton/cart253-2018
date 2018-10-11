@@ -8,6 +8,11 @@ A simple game of cat and mouse.
 Physics-based movement, keyboard controls, health/stamina,
 sprinting, random movement, screen wrap.
 
+Image sources:
+http://www.pngmart.com/image/73027
+https://gallery.yopriceville.com/Free-Clipart-Pictures/Underwater/Shark_Transparent_Clip_Art_Image#.W7_ZbWhKjIU
+https://www.sciencenewsforstudents.org/article/mystery-microbes-sea
+
 ******************************************************/
 var time = 0;
 
