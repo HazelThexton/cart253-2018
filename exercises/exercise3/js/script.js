@@ -9,6 +9,7 @@ the visual noise of other animals.
 Animal images from:
 https://creativenerds.co.uk/freebies/80-free-wildlife-icons-the-best-ever-animal-icon-set/
 ******************************************************************************/
+var time = 0;
 
 // Position and image of the animal we're searching for
 var targetX = 0;

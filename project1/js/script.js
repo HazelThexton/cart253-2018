@@ -9,6 +9,7 @@ Physics-based movement, keyboard controls, health/stamina,
 sprinting, random movement, screen wrap.
 
 ******************************************************/
+var time = 0;
 
 // Track whether the game is over
 var gameOver = false;
@@ -16,7 +17,7 @@ var gameOver = false;
 // Player position, size, velocity, and direction
 var playerX;
 var playerY;
-var playerRadius = 25;
+var playerSize = 50;
 var playerVX = 0;
 var playerVY = 0;
 var playerMinSpeed = 3;
@@ -27,13 +28,14 @@ var playerYDirection;
 // Player health
 var playerHealth;
 var playerMaxHealth = 255;
-// Player fill color
-var playerFill = 50;
+// Player image
+var playerImage;
 
 // Prey position, size, velocity, perlin noise time value, and direction
 var preyX;
 var preyY;
-var preyRadius = 25;
+var preySize = 50;
+var preySizeIncrease = 0.4;
 var preyVX;
 var preyVY;
 var preyMinSpeed = 4;
@@ -47,15 +49,21 @@ var ty;
 // Prey health
 var preyHealth;
 var preyMaxHealth = 100;
-// Prey fill color
-var preyFill = 200;
+// Prey image
+var preyImage;
 
 // Amount of health obtained per frame of "eating" the prey
 var eatHealth = 10;
 // Number of prey eaten during the game
 var preyEaten = 0;
 
-
+// preload()
+//
+// Preloads our sound and images
+function preload() {
+  playerImage = loadImage("assets/images/player.png");
+  preyImage = loadImage("assets/images/prey.png");
+}
 // setup()
 //
 // Sets up the basic elements of the game
@@ -67,7 +75,6 @@ function setup() {
   setupPrey();
   setupPlayer();
 }
-
 
 
 // setupPrey()
@@ -100,6 +107,7 @@ function setupPlayer() {
 // displays the two agents.
 // When the game is over, shows the game over screen.
 function draw() {
+
   background(100,100,200);
 
   if (!gameOver) {
@@ -234,7 +242,7 @@ function checkEating() {
   // Get distance of player to prey
   var d = dist(playerX,playerY,preyX,preyY);
   // Check if it's an overlap
-  if (d < playerRadius + preyRadius) {
+  if (d < playerSize + preySize) {
     // Increase the player health
     playerHealth = constrain(playerHealth + eatHealth,0,playerMaxHealth);
     // Reduce the prey health
@@ -252,60 +260,15 @@ function checkEating() {
     }
   }
 }
-// preyDirection()
-//
-// Determines the direction the prey is going
-function determinePreyDirection(){
-  if (Math.sign(preyVX) == -1){
-    preyXDirection = true;
-  }
-  else {
-    preyXDirection = false;
-  }
-  if (Math.sign(preyVY) == -1){
-    preyYDirection = true;
-  }
-  else {
-    preyYDirection = false;
-  }
-}
 
-// preyRunAway()
-//
-// Makes the prey move fast in the opposite direction from the player
-function preyRunAway(){
-
-  // Increase the speed of the prey's "jitter"
-  preySpeed = constrain(preySpeed + 1,preyMinSpeed,preyMaxSpeed);
-
-  // Update prey position based on velocity (added to base movement- so
-  // makes it moves away faster)
-  preyX += preyVX/2;
-  preyY += preyVY/2;
-  // Makes the prey go the opposite direction of the player by matching
-  // the sign (positive or negative) of the player and prey's velocities
-  if (preyXDirection != playerXDirection){
-    if (Math.sign(playerVX) <= 0){
-      preyVX = -Math.abs(preyVX);
-    }
-    else {
-      preyVX = Math.abs(preyVX);
-    }
-  }
-  if (preyYDirection != playerYDirection){
-    if (Math.sign(playerVY) <= 0){
-      preyVY = -Math.abs(preyVY);
-    }
-    else {
-      preyVY = Math.abs(preyVY);
-    }
-  }
-}
 // movePrey()
 //
 // Moves the prey based on random velocity changes
 function movePrey() {
   determinePreyDirection();
+
+  offsetX = random();
+  offsetY = random();
   // Set velocity based on random noise values to get a new direction
   // and speed of movement
   preyVX = map(noise(tx),0,1,-preySpeed,preySpeed);
@@ -320,6 +283,7 @@ function movePrey() {
   else {
     // Reduce the speed of the prey back to normal
     preySpeed = constrain(preySpeed - 1,preyMinSpeed,preyMaxSpeed);
+
   }
 
   // Update prey position based on velocity
@@ -346,22 +310,85 @@ function movePrey() {
 
 }
 
+// preyDirection()
+//
+// Determines the direction the prey is going
+function determinePreyDirection(){
+  if (Math.sign(preyVX) == -1){
+    preyXDirection = true;
+  }
+  else {
+    preyXDirection = false;
+  }
+  if (Math.sign(preyVY) == -1){
+    preyYDirection = true;
+  }
+  else {
+    preyYDirection = false;
+  }
+}
 
+// preyRunAway()
+//
+// Makes the prey move fast in the opposite direction from the player
+function preyRunAway(){
+
+  // Increase the speed of the prey's "jitter"
+  preySpeed = constrain(preySpeed + 1,preyMinSpeed,preyMaxSpeed);
+
+  // Increase the speed of the prey's size changing
+  //preySizeIncrease = 1;
+
+  // Update prey position based on velocity (added to base movement- so
+  // makes it moves away faster)
+  preyX += preyVX/2;
+  preyY += preyVY/2;
+  // Makes the prey go the opposite direction of the player by matching
+  // the sign (positive or negative) of the player and prey's velocities
+  if (preyXDirection != playerXDirection){
+    if (Math.sign(playerVX) <= 0){
+      preyVX = -Math.abs(preyVX);
+    }
+    else {
+      preyVX = Math.abs(preyVX);
+    }
+  }
+  if (preyYDirection != playerYDirection){
+    if (Math.sign(playerVY) <= 0){
+      preyVY = -Math.abs(preyVY);
+    }
+    else {
+      preyVY = Math.abs(preyVY);
+    }
+  }
+}
 
 // drawPrey()
 //
 // Draw the prey as an ellipse with alpha based on health
 function drawPrey() {
-  fill(preyFill,preyHealth);
-  ellipse(preyX,preyY,preyRadius*2);
+  tint(255,preyHealth);
+  preySize += preySizeIncrease;
+  // Makes the target image shrink/grow back when it reaches a certain size
+if (preySize <= 40 || preySize >= 60) {
+  preySizeIncrease = -preySizeIncrease;
+}
+  image(preyImage,preyX,preyY,preySize,preySize);
 }
 
 // drawPlayer()
 //
 // Draw the player as an ellipse with alpha based on health
 function drawPlayer() {
-  fill(playerFill,playerHealth);
-  ellipse(playerX,playerY,playerRadius*2);
+  // Tracks the advancement of time each time the draw function runs
+time += 1;
+// Moves the origin to the target image location
+translate(playerX, playerY);
+// Rotates the image around the new origin (so, it rotates on itself)
+rotate(0.1 * time);
+
+  tint(255,playerHealth);
+  image(playerImage,playerX,playerY,playerSize,playerSize + 20);
 }
 
 // showGameOver()
