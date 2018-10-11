@@ -20,7 +20,7 @@ var startScreen = true;
 // Player position, size, velocity, and direction
 var playerX;
 var playerY;
-var playerSize = 50;
+var playerSize = 100;
 var playerVX = 0;
 var playerVY = 0;
 var playerMinSpeed = 3;
@@ -38,7 +38,7 @@ var playerRotate;
 // Prey position, size, velocity, perlin noise time value, and direction
 var preyX;
 var preyY;
-var preySize = 50;
+var preySize = 90;
 var preySizeIncrease = 0.4;
 var preyVX;
 var preyVY;
@@ -51,13 +51,13 @@ var tx;
 var ty;
 
 // Prey health
-var preyHealth;
-var preyMaxHealth = 200;
+var preyAlive;
+
 // Prey image
 var preyImage;
 
 // Amount of health obtained per frame of "eating" the prey
-var eatHealth = 10;
+var eatHealth = 100;
 // Number of prey eaten during the game
 var preyEaten = 0;
 
@@ -65,6 +65,7 @@ var preyEaten = 0;
 //
 // Preloads our sound and images
 function preload() {
+  backgroundImage = loadImage("assets/images/background.jpg");
   playerImage = loadImage("assets/images/player.png");
   playerDyingImage = loadImage("assets/images/playerDying.png");
   preyImage = loadImage("assets/images/prey.png");
@@ -91,7 +92,7 @@ function setupPrey() {
   preyY = height/2;
   preyVX = -preyMaxSpeed;
   preyVY = preyMaxSpeed;
-  preyHealth = preyMaxHealth;
+  preyAlive = true;
   tx = random(0,1000);
   ty = random(0,1000);
 }
@@ -114,7 +115,7 @@ function setupPlayer() {
 // When the game is over, shows the game over screen.
 function draw() {
 
-  background(100,100,200);
+  background(backgroundImage);
 if (startScreen) {
   startScreenInput();
 
@@ -285,16 +286,16 @@ function checkEating() {
   if (d < playerSize + preySize) {
     // Increase the player health
     playerHealth = constrain(playerHealth + eatHealth,0,playerMaxHealth);
-    // Reduce the prey health
-    preyHealth = constrain(preyHealth - eatHealth,0,preyMaxHealth);
+    // Kill the prey
+    preyAlive = false;
 
     // Check if the prey died
-    if (preyHealth === 0) {
+    if (preyAlive === false) {
       // Move the "new" prey to a random position
       preyX = random(0,width);
       preyY = random(0,height);
       // Give it full health
-      preyHealth = preyMaxHealth;
+      preyAlive = true;
       // Track how many prey were eaten
       preyEaten++;
     }
@@ -407,7 +408,6 @@ function preyRunAway(){
 //
 // Draw the prey as an ellipse with alpha based on health
 function drawPrey() {
-  tint(255,preyHealth);
   preySize += preySizeIncrease;
   // Makes the target image shrink/grow back when it reaches a certain size
 if (preySize <= 40 || preySize >= 60) {
@@ -429,12 +429,10 @@ translate(playerX, playerY);
 rotate(playerRotate);
 imageMode(CENTER);
   tint(255,playerHealth);
-  if (playerHealth > 200){
-      image(playerImage,0,0,playerSize,playerSize + 20);
+  if (playerHealth < 150){
+    tint(255,50,50,playerHealth);
   }
-else {
-  image(playerDyingImage,0,0,playerSize,playerSize + 20);
-}
+  image(playerImage,0,0,playerSize,playerSize + 20);
   pop();
 }
 
@@ -458,8 +456,8 @@ function showScore() {
   textSize(32);
   textAlign(LEFT,TOP);
   fill(0);
-  var scoreText = preyEaten + " fish eaten!";
-  text(scoreText,20,20);
+  var scoreText = preyEaten + " jellyfish eaten!";
+  text(scoreText,40,40);
 }
 // showGameOver()
 //
