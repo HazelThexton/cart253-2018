@@ -14,6 +14,9 @@ var time = 0;
 // Track whether the game is over
 var gameOver = false;
 
+// Track whether we are on the start screen
+var startScreen = true;
+
 // Player position, size, velocity, and direction
 var playerX;
 var playerY;
@@ -49,7 +52,7 @@ var ty;
 
 // Prey health
 var preyHealth;
-var preyMaxHealth = 100;
+var preyMaxHealth = 255;
 // Prey image
 var preyImage;
 
@@ -65,11 +68,12 @@ function preload() {
   playerImage = loadImage("assets/images/player.png");
   preyImage = loadImage("assets/images/prey.png");
 }
+
 // setup()
 //
 // Sets up the basic elements of the game
 function setup() {
-  createCanvas(500,500);
+  createCanvas(windowWidth,windowHeight);
 
   noStroke();
 
@@ -110,8 +114,12 @@ function setupPlayer() {
 function draw() {
 
   background(100,100,200);
+if (startScreen) {
+  startScreenInput();
 
-  if (!gameOver) {
+  showStartScreen();
+}
+  else if (!gameOver) {
     handleInput();
 
     movePlayer();
@@ -164,9 +172,8 @@ function handleInput() {
   else if (keyIsDown(RIGHT_ARROW)) {
     playerRotate = constrain(playerRotate + 0.1,0,1.5);
   }
-
   else if (keyIsDown(UP_ARROW)) {
-    playerRotate = constrain(playerRotate - 0.1,0, 1.5);
+    playerRotate = constrain(playerRotate - 0.1,0,1.5);
     }
   else if (keyIsDown(DOWN_ARROW)) {
     playerRotate = constrain(playerRotate + 0.1,-1.5,3);
@@ -194,6 +201,16 @@ function gameOverInput() {
   // Reloads the page if the player presses enter
   if (keyIsDown(ENTER)) {
     location.reload();
+  }
+}
+
+// startScreenInput()
+//
+// Handles input on the start screen
+function startScreenInput() {
+  // Starts the game if the player presses enter
+  if (keyIsDown(ENTER)) {
+    startScreen = false;
   }
 }
 // playerDirection()
@@ -411,6 +428,19 @@ imageMode(CENTER);
   tint(255,playerHealth);
   image(playerImage,0,0,playerSize,playerSize + 20);
   pop();
+}
+// showStartScreen()
+//
+// Display text about the game instructions!
+function showStartScreen() {
+  textSize(32);
+  textAlign(CENTER,CENTER);
+  fill(0);
+  var startScreenText = "FISHY FRENZY\n\n";
+  startScreenText += "Eat as many fish as you can!\n";
+  startScreenText += "Use the arrow keys to move and SHIFT to sprint.\n";
+  startScreenText += "Press ENTER to start.";
+  text(startScreenText,width/2,height/2);
 }
 
 // showGameOver()
