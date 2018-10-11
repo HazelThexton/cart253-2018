@@ -66,6 +66,7 @@ var preyEaten = 0;
 // Preloads our sound and images
 function preload() {
   playerImage = loadImage("assets/images/player.png");
+  playerDyingImage = loadImage("assets/images/playerDying.png");
   preyImage = loadImage("assets/images/prey.png");
 }
 
@@ -428,7 +429,12 @@ translate(playerX, playerY);
 rotate(playerRotate);
 imageMode(CENTER);
   tint(255,playerHealth);
-  image(playerImage,0,0,playerSize,playerSize + 20);
+  if (playerHealth > 200){
+      image(playerImage,0,0,playerSize,playerSize + 20);
+  }
+else {
+  image(playerDyingImage,0,0,playerSize,playerSize + 20);
+}
   pop();
 }
 
