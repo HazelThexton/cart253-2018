@@ -120,13 +120,14 @@ function setupPlayer() {
 // When the game is over, shows the game over screen.
 function draw() {
 
-  background(backgroundImage);
   if (startScreen) {
+    background(backgroundImage);
     startScreenInput();
 
     showStartScreen();
   }
   else if (!gameOver) {
+    background(backgroundImage);
     handleInput();
 
     movePlayer();
@@ -135,17 +136,21 @@ function draw() {
     updateHealth();
     checkEating();
 
-    drawPrey();
+    drawPrey(0,0);
     drawPlayer();
 
     showScore();
   }
   else {
+    jellyfishExplosion();
     gameOverInput();
+
 
     showGameOver();
   }
 }
+
+
 
 // handleInput()
 //
@@ -409,13 +414,13 @@ function preyRunAway(){
 // drawPrey()
 //
 // Draw the prey as an ellipse with alpha based on health
-function drawPrey() {
+function drawPrey(x,y) {
   preySize += preySizeIncrease;
   // Makes the target image shrink/grow back when it reaches a certain size
   if (preySize <= 40 || preySize >= 60) {
     preySizeIncrease = -preySizeIncrease;
   }
-  image(preyImage,preyX,preyY,preySize,preySize);
+  image(preyImage,preyX + x,preyY + y,preySize,preySize + 30);
 }
 
 // drawPlayer()
@@ -432,7 +437,7 @@ function drawPlayer() {
   if (playerHealth < 150){
     tint(255,0,0,playerHealth);
   }
-  image(playerImage,0,0,playerSize,playerSize + 20);
+  image(playerImage,0,0,playerSize,playerSize + 50);
   pop();
 }
 
@@ -461,7 +466,7 @@ function showScore() {
 
 // showGameOver()
 //
-// Display text about the game being over!
+// Display the game over screen
 function showGameOver() {
   textFormat();
   textAlign(CENTER,CENTER);
@@ -470,6 +475,18 @@ function showGameOver() {
   gameOverText += "before you died.\n";
   gameOverText += "Press ENTER to try again."
   text(gameOverText,width/2,height/2);
+}
+
+// jellyfishExplosion()
+//
+// Make jellyfish overwhelm the screen
+function jellyfishExplosion(){
+  for(var i = 0; i < 100; i++){
+    push();
+    rotate(random());
+    drawPrey(random(-width,width),random(-height,height));
+    pop();
+  }
 }
 
 // textFormat()
