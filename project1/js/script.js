@@ -121,11 +121,11 @@ function setupPlayer() {
 function draw() {
 
   background(backgroundImage);
-if (startScreen) {
-  startScreenInput();
+  if (startScreen) {
+    startScreenInput();
 
-  showStartScreen();
-}
+    showStartScreen();
+  }
   else if (!gameOver) {
     handleInput();
 
@@ -165,7 +165,7 @@ function handleInput() {
   // Check for vertical movement
   if (keyIsDown(UP_ARROW)) {
     playerVY = -playerSpeed;
-    }
+  }
   else if (keyIsDown(DOWN_ARROW)) {
     playerVY = playerSpeed;
 
@@ -174,22 +174,7 @@ function handleInput() {
     playerVY = 0;
   }
 
-  // Check for rotation
-  if (keyIsDown(LEFT_ARROW)) {
-    playerRotate = constrain(playerRotate - 0.3,-1.5,0);
-  }
-  else if (keyIsDown(RIGHT_ARROW)) {
-    playerRotate = constrain(playerRotate + 0.3,0,1.5);
-  }
-  else if (keyIsDown(UP_ARROW)) {
-    playerRotate = constrain(playerRotate - 0.3,0,1.5);
-    }
-  else if (keyIsDown(DOWN_ARROW)) {
-    playerRotate = constrain(playerRotate + 0.3,-1.5,3);
-  }
-  else {
- playerRotate = 0;
-  }
+  playerRotation();
 
   // Checks for sprinting
   if (keyIsDown(SHIFT)) {
@@ -200,6 +185,27 @@ function handleInput() {
   }
   else {
     playerSpeed = constrain(playerSpeed - 1,playerMinSpeed,playerMaxSpeed);
+  }
+}
+
+// playerRotation()
+//
+// Check for rotation
+function playerRotation() {
+  if (keyIsDown(LEFT_ARROW)) {
+    playerRotate = constrain(playerRotate - 0.3,-1.5,0);
+  }
+  else if (keyIsDown(RIGHT_ARROW)) {
+    playerRotate = constrain(playerRotate + 0.3,0,1.5);
+  }
+  else if (keyIsDown(UP_ARROW)) {
+    playerRotate = constrain(playerRotate - 0.3,0,1.5);
+  }
+  else if (keyIsDown(DOWN_ARROW)) {
+    playerRotate = constrain(playerRotate + 0.3,-1.5,3);
+  }
+  else {
+    playerRotate = 0;
   }
 }
 
@@ -222,6 +228,7 @@ function startScreenInput() {
     startScreen = false;
   }
 }
+
 // playerDirection()
 //
 // Determines the direction the player is going
@@ -265,7 +272,6 @@ function movePlayer() {
     playerY -= height;
   }
 }
-
 
 // updateHealth()
 //
@@ -312,9 +318,6 @@ function checkEating() {
 // Moves the prey based on random velocity changes
 function movePrey() {
   determinePreyDirection();
-
-  offsetX = random();
-  offsetY = random();
   // Set velocity based on random noise values to get a new direction
   // and speed of movement
   preyVX = map(noise(tx),0,1,-preySpeed,preySpeed);
@@ -323,18 +326,11 @@ function movePrey() {
   preyVY = map(noise(ty),0,1,-preySpeed,preySpeed);
 
   // Behavior when the prey "panics" from being near the player
-  if (dist(preyX,preyY,playerX,playerY) <= 200){
-    preyRunAway();
-  }
-  else {
-    // Reduce the speed of the prey back to normal
-    preySpeed = constrain(preySpeed - 1,preyMinSpeed,preyMaxSpeed);
-
-  }
+  preyRunAway();
 
   // Update prey position based on velocity AND number of fish eaten (gets harder)
-  preyX += preyVX * preyEaten/15;
-  preyY += preyVY * preyEaten/15;
+  preyX += preyVX + preyVX * preyEaten/10;
+  preyY += preyVY + preyVY * preyEaten/10;
 
   tx +=0.1;
   ty +=0.1;
@@ -353,7 +349,6 @@ function movePrey() {
   else if (preyY > height) {
     preyY -= height;
   }
-
 }
 
 // preyDirection()
@@ -378,34 +373,36 @@ function determinePreyDirection(){
 //
 // Makes the prey move fast in the opposite direction from the player
 function preyRunAway(){
+  if (dist(preyX,preyY,playerX,playerY) <= 300){
+    // Increase the speed of the prey's "jitter"
+    preySpeed = constrain(preySpeed + 1,preyMinSpeed,preyMaxSpeed);
 
-  // Increase the speed of the prey's "jitter"
-  preySpeed = constrain(preySpeed + 1,preyMinSpeed,preyMaxSpeed);
-
-  // Increase the speed of the prey's size changing
-  //preySizeIncrease = 1;
-
-  // Update prey position based on velocity (added to base movement- so
-  // makes it moves away faster)
-  preyX += preyVX/2;
-  preyY += preyVY/2;
-  // Makes the prey go the opposite direction of the player by matching
-  // the sign (positive or negative) of the player and prey's velocities
-  if (preyXDirection != playerXDirection){
-    if (Math.sign(playerVX) <= 0){
-      preyVX = -Math.abs(preyVX);
+    // Update prey position based on velocity (added to base movement- so
+    // makes it move away faster)
+    preyX += preyVX/2;
+    preyY += preyVY/2;
+    // Makes the prey go the opposite direction of the player by matching
+    // the sign (positive or negative) of the player and prey's velocities
+    if (preyXDirection != playerXDirection){
+      if (Math.sign(playerVX) <= 0){
+        preyVX = -Math.abs(preyVX);
+      }
+      else {
+        preyVX = Math.abs(preyVX);
+      }
     }
-    else {
-      preyVX = Math.abs(preyVX);
+    if (preyYDirection != playerYDirection){
+      if (Math.sign(playerVY) <= 0){
+        preyVY = -Math.abs(preyVY);
+      }
+      else {
+        preyVY = Math.abs(preyVY);
+      }
     }
   }
-  if (preyYDirection != playerYDirection){
-    if (Math.sign(playerVY) <= 0){
-      preyVY = -Math.abs(preyVY);
-    }
-    else {
-      preyVY = Math.abs(preyVY);
-    }
+  else {
+    // Reduce the speed of the prey back to normal
+    preySpeed = constrain(preySpeed - 1,preyMinSpeed,preyMaxSpeed);
   }
 }
 
@@ -415,27 +412,25 @@ function preyRunAway(){
 function drawPrey() {
   preySize += preySizeIncrease;
   // Makes the target image shrink/grow back when it reaches a certain size
-if (preySize <= 40 || preySize >= 60) {
-  preySizeIncrease = -preySizeIncrease;
-}
+  if (preySize <= 40 || preySize >= 60) {
+    preySizeIncrease = -preySizeIncrease;
+  }
   image(preyImage,preyX,preyY,preySize,preySize);
 }
 
 // drawPlayer()
 //
-// Draw the player as an ellipse with alpha based on health
+// Draw the player with alpha based on health
 function drawPlayer() {
-
-push();
-// Moves the origin to the target image location
-translate(playerX, playerY);
-
-// Rotates the image around the new origin (so, it rotates on itself)
-rotate(playerRotate);
-imageMode(CENTER);
+  push();
+  // Moves the origin to the target image location
+  translate(playerX, playerY);
+  // Rotates the image around the new origin (so, it rotates on itself)
+  rotate(playerRotate);
+  imageMode(CENTER);
   tint(255,playerHealth);
   if (playerHealth < 150){
-    tint(255,50,50,playerHealth);
+    tint(255,0,0,playerHealth);
   }
   image(playerImage,0,0,playerSize,playerSize + 20);
   pop();
@@ -445,35 +440,44 @@ imageMode(CENTER);
 //
 // Display text about the game instructions!
 function showStartScreen() {
-  textSize(32);
+  textFormat();
   textAlign(CENTER,CENTER);
-  fill(0);
   var startScreenText = "FISHY FRENZY\n\n";
   startScreenText += "Eat as many fish as you can!\n";
   startScreenText += "Use the arrow keys to move and SHIFT to sprint.\n";
   startScreenText += "Press ENTER to start.";
   text(startScreenText,width/2,height/2);
 }
+
 // showScore()
 //
 // Display the score
 function showScore() {
-  textSize(32);
+  textFormat();
   textAlign(LEFT,TOP);
-  fill(0);
   var scoreText = preyEaten + " jellyfish eaten!";
   text(scoreText,40,40);
 }
+
 // showGameOver()
 //
 // Display text about the game being over!
 function showGameOver() {
-  textSize(32);
+  textFormat();
   textAlign(CENTER,CENTER);
-  fill(0);
-  var gameOverText = "GAME OVER\n";
+  var gameOverText = "GAME OVER\n\n";
   gameOverText += "You ate " + preyEaten + " prey\n";
   gameOverText += "before you died.\n";
   gameOverText += "Press ENTER to try again."
   text(gameOverText,width/2,height/2);
+}
+
+// textFormat()
+//
+// Text size, color, etc.
+function textFormat() {
+  textSize(40);
+  fill(255);
+  stroke(50,100,255);
+  strokeWeight(4);
 }
