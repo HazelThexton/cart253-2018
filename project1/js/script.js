@@ -197,8 +197,8 @@ function backgroundMusic(){
 function showStartScreen() {
   textFormat();
   textAlign(CENTER,CENTER);
-  var startScreenText = "FISHY FRENZY\n\n";
-  startScreenText += "Eat as many fish as you can!\n";
+  var startScreenText = "JELLY FRENZY\n\n";
+  startScreenText += "Eat as many jellyfish as you can!\n";
   startScreenText += "Use the arrow keys to move and SHIFT to sprint.\n";
   startScreenText += "Press ENTER to start.";
   text(startScreenText,width/2,height/2);
@@ -549,7 +549,7 @@ function showGameOver() {
   textFormat();
   textAlign(CENTER,CENTER);
   var gameOverText = "GAME OVER\n\n";
-  gameOverText += "You ate " + preyEaten + " prey\n";
+  gameOverText += "You ate " + preyEaten + " jellyfish\n";
   gameOverText += "before you died.\n";
   gameOverText += "Press ENTER to try again."
   text(gameOverText,width/2,height/2);
