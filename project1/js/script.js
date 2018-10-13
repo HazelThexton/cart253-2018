@@ -19,6 +19,7 @@ http://soundbible.com/801-Suck-Up.html
 https://www.youtube.com/watch?v=J2ogakQM_so
 
 ******************************************************/
+// Tracks the advancement of time
 var time = 0;
 
 // Track whether the game is over
@@ -58,6 +59,7 @@ var preyMaxSpeed = 10;
 var preySpeed = preyMinSpeed;
 var preyXDirection;
 var preyYDirection;
+// Perlin noise variables
 var tx;
 var ty;
 // Prey health
@@ -137,6 +139,7 @@ function draw() {
 
   if (startScreen) {
     background(backgroundImage);
+
     startScreenInput();
 
     showStartScreen();
@@ -164,6 +167,21 @@ function draw() {
   }
 }
 
+// Start screen functions
+
+// startScreenInput()
+//
+// Handles input on the start screen
+function startScreenInput() {
+  // Starts the game if the player presses enter
+  if (keyIsDown(ENTER)) {
+    popSound.play();
+    popSound.currentTime = 0;
+    backgroundMusic();
+    startScreen = false;
+  }
+}
+
 // backgroundMusic()
 //
 // Handles the background music
@@ -172,6 +190,31 @@ function backgroundMusic(){
   jellyfishJam.loop = true;
   musicPlaying = true;
 }
+
+// showStartScreen()
+//
+// Display text about the game instructions!
+function showStartScreen() {
+  textFormat();
+  textAlign(CENTER,CENTER);
+  var startScreenText = "FISHY FRENZY\n\n";
+  startScreenText += "Eat as many fish as you can!\n";
+  startScreenText += "Use the arrow keys to move and SHIFT to sprint.\n";
+  startScreenText += "Press ENTER to start.";
+  text(startScreenText,width/2,height/2);
+}
+
+// textFormat()
+//
+// Text size, color, etc.
+function textFormat() {
+  textSize(40);
+  fill(255);
+  stroke(50,100,255);
+  strokeWeight(4);
+}
+
+// Actual game functions
 
 // handleInput()
 //
@@ -245,48 +288,6 @@ function playerRotation() {
   }
 }
 
-// gameOverInput()
-//
-// Handles input on the game over screen
-function gameOverInput() {
-  // Reloads the page if the player presses enter
-  if (keyIsDown(ENTER)) {
-    popSound.play();
-    location.reload();
-  }
-}
-
-// startScreenInput()
-//
-// Handles input on the start screen
-function startScreenInput() {
-  // Starts the game if the player presses enter
-  if (keyIsDown(ENTER)) {
-    popSound.play();
-    popSound.currentTime = 0;
-    backgroundMusic();
-    startScreen = false;
-  }
-}
-
-// playerDirection()
-//
-// Determines the direction the player is going
-function determinePlayerDirection(){
-  if (Math.sign(playerVX) == -1){
-    playerXDirection = true;
-  }
-  else {
-    playerXDirection = false;
-  }
-  if (Math.sign(playerVY) == -1){
-    playerYDirection = true;
-  }
-  else {
-    playerYDirection = false;
-  }
-}
-
 // movePlayer()
 //
 // Updates player position based on velocity,
@@ -313,46 +314,21 @@ function movePlayer() {
   }
 }
 
-// updateHealth()
+// playerDirection()
 //
-// Reduce the player's health (every frame)
-// Check if the player is dead
-function updateHealth() {
-  // Reduce player health, constrain to reasonable range
-  playerHealth = constrain(playerHealth - 0.5,0,playerMaxHealth);
-  // Check if the player is dead
-  if (playerHealth === 0) {
-    // If so, the game is over
-    gameOver = true;
+// Determines the direction the player is going
+function determinePlayerDirection(){
+  if (Math.sign(playerVX) == -1){
+    playerXDirection = true;
   }
-}
-
-// checkEating()
-//
-// Check if the player overlaps the prey and updates health of both
-function checkEating() {
-  // Get distance of player to prey
-  var d = dist(playerX,playerY,preyX,preyY);
-  // Check if it's an overlap
-  if (d < playerSize + preySize) {
-    // Increase the player health
-    playerHealth = constrain(playerHealth + eatHealth,0,playerMaxHealth);
-    // Kill the prey
-    preyAlive = false;
-    // Play a slurping sound
-    eatSound.play();
-    eatSound.currentTime = 0;
-
-    // Check if the prey died
-    if (preyAlive === false) {
-      // Move the "new" prey to a random position
-      preyX = random(0,width);
-      preyY = random(0,height);
-      // Give it full health
-      preyAlive = true;
-      // Track how many prey were eaten
-      preyEaten++;
-    }
+  else {
+    playerXDirection = false;
+  }
+  if (Math.sign(playerVY) == -1){
+    playerYDirection = true;
+  }
+  else {
+    playerYDirection = false;
   }
 }
 
@@ -449,6 +425,49 @@ function preyRunAway(){
   }
 }
 
+// updateHealth()
+//
+// Reduce the player's health (every frame)
+// Check if the player is dead
+function updateHealth() {
+  // Reduce player health, constrain to reasonable range
+  playerHealth = constrain(playerHealth - 0.5,0,playerMaxHealth);
+  // Check if the player is dead
+  if (playerHealth === 0) {
+    // If so, the game is over
+    gameOver = true;
+  }
+}
+
+// checkEating()
+//
+// Check if the player overlaps the prey and updates health of both
+function checkEating() {
+  // Get distance of player to prey
+  var d = dist(playerX,playerY,preyX,preyY);
+  // Check if it's an overlap
+  if (d < playerSize + preySize) {
+    // Increase the player health
+    playerHealth = constrain(playerHealth + eatHealth,0,playerMaxHealth);
+    // Kill the prey
+    preyAlive = false;
+    // Play a slurping sound
+    eatSound.play();
+    eatSound.currentTime = 0;
+
+    // Check if the prey died
+    if (preyAlive === false) {
+      // Move the "new" prey to a random position
+      preyX = random(0,width);
+      preyY = random(0,height);
+      // Give it full health
+      preyAlive = true;
+      // Track how many prey were eaten
+      preyEaten++;
+    }
+  }
+}
+
 // drawPrey()
 //
 // Draw the prey as an ellipse with alpha based on health
@@ -479,19 +498,6 @@ function drawPlayer() {
   pop();
 }
 
-// showStartScreen()
-//
-// Display text about the game instructions!
-function showStartScreen() {
-  textFormat();
-  textAlign(CENTER,CENTER);
-  var startScreenText = "FISHY FRENZY\n\n";
-  startScreenText += "Eat as many fish as you can!\n";
-  startScreenText += "Use the arrow keys to move and SHIFT to sprint.\n";
-  startScreenText += "Press ENTER to start.";
-  text(startScreenText,width/2,height/2);
-}
-
 // gameText()
 //
 // Display the score and text onscreen
@@ -511,18 +517,7 @@ function gameText() {
   }
 }
 
-// showGameOver()
-//
-// Display the game over screen
-function showGameOver() {
-  textFormat();
-  textAlign(CENTER,CENTER);
-  var gameOverText = "GAME OVER\n\n";
-  gameOverText += "You ate " + preyEaten + " prey\n";
-  gameOverText += "before you died.\n";
-  gameOverText += "Press ENTER to try again."
-  text(gameOverText,width/2,height/2);
-}
+//Game over functions
 
 // jellyfishExplosion()
 //
@@ -536,12 +531,26 @@ function jellyfishExplosion(){
   }
 }
 
-// textFormat()
+// gameOverInput()
 //
-// Text size, color, etc.
-function textFormat() {
-  textSize(40);
-  fill(255);
-  stroke(50,100,255);
-  strokeWeight(4);
+// Handles input on the game over screen
+function gameOverInput() {
+  // Reloads the page if the player presses enter
+  if (keyIsDown(ENTER)) {
+    popSound.play();
+    location.reload();
+  }
+}
+
+// showGameOver()
+//
+// Display the game over screen
+function showGameOver() {
+  textFormat();
+  textAlign(CENTER,CENTER);
+  var gameOverText = "GAME OVER\n\n";
+  gameOverText += "You ate " + preyEaten + " prey\n";
+  gameOverText += "before you died.\n";
+  gameOverText += "Press ENTER to try again."
+  text(gameOverText,width/2,height/2);
 }
