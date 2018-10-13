@@ -13,6 +13,11 @@ http://www.pngmart.com/image/73027
 https://gallery.yopriceville.com/Free-Clipart-Pictures/Underwater/Shark_Transparent_Clip_Art_Image#.W7_ZbWhKjIU
 https://www.sciencenewsforstudents.org/article/mystery-microbes-sea
 
+Sound sources:
+http://soundbible.com/2067-Blop.html
+http://soundbible.com/801-Suck-Up.html
+https://www.youtube.com/watch?v=J2ogakQM_so
+
 ******************************************************/
 var time = 0;
 
@@ -38,6 +43,7 @@ var playerHealth;
 var playerMaxHealth = 255;
 // Player image
 var playerImage;
+// Player rotation
 var playerRotate;
 
 // Prey position, size, velocity, perlin noise time value, and direction
@@ -54,10 +60,8 @@ var preyXDirection;
 var preyYDirection;
 var tx;
 var ty;
-
 // Prey health
 var preyAlive;
-
 // Prey image
 var preyImage;
 
@@ -65,6 +69,14 @@ var preyImage;
 var eatHealth = 100;
 // Number of prey eaten during the game
 var preyEaten = 0;
+
+// Sound effects
+var popSound;
+var eatSound;
+// Music
+var jellyfishJam;
+// Checks if music is playing
+var musicPlaying;
 
 // preload()
 //
@@ -74,6 +86,10 @@ function preload() {
   playerImage = loadImage("assets/images/player.png");
   playerDyingImage = loadImage("assets/images/playerDying.png");
   preyImage = loadImage("assets/images/prey.png");
+
+  popSound = new Audio("assets/sounds/pop.wav");
+  eatSound = new Audio("assets/sounds/eat.wav");
+  jellyfishJam = new Audio("assets/sounds/jellyfishjam.mp3");
 }
 
 // setup()
@@ -81,13 +97,15 @@ function preload() {
 // Sets up the basic elements of the game
 function setup() {
   createCanvas(windowWidth,windowHeight);
+  
+// Chrome prevents pages from playing before the user has interacted with them
+backgroundMusic();
 
   noStroke();
 
   setupPrey();
   setupPlayer();
 }
-
 
 // setupPrey()
 //
@@ -128,6 +146,7 @@ function draw() {
   }
   else if (!gameOver) {
     background(backgroundImage);
+
     handleInput();
 
     movePlayer();
@@ -139,23 +158,41 @@ function draw() {
     drawPrey(0,0);
     drawPlayer();
 
-    showScore();
+    gameText();
   }
   else {
     jellyfishExplosion();
     gameOverInput();
-
-
     showGameOver();
   }
 }
 
-
+// backgroundMusic()
+//
+// Handles the background music
+function backgroundMusic(){
+  jellyfishJam.currentTime = 0;
+  jellyfishJam.play();
+  jellyfishJam.loop = true;
+  musicPlaying = true;
+}
 
 // handleInput()
 //
 // Checks arrow keys and adjusts player velocity accordingly
 function handleInput() {
+  // Rotates based on player movement
+  playerRotation();
+
+  // Pause music
+  if (keyIsDown(ESCAPE) && musicPlaying == true) {
+    jellyfishJam.pause();
+    musicPlaying = false;
+  }
+  else if (keyIsDown(ESCAPE) && musicPlaying == false) {
+    backgroundMusic();
+  }
+
   // Check for horizontal movement
   if (keyIsDown(LEFT_ARROW)) {
     playerVX = -playerSpeed;
@@ -179,8 +216,6 @@ function handleInput() {
     playerVY = 0;
   }
 
-  playerRotation();
-
   // Checks for sprinting
   if (keyIsDown(SHIFT)) {
     playerSpeed = constrain(playerSpeed + 1,playerMinSpeed,playerMaxSpeed);
@@ -189,6 +224,7 @@ function handleInput() {
 
   }
   else {
+    // Returns speed to normal
     playerSpeed = constrain(playerSpeed - 1,playerMinSpeed,playerMaxSpeed);
   }
 }
@@ -220,6 +256,7 @@ function playerRotation() {
 function gameOverInput() {
   // Reloads the page if the player presses enter
   if (keyIsDown(ENTER)) {
+    popSound.play();
     location.reload();
   }
 }
@@ -230,6 +267,8 @@ function gameOverInput() {
 function startScreenInput() {
   // Starts the game if the player presses enter
   if (keyIsDown(ENTER)) {
+    popSound.play();
+    popSound.currentTime = 0;
     startScreen = false;
   }
 }
@@ -304,6 +343,9 @@ function checkEating() {
     playerHealth = constrain(playerHealth + eatHealth,0,playerMaxHealth);
     // Kill the prey
     preyAlive = false;
+    // Play a slurping sound
+    eatSound.play();
+    eatSound.currentTime = 0;
 
     // Check if the prey died
     if (preyAlive === false) {
@@ -454,14 +496,23 @@ function showStartScreen() {
   text(startScreenText,width/2,height/2);
 }
 
-// showScore()
+// gameText()
 //
-// Display the score
-function showScore() {
+// Display the score and text onscreen
+function gameText() {
   textFormat();
   textAlign(LEFT,TOP);
   var scoreText = preyEaten + " jellyfish eaten!";
   text(scoreText,40,40);
+  textAlign(RIGHT,TOP);
+  var stopMusicText = "Press ESC to stop music";
+  var playMusicText = "Press ESC to play music";
+  if (musicPlaying == true){
+    text(stopMusicText,width - 40,40);
+  }
+  else {
+    text(playMusicText,width - 40,40);
+  }
 }
 
 // showGameOver()
