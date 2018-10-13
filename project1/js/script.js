@@ -76,7 +76,7 @@ var eatSound;
 // Music
 var jellyfishJam;
 // Checks if music is playing
-var musicPlaying;
+var musicPlaying = true;
 
 // preload()
 //
@@ -97,9 +97,6 @@ function preload() {
 // Sets up the basic elements of the game
 function setup() {
   createCanvas(windowWidth,windowHeight);
-  
-// Chrome prevents pages from playing before the user has interacted with them
-backgroundMusic();
 
   noStroke();
 
@@ -171,7 +168,6 @@ function draw() {
 //
 // Handles the background music
 function backgroundMusic(){
-  jellyfishJam.currentTime = 0;
   jellyfishJam.play();
   jellyfishJam.loop = true;
   musicPlaying = true;
@@ -183,7 +179,6 @@ function backgroundMusic(){
 function handleInput() {
   // Rotates based on player movement
   playerRotation();
-
   // Pause music
   if (keyIsDown(ESCAPE) && musicPlaying == true) {
     jellyfishJam.pause();
@@ -269,6 +264,7 @@ function startScreenInput() {
   if (keyIsDown(ENTER)) {
     popSound.play();
     popSound.currentTime = 0;
+    backgroundMusic();
     startScreen = false;
   }
 }
