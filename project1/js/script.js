@@ -29,43 +29,47 @@ var gameOver = false;
 var startScreen = true;
 
 // Player position, size, velocity, and direction
-var playerX;
-var playerY;
-var playerSize = 100;
-var playerVX = 0;
-var playerVY = 0;
-var playerMinSpeed = 3;
-var playerMaxSpeed = 6;
-var playerSpeed = playerMinSpeed;
-var playerXDirection;
-var playerYDirection;
-// Player health
-var playerHealth;
-var playerMaxHealth = 255;
-// Player image
-var playerImage;
-// Player rotation
-var playerRotate;
+var player = {
+  x : 0,
+  y : 0,
+  size : 100,
+  vx : 0,
+  vy : 0,
+  minSpeed : 3,
+  maxSpeed : 6,
+  speed : 3,
+  xDirection : false,
+  yDirection : false,
+  // Player health
+  health : 255,
+  maxHealth : 255,
+  // Player image
+  image : 0,
+  // Player rotation
+  rotate : 0
+}
 
 // Prey position, size, velocity, perlin noise time value, and direction
-var preyX;
-var preyY;
-var preySize = 90;
-var preySizeIncrease = 0.4;
-var preyVX;
-var preyVY;
-var preyMinSpeed = 4;
-var preyMaxSpeed = 10;
-var preySpeed = preyMinSpeed;
-var preyXDirection;
-var preyYDirection;
-// Perlin noise variables
-var tx;
-var ty;
-// Prey health
-var preyAlive;
-// Prey image
-var preyImage;
+var prey = {
+  x : 0,
+  y : 0,
+  size : 90,
+  sizeIncrease : 0.4,
+  vx : 0,
+  vy : 0,
+  minSpeed : 4,
+  maxSpeed : 10,
+  speed : 4,
+  xDirection : false,
+  yDirection : false,
+  // Perlin noise variables
+  tx : 0,
+  ty : 0,
+  // Prey health
+  alive : true,
+  // Prey image
+  image : 0
+}
 
 // Amount of health obtained per frame of "eating" the prey
 var eatHealth = 100;
@@ -85,9 +89,9 @@ var musicPlaying = true;
 // Preloads our sound and images
 function preload() {
   backgroundImage = loadImage("assets/images/background.jpg");
-  playerImage = loadImage("assets/images/player.png");
+  player.image = loadImage("assets/images/player.png");
   playerDyingImage = loadImage("assets/images/playerDying.png");
-  preyImage = loadImage("assets/images/prey.png");
+  prey.image = loadImage("assets/images/prey.png");
 
   popSound = new Audio("assets/sounds/pop.wav");
   eatSound = new Audio("assets/sounds/eat.wav");
@@ -110,22 +114,22 @@ function setup() {
 //
 // Initialises prey's position, velocity, health, and perlin noise time value
 function setupPrey() {
-  preyX = width/5;
-  preyY = height/2;
-  preyVX = -preyMaxSpeed;
-  preyVY = preyMaxSpeed;
-  preyAlive = true;
-  tx = random(0,1000);
-  ty = random(0,1000);
+  prey.x = width/5;
+  prey.y = height/2;
+  prey.vx = -prey.maxSpeed;
+  prey.vy = prey.maxSpeed;
+  prey.alive = true;
+  prey.tx = random(0,1000);
+  prey.ty = random(0,1000);
 }
 
 // setupPlayer()
 //
 // Initialises player position and health
 function setupPlayer() {
-  playerX = 4*width/5;
-  playerY = height/2;
-  playerHealth = playerMaxHealth;
+  player.x = 4*width/5;
+  player.y = height/2;
+  player.health = player.maxHealth;
 }
 
 // draw()
@@ -233,37 +237,37 @@ function handleInput() {
 
   // Check for horizontal movement
   if (keyIsDown(LEFT_ARROW)) {
-    playerVX = -playerSpeed;
+    player.vx = -player.speed;
   }
   else if (keyIsDown(RIGHT_ARROW)) {
-    playerVX = playerSpeed;
+    player.vx = player.speed;
   }
   else {
-    playerVX = 0;
+    player.vx = 0;
   }
 
   // Check for vertical movement
   if (keyIsDown(UP_ARROW)) {
-    playerVY = -playerSpeed;
+    player.vy = -player.speed;
   }
   else if (keyIsDown(DOWN_ARROW)) {
-    playerVY = playerSpeed;
+    player.vy = player.speed;
 
   }
   else {
-    playerVY = 0;
+    player.vy = 0;
   }
 
   // Checks for sprinting
   if (keyIsDown(SHIFT)) {
-    playerSpeed = constrain(playerSpeed + 1,playerMinSpeed,playerMaxSpeed);
+    player.speed = constrain(player.speed + 1,player.minSpeed,player.maxSpeed);
     // Reduce player health, constrain to reasonable range (in addition to base reduction)
-    playerHealth = constrain(playerHealth - 0.2,0,playerMaxHealth);
+    player.health = constrain(player.health - 0.2,0,player.maxHealth);
 
   }
   else {
     // Returns speed to normal
-    playerSpeed = constrain(playerSpeed - 1,playerMinSpeed,playerMaxSpeed);
+    player.speed = constrain(player.speed - 1,player.minSpeed,player.maxSpeed);
   }
 }
 
@@ -272,19 +276,19 @@ function handleInput() {
 // Check for rotation
 function playerRotation() {
   if (keyIsDown(LEFT_ARROW)) {
-    playerRotate = constrain(playerRotate - 0.3,-1.5,0);
+    player.rotate = constrain(player.rotate - 0.3,-1.5,0);
   }
   else if (keyIsDown(RIGHT_ARROW)) {
-    playerRotate = constrain(playerRotate + 0.3,0,1.5);
+    player.rotate = constrain(player.rotate + 0.3,0,1.5);
   }
   else if (keyIsDown(UP_ARROW)) {
-    playerRotate = constrain(playerRotate - 0.3,0,1.5);
+    player.rotate = constrain(player.rotate - 0.3,0,1.5);
   }
   else if (keyIsDown(DOWN_ARROW)) {
-    playerRotate = constrain(playerRotate + 0.3,-1.5,3);
+    player.rotate = constrain(player.rotate + 0.3,-1.5,3);
   }
   else {
-    playerRotate = 0;
+    player.rotate = 0;
   }
 }
 
@@ -295,22 +299,22 @@ function playerRotation() {
 function movePlayer() {
   determinePlayerDirection();
   // Update position
-  playerX += playerVX;
-  playerY += playerVY;
+  player.x += player.vx;
+  player.y += player.vy;
 
   // Wrap when player goes off the canvas
-  if (playerX < 0) {
-    playerX += width;
+  if (player.x < 0) {
+    player.x += width;
   }
-  else if (playerX > width) {
-    playerX -= width;
+  else if (player.x > width) {
+    player.x -= width;
   }
 
-  if (playerY < 0) {
-    playerY += height;
+  if (player.y < 0) {
+    player.y += height;
   }
-  else if (playerY > height) {
-    playerY -= height;
+  else if (player.y > height) {
+    player.y -= height;
   }
 }
 
@@ -318,17 +322,17 @@ function movePlayer() {
 //
 // Determines the direction the player is going
 function determinePlayerDirection(){
-  if (Math.sign(playerVX) == -1){
-    playerXDirection = true;
+  if (Math.sign(player.vx) == -1){
+    player.xDirection = true;
   }
   else {
-    playerXDirection = false;
+    player.xDirection = false;
   }
-  if (Math.sign(playerVY) == -1){
-    playerYDirection = true;
+  if (Math.sign(player.vy) == -1){
+    player.yDirection = true;
   }
   else {
-    playerYDirection = false;
+    player.yDirection = false;
   }
 }
 
@@ -339,34 +343,34 @@ function movePrey() {
   determinePreyDirection();
   // Set velocity based on random noise values to get a new direction
   // and speed of movement
-  preyVX = map(noise(tx),0,1,-preySpeed,preySpeed);
+  prey.vx = map(noise(prey.tx),0,1,-prey.speed,prey.speed);
   // Use map() to convert from the 0-1 range of the noise() function
   // to the appropriate range of velocities for the prey
-  preyVY = map(noise(ty),0,1,-preySpeed,preySpeed);
+  prey.vy = map(noise(prey.ty),0,1,-prey.speed,prey.speed);
 
   // Behavior when the prey "panics" from being near the player
   preyRunAway();
 
   // Update prey position based on velocity AND number of fish eaten (gets harder)
-  preyX += preyVX + preyVX * preyEaten/10;
-  preyY += preyVY + preyVY * preyEaten/10;
+  prey.x += prey.vx + prey.vx * preyEaten/10;
+  prey.y += prey.vy + prey.vy * preyEaten/10;
 
-  tx +=0.1;
-  ty +=0.1;
+  prey.tx +=0.1;
+  prey.ty +=0.1;
 
   // Screen wrapping
-  if (preyX < 0) {
-    preyX += width;
+  if (prey.x < 0) {
+    prey.x += width;
   }
-  else if (preyX > width) {
-    preyX -= width;
+  else if (prey.x > width) {
+    prey.x -= width;
   }
 
-  if (preyY < 0) {
-    preyY += height;
+  if (prey.y < 0) {
+    prey.y += height;
   }
-  else if (preyY > height) {
-    preyY -= height;
+  else if (prey.y > height) {
+    prey.y -= height;
   }
 }
 
@@ -374,17 +378,17 @@ function movePrey() {
 //
 // Determines the direction the prey is going
 function determinePreyDirection(){
-  if (Math.sign(preyVX) == -1){
-    preyXDirection = true;
+  if (Math.sign(prey.vx) == -1){
+    prey.xDirection = true;
   }
   else {
-    preyXDirection = false;
+    prey.xDirection = false;
   }
-  if (Math.sign(preyVY) == -1){
-    preyYDirection = true;
+  if (Math.sign(prey.vy) == -1){
+    prey.yDirection = true;
   }
   else {
-    preyYDirection = false;
+    prey.yDirection = false;
   }
 }
 
@@ -392,36 +396,36 @@ function determinePreyDirection(){
 //
 // Makes the prey move fast in the opposite direction from the player
 function preyRunAway(){
-  if (dist(preyX,preyY,playerX,playerY) <= 300){
+  if (dist(prey.x,prey.y,player.x,player.y) <= 300){
     // Increase the speed of the prey's "jitter"
-    preySpeed = constrain(preySpeed + 1,preyMinSpeed,preyMaxSpeed);
+    prey.speed = constrain(prey.speed + 1,prey.minSpeed,prey.maxSpeed);
 
     // Update prey position based on velocity (added to base movement- so
     // makes it move away faster)
-    preyX += preyVX/2;
-    preyY += preyVY/2;
+    prey.x += prey.vx/2;
+    prey.y += prey.vy/2;
     // Makes the prey go the opposite direction of the player by matching
     // the sign (positive or negative) of the player and prey's velocities
-    if (preyXDirection != playerXDirection){
-      if (Math.sign(playerVX) <= 0){
-        preyVX = -Math.abs(preyVX);
+    if (prey.xDirection != player.xDirection){
+      if (Math.sign(player.vx) <= 0){
+        prey.vx = -Math.abs(prey.vx);
       }
       else {
-        preyVX = Math.abs(preyVX);
+        prey.vx = Math.abs(prey.vx);
       }
     }
-    if (preyYDirection != playerYDirection){
-      if (Math.sign(playerVY) <= 0){
-        preyVY = -Math.abs(preyVY);
+    if (prey.yDirection != player.yDirection){
+      if (Math.sign(player.vy) <= 0){
+        prey.vy = -Math.abs(prey.vy);
       }
       else {
-        preyVY = Math.abs(preyVY);
+        prey.vy = Math.abs(prey.vy);
       }
     }
   }
   else {
     // Reduce the speed of the prey back to normal
-    preySpeed = constrain(preySpeed - 1,preyMinSpeed,preyMaxSpeed);
+    prey.speed = constrain(prey.speed - 1,prey.minSpeed,prey.maxSpeed);
   }
 }
 
@@ -431,9 +435,9 @@ function preyRunAway(){
 // Check if the player is dead
 function updateHealth() {
   // Reduce player health, constrain to reasonable range
-  playerHealth = constrain(playerHealth - 0.5,0,playerMaxHealth);
+  player.health = constrain(player.health - 0.5,0,player.maxHealth);
   // Check if the player is dead
-  if (playerHealth === 0) {
+  if (player.health === 0) {
     // If so, the game is over
     gameOver = true;
   }
@@ -444,24 +448,24 @@ function updateHealth() {
 // Check if the player overlaps the prey and updates health of both
 function checkEating() {
   // Get distance of player to prey
-  var d = dist(playerX,playerY,preyX,preyY);
+  var d = dist(player.x,player.y,prey.x,prey.y);
   // Check if it's an overlap
-  if (d < playerSize + preySize) {
+  if (d < player.size + prey.size) {
     // Increase the player health
-    playerHealth = constrain(playerHealth + eatHealth,0,playerMaxHealth);
+    player.health = constrain(player.health + eatHealth,0,player.maxHealth);
     // Kill the prey
-    preyAlive = false;
+    prey.alive = false;
     // Play a slurping sound
     eatSound.play();
     eatSound.currentTime = 0;
 
     // Check if the prey died
-    if (preyAlive === false) {
+    if (prey.alive === false) {
       // Move the "new" prey to a random position
-      preyX = random(0,width);
-      preyY = random(0,height);
+      prey.x = random(0,width);
+      prey.y = random(0,height);
       // Give it full health
-      preyAlive = true;
+      prey.alive = true;
       // Track how many prey were eaten
       preyEaten++;
     }
@@ -472,12 +476,12 @@ function checkEating() {
 //
 // Draw the prey as an ellipse with alpha based on health
 function drawPrey(x,y) {
-  preySize += preySizeIncrease;
+  prey.size += prey.sizeIncrease;
   // Makes the target image shrink/grow back when it reaches a certain size
-  if (preySize <= 40 || preySize >= 60) {
-    preySizeIncrease = -preySizeIncrease;
+  if (prey.size <= 70 || prey.size >= 110) {
+    prey.sizeIncrease = -prey.sizeIncrease;
   }
-  image(preyImage,preyX + x,preyY + y,preySize,preySize + 30);
+  image(prey.image,prey.x + x,prey.y + y,prey.size,prey.size + 30);
 }
 
 // drawPlayer()
@@ -486,15 +490,15 @@ function drawPrey(x,y) {
 function drawPlayer() {
   push();
   // Moves the origin to the target image location
-  translate(playerX, playerY);
+  translate(player.x, player.y);
   // Rotates the image around the new origin (so, it rotates on itself)
-  rotate(playerRotate);
+  rotate(player.rotate);
   imageMode(CENTER);
-  tint(255,playerHealth);
-  if (playerHealth < 150){
-    tint(255,0,0,playerHealth);
+  tint(255,player.health);
+  if (player.health < 150){
+    tint(255,0,0,player.health);
   }
-  image(playerImage,0,0,playerSize,playerSize + 50);
+  image(player.image,0,0,player.size,player.size + 50);
   pop();
 }
 
