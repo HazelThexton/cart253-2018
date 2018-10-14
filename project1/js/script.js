@@ -69,10 +69,7 @@ var prey = {
   health : 0,
   maxHealth : 255,
   // Prey image
-  image : 0,
-  tint1 : 255,
-  tint2 : 255,
-  tint3 : 255
+  image : 0
 }
 
 // Amount of health obtained per frame of "eating" the prey
@@ -467,9 +464,6 @@ function checkEating() {
       // Move the "new" prey to a random position
       prey.x = random(0,width);
       prey.y = random(0,height);
-      prey.tint1 = random(255);
-      prey.tint2 = random(255);
-      prey.tint3 = random(255);
       // Give it full health
       prey.health = prey.maxHealth;
       // Track how many prey were eaten
@@ -489,10 +483,7 @@ function drawPrey(x,y) {
   }
   // The game gets real laggy if I keep the tint on for the jellyfish explosion
   push ();
-  if (!gameOver){
-    // The constraint prevents the jellies from becoming so transparent they are invisible
-    tint(prey.tint1,prey.tint2,prey.tint3,constrain(prey.health,100,prey.maxHealth));
-  }
+  tint(255,constrain(prey.health,100,prey.maxHealth));
   image(prey.image,prey.x + x,prey.y + y,prey.size,prey.size + 30);
   pop ();
 }
