@@ -36,7 +36,7 @@ var player = {
   vx : 0,
   vy : 0,
   minSpeed : 8,
-  maxSpeed : 20,
+  maxSpeed : 15,
   speed : 8,
   xDirection : false,
   yDirection : false,
