@@ -66,7 +66,8 @@ var prey = {
   tx : 0,
   ty : 0,
   // Prey health
-  alive : true,
+  health : 0,
+  maxHealth : 255,
   // Prey image
   image : 0,
   tint1 : 255,
@@ -75,7 +76,7 @@ var prey = {
 }
 
 // Amount of health obtained per frame of "eating" the prey
-var eatHealth = 100;
+var eatHealth = 10;
 // Number of prey eaten during the game
 var preyEaten = 0;
 
@@ -121,7 +122,7 @@ function setupPrey() {
   prey.y = height/2;
   prey.vx = -prey.maxSpeed;
   prey.vy = prey.maxSpeed;
-  prey.alive = true;
+  prey.health = prey.maxHealth;
   prey.tx = random(0,1000);
   prey.ty = random(0,1000);
 }
@@ -456,14 +457,14 @@ function checkEating() {
   if (d < player.size + prey.size) {
     // Increase the player health
     player.health = constrain(player.health + eatHealth,0,player.maxHealth);
-    // Kill the prey
-    prey.alive = false;
+    // Reduce the prey health
+    prey.health = constrain(prey.health - eatHealth,0,prey.maxHealth);
     // Play a slurping sound
     eatSound.play();
     eatSound.currentTime = 0;
 
     // Check if the prey died
-    if (prey.alive === false) {
+    if (prey.health === 0) {
       // Move the "new" prey to a random position
       prey.x = random(0,width);
       prey.y = random(0,height);
@@ -471,7 +472,7 @@ function checkEating() {
       prey.tint2 = random(255);
       prey.tint3 = random(255);
       // Give it full health
-      prey.alive = true;
+      prey.health = prey.maxHealth;
       // Track how many prey were eaten
       preyEaten++;
     }
@@ -490,7 +491,7 @@ function drawPrey(x,y) {
   // The game gets real laggy if I keep the tint on for the jellyfish explosion
   push ();
   if (!gameOver){
-    tint(prey.tint1,prey.tint2,prey.tint3);
+    tint(prey.tint1,prey.tint2,prey.tint3, prey.health);
   }
   image(prey.image,prey.x + x,prey.y + y,prey.size,prey.size + 30);
   pop ();
