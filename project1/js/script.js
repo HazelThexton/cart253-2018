@@ -35,9 +35,9 @@ var player = {
   size : 100,
   vx : 0,
   vy : 0,
-  minSpeed : 10,
+  minSpeed : 8,
   maxSpeed : 20,
-  speed : 10,
+  speed : 8,
   xDirection : false,
   yDirection : false,
   // Player health
@@ -481,9 +481,12 @@ function drawPrey(x,y) {
   if (prey.size <= 70 || prey.size >= 110) {
     prey.sizeIncrease = -prey.sizeIncrease;
   }
-  // The game gets real laggy if I keep the tint on for the jellyfish explosion
+  // The game gets really laggy if I keep the tint on for the jellyfish explosion
   push ();
-  tint(255,constrain(prey.health,100,prey.maxHealth));
+  if (!gameOver){
+    // The constraint prevents the jellies from becoming so transparent they are invisible
+    tint(255,constrain(prey.health,100,prey.maxHealth));
+  }
   image(prey.image,prey.x + x,prey.y + y,prey.size,prey.size + 30);
   pop ();
 }
