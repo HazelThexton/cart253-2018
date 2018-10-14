@@ -491,7 +491,8 @@ function drawPrey(x,y) {
   // The game gets real laggy if I keep the tint on for the jellyfish explosion
   push ();
   if (!gameOver){
-    tint(prey.tint1,prey.tint2,prey.tint3, prey.health);
+    // The constraint prevents the jellies from becoming so transparent they are invisible
+    tint(prey.tint1,prey.tint2,prey.tint3,constrain(prey.health,100,prey.maxHealth));
   }
   image(prey.image,prey.x + x,prey.y + y,prey.size,prey.size + 30);
   pop ();
