@@ -94,7 +94,6 @@ var musicPlaying = true;
 function preload() {
   backgroundImage = loadImage("assets/images/background.jpg");
   player.image = loadImage("assets/images/player.png");
-  playerDyingImage = loadImage("assets/images/playerDying.png");
   prey.image = loadImage("assets/images/prey.png");
 
   popSound = new Audio("assets/sounds/pop.wav");
