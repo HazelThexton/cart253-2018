@@ -35,9 +35,9 @@ var player = {
   size : 100,
   vx : 0,
   vy : 0,
-  minSpeed : 3,
-  maxSpeed : 6,
-  speed : 3,
+  minSpeed : 6,
+  maxSpeed : 12,
+  speed : 6,
   xDirection : false,
   yDirection : false,
   // Player health
