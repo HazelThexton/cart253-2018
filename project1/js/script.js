@@ -104,8 +104,6 @@ function preload() {
 function setup() {
   createCanvas(windowWidth,windowHeight);
 
-  noStroke();
-
   setupPrey();
   setupPlayer();
 }
@@ -297,7 +295,6 @@ function playerRotation() {
 // Updates player position based on velocity,
 // wraps around the edges.
 function movePlayer() {
-  determinePlayerDirection();
   // Update position
   player.x += player.vx;
   player.y += player.vy;
@@ -318,28 +315,11 @@ function movePlayer() {
   }
 }
 
-// playerDirection()
-//
-// Determines the direction the player is going
-function determinePlayerDirection(){
-  if (Math.sign(player.vx) == -1){
-    player.xDirection = true;
-  }
-  else {
-    player.xDirection = false;
-  }
-  if (Math.sign(player.vy) == -1){
-    player.yDirection = true;
-  }
-  else {
-    player.yDirection = false;
-  }
-}
-
 // movePrey()
 //
 // Moves the prey based on random velocity changes
 function movePrey() {
+  determinePlayerDirection();
   determinePreyDirection();
   // Set velocity based on random noise values to get a new direction
   // and speed of movement
@@ -371,6 +351,24 @@ function movePrey() {
   }
   else if (prey.y > height) {
     prey.y -= height;
+  }
+}
+
+// playerDirection()
+//
+// Determines the direction the player is going
+function determinePlayerDirection(){
+  if (Math.sign(player.vx) == -1){
+    player.xDirection = true;
+  }
+  else {
+    player.xDirection = false;
+  }
+  if (Math.sign(player.vy) == -1){
+    player.yDirection = true;
+  }
+  else {
+    player.yDirection = false;
   }
 }
 
