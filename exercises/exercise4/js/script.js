@@ -4,6 +4,10 @@
 // A primitive implementation of Pong with no scoring system
 // just the ability to play the game with the keyboard.
 
+// Image sources:
+// https://www.istockphoto.com/ca/photos/profile-picture?sort=mostpopular&mediatype=photography&phrase=profile%20picture
+// https://www.samsung.com/global/galaxy/galaxy-s8/security/
+
 // Game colors
 var bgColor = 0;
 var fgColor = 255;
@@ -15,10 +19,13 @@ var fgColor = 255;
 var ball = {
   x: 0,
   y: 0,
-  size: 20,
+  size: 50,
   vx: 0,
   vy: 0,
-  speed: 5
+  speed: 5,
+  ///////// NEW /////////
+  image: 0
+  ///////// END NEW /////////
 }
 
 // PADDLES
@@ -33,15 +40,16 @@ var paddleInset = 50;
 var leftPaddle = {
   x: 0,
   y: 0,
-  w: 20,
-  h: 70,
+  w: 70,
+  h: 90,
   vx: 0,
   vy: 0,
   speed: 5,
   upKeyCode: 87, // The key code for W
   downKeyCode: 83, // The key code for S
   ///////// NEW /////////
-  score: 0
+  score: 0,
+  image: 0
   ///////// END NEW /////////
 }
 
@@ -52,15 +60,16 @@ var leftPaddle = {
 var rightPaddle = {
   x: 0,
   y: 0,
-  w: 20,
-  h: 70,
+  w: 70,
+  h: 90,
   vx: 0,
   vy: 0,
   speed: 5,
   upKeyCode: 38, // The key code for the UP ARROW
   downKeyCode: 40, // The key code for the DOWN ARROW
   ///////// NEW /////////
-  score: 0
+  score: 0,
+  image: 0
   ///////// END NEW /////////
 }
 
@@ -72,6 +81,9 @@ var beepSFX;
 // Loads the beep audio for the sound of bouncing
 function preload() {
   beepSFX = new Audio("assets/sounds/beep.wav");
+  leftPaddle.image = loadImage("assets/images/left.png");
+  rightPaddle.image = loadImage("assets/images/right.png");
+  ball.image = loadImage("assets/images/ball.png");
 }
 
 // setup()
@@ -82,7 +94,7 @@ function preload() {
 function setup() {
   // Create canvas and set drawing modes
   createCanvas(640,480);
-  rectMode(CENTER);
+  imageMode(CENTER);
   noStroke();
   fill(fgColor);
 
@@ -290,14 +302,14 @@ function handleBallOffScreen() {
 //
 // Draws ball on screen based on its properties
 function displayBall() {
-  rect(ball.x,ball.y,ball.size,ball.size);
+  image(ball.image,ball.x,ball.y,ball.size,ball.size / 2);
 }
 
 // displayPaddle(paddle)
 //
 // Draws the specified paddle on screen based on its properties
 function displayPaddle(paddle) {
-  rect(paddle.x,paddle.y,paddle.w,paddle.h);
+  image(paddle.image,paddle.x,paddle.y,paddle.w,paddle.h);
 }
 ///////// NEW /////////
 // paddleSize(paddle)
