@@ -264,9 +264,11 @@ function handleBallOffScreen() {
     // Update the score depending on which side the ball went off
     if (ballRight < 0) {
       rightPaddle.score += 1;
+      paddleSize(rightPaddle);
     }
     else {
       leftPaddle.score += 1;
+      paddleSize(leftPaddle);
     }
     console.log(rightPaddle.score);
     console.log(leftPaddle.score);
@@ -294,3 +296,12 @@ function displayBall() {
 function displayPaddle(paddle) {
   rect(paddle.x,paddle.y,paddle.w,paddle.h);
 }
+///////// NEW /////////
+// paddleSize(paddle)
+//
+// Makes the specified paddle smaller based on its score
+// (the game gets harder for the winning side)
+function paddleSize(paddle) {
+  paddle.h = constrain(paddle.h - paddle.score, 10, 70);
+}
+///////// END NEW /////////
