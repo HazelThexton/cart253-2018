@@ -276,6 +276,9 @@ function handleBallOffScreen() {
     // If it went off either side, reset it to the centre
     ball.x = width/2;
     ball.y = height/2;
+    ///////// NEW /////////
+    reset();
+    ///////// END NEW /////////
     // NOTE that we don't change its velocity here so it just
     // carries on moving with the same velocity after its
     // position is reset.
@@ -303,5 +306,14 @@ function displayPaddle(paddle) {
 // (the game gets harder for the winning side)
 function paddleSize(paddle) {
   paddle.h = constrain(paddle.h - paddle.score, 10, 70);
+}
+
+// reset()
+//
+// Resets the postion of the ball with a random velocity towards to last side
+// to score
+function reset() {
+  ball.vx = -ball.vx;
+  ball.vy = random(-10,10);
 }
 ///////// END NEW /////////
