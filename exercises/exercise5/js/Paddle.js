@@ -59,5 +59,14 @@ Paddle.prototype.display = function() {
 // Update the score
 Paddle.prototype.scoring = function() {
 this.score += 1;
+this.sizeChange();
+}
+
+// paddleSize(paddle)
+//
+// Makes the specified paddle smaller based on its score
+// (the game gets harder for the winning side)
+Paddle.prototype.sizeChange = function() {
+  this.h = constrain(this.h - this.score, 10, 70);
 }
 ///////// END NEW /////////
