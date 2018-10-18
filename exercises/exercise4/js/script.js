@@ -18,7 +18,7 @@ var fgColor = 255;
 // BALL
 
 // Basic definition of a ball object with its key properties of
-// position, size, velocity, and speed
+// position, size, velocity, speed, and image
 var ball = {
   x: 0,
   y: 0,
@@ -39,7 +39,7 @@ var paddleInset = 50;
 // LEFT PADDLE
 
 // Basic definition of a left paddle object with its key properties of
-// position, size, velocity, and speed
+// position, size, velocity, speed, score, and image
 var leftPaddle = {
   x: 0,
   y: 0,
@@ -59,7 +59,7 @@ var leftPaddle = {
 // RIGHT PADDLE
 
 // Basic definition of a left paddle object with its key properties of
-// position, size, velocity, and speed
+// position, size, velocity, score, and speed
 var rightPaddle = {
   x: 0,
   y: 0,
@@ -73,22 +73,22 @@ var rightPaddle = {
   ///////// NEW /////////
   score: 0,
   image: 0
-  ///////// END NEW /////////
 }
-///////// NEW /////////
+
 // A variable to hold the bla sound we will play on bouncing
 var blaSFX;
-  ///////// END NEW /////////
+
 
 // preload()
 //
-// Loads the bla audio for the sound of bouncing
+// Loads the bla audio for the sound of bouncing and images for the ball and paddles
 function preload() {
   blaSFX = new Audio("assets/sounds/bla.wav");
   leftPaddle.image = loadImage("assets/images/left.png");
   rightPaddle.image = loadImage("assets/images/right.png");
   ball.image = loadImage("assets/images/ball.png");
 }
+///////// END NEW /////////
 
 // setup()
 //
@@ -277,7 +277,8 @@ function handleBallOffScreen() {
   // Check for ball going off the sides
   if (ballRight < 0 || ballLeft > width) {
     ///////// NEW /////////
-    // Update the score depending on which side the ball went off
+    // Update the score depending on which side the ball went off and update
+    // the size of the side that scored a point
     if (ballRight < 0) {
       rightPaddle.score += 1;
       paddleSize(rightPaddle);
@@ -302,6 +303,7 @@ function handleBallOffScreen() {
   }
 }
 
+///////// NEW /////////
 // displayBall()
 //
 // Draws ball on screen based on its properties
@@ -315,7 +317,7 @@ function displayBall() {
 function displayPaddle(paddle) {
   image(paddle.image,paddle.x,paddle.y,paddle.w,paddle.h);
 }
-///////// NEW /////////
+
 // paddleSize(paddle)
 //
 // Makes the specified paddle smaller based on its score
@@ -326,8 +328,8 @@ function paddleSize(paddle) {
 
 // reset()
 //
-// Resets the postion of the ball with a random velocity towards to last side
-// to score
+// Resets the postion of the ball with a (restricted) random y velocity towards
+// the last side that scored
 function reset() {
   ball.vx = -ball.vx;
   ball.vy = random(-10,10);
