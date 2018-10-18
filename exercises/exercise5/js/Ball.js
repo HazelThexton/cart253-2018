@@ -90,10 +90,12 @@ Ball.prototype.handleCollision = function(paddle) {
 
 // reset()
 //
-// Set position back to the middle of the screen
+// Resets the postion of the ball with a (restricted) random y velocity towards
+// the last side that scored
 Ball.prototype.reset = function () {
   this.x = width/2;
   this.y = height/2;
-  // Reverse x velocity to go towards the last side to score
+  // Reverse x velocity to go towards the last side to score and randomize y velocity
   this.vx = -this.vx;
+  this.vy = random(-10,10);
 }
