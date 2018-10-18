@@ -19,7 +19,7 @@ function Ball(x,y,vx,vy,size,speed) {
 // update()
 //
 // Moves according to velocity, constrains y to be on screen,
-// checks for bouncing on upper or lower edgs, checks for going
+// checks for bouncing on upper or lower edges, checks for going
 // off left or right side.
 Ball.prototype.update = function () {
   // Update position with velocity
@@ -34,20 +34,23 @@ Ball.prototype.update = function () {
     this.vy = -this.vy;
   }
 }
-
-// isOffScreen()
+///////// NEW /////////
+// location()
 //
-// Checks if the ball has moved off the screen and, if so, returns true.
-// Otherwise it returns false.
-Ball.prototype.isOffScreen = function () {
+// Checks where the ball is and returns a corresponding string
+Ball.prototype.location = function () {
   // Check for going off screen and reset if so
-  if (this.x + this.size < 0 || this.x > width) {
-    return true;
+  if (this.x + this.size < 0) {
+    return "left";
+  }
+  if (this.x > width) {
+    return "right";
   }
   else {
-    return false;
+    return "onscreen";
   }
 }
+///////// END NEW /////////
 
 // display()
 //

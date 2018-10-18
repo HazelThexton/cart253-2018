@@ -41,10 +41,18 @@ function draw() {
   ball.update();
   leftPaddle.update();
   rightPaddle.update();
-
-  if (ball.isOffScreen()) {
+  ///////// NEW /////////
+  if (ball.location() === "right") {
+    leftPaddle.scoring();
     ball.reset();
   }
+  else if (ball.location() === "left"){
+    rightPaddle.scoring();
+    ball.reset();
+  }
+  console.log(rightPaddle.score);
+  console.log(leftPaddle.score);
+  ///////// END NEW /////////
 
   ball.handleCollision(leftPaddle);
   ball.handleCollision(rightPaddle);
