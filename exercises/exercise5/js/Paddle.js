@@ -62,7 +62,7 @@ this.score += 1;
 this.sizeChange();
 }
 
-// paddleSize(paddle)
+// sizeChange(paddle)
 //
 // Makes the specified paddle smaller based on its score
 // (the game gets harder for the winning side)

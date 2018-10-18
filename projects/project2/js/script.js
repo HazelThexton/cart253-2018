@@ -13,6 +13,7 @@
 var ball;
 var leftPaddle;
 var rightPaddle;
+var score = 0;
 
 // setup()
 //
@@ -52,4 +53,14 @@ function draw() {
   ball.display();
   leftPaddle.display();
   rightPaddle.display();
+  console.log(score);
+}
+
+// scoring()
+//
+// Update the score
+function scoring() {
+score += 1;
+leftPaddle.distanceChange(1);
+rightPaddle.distanceChange(-1);
 }

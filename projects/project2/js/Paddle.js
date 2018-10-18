@@ -16,6 +16,8 @@ function Paddle(x,y,w,h,speed,downKey,upKey) {
   this.speed = speed;
   this.downKey = downKey;
   this.upKey = upKey;
+  ///////// NEW /////////
+///////// END NEW /////////
 }
 
 // handleInput()
@@ -49,3 +51,12 @@ Paddle.prototype.display = function() {
   fill(255);
   rect(this.x,this.y,this.w,this.h);
 }
+///////// NEW /////////
+// distanceChange()
+//
+// Makes the specified paddle smaller based on its score
+// (the game gets harder for the winning side)
+Paddle.prototype.distanceChange = function(sign) {
+  this.x = constrain(this.x + (score * sign),0,width);
+}
+///////// END NEW /////////
