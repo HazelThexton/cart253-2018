@@ -7,6 +7,9 @@
 // Image sources:
 // https://www.istockphoto.com/ca/photos/profile-picture?sort=mostpopular&mediatype=photography&phrase=profile%20picture
 // https://www.samsung.com/global/galaxy/galaxy-s8/security/
+//
+// Sound source:
+// http://www.pacdv.com/sounds/voices-1.html
 
 // Game colors
 var bgColor = 0;
@@ -72,15 +75,16 @@ var rightPaddle = {
   image: 0
   ///////// END NEW /////////
 }
-
-// A variable to hold the beep sound we will play on bouncing
-var beepSFX;
+///////// NEW /////////
+// A variable to hold the bla sound we will play on bouncing
+var blaSFX;
+  ///////// END NEW /////////
 
 // preload()
 //
-// Loads the beep audio for the sound of bouncing
+// Loads the bla audio for the sound of bouncing
 function preload() {
-  beepSFX = new Audio("assets/sounds/beep.wav");
+  blaSFX = new Audio("assets/sounds/bla.wav");
   leftPaddle.image = loadImage("assets/images/left.png");
   rightPaddle.image = loadImage("assets/images/right.png");
   ball.image = loadImage("assets/images/ball.png");
@@ -224,8 +228,8 @@ function handleBallWallCollision() {
     // If it touched the top or bottom, reverse its vy
     ball.vy = -ball.vy;
     // Play our bouncing sound effect by rewinding and then playing
-    beepSFX.currentTime = 0;
-    beepSFX.play();
+    blaSFX.currentTime = 0;
+    blaSFX.play();
   }
 }
 
@@ -254,8 +258,8 @@ function handleBallPaddleCollision(paddle) {
       // Then the ball is touching the paddle so reverse its vx
       ball.vx = -ball.vx;
       // Play our bouncing sound effect by rewinding and then playing
-      beepSFX.currentTime = 0;
-      beepSFX.play();
+      blaSFX.currentTime = 0;
+      blaSFX.play();
     }
   }
 }
