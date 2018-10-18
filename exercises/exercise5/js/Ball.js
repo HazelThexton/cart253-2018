@@ -35,6 +35,9 @@ Ball.prototype.update = function () {
   // Check for touching upper or lower edge and reverse velocity if so
   if (this.y === 0 || this.y + this.size === height) {
     this.vy = -this.vy;
+    // Play our bouncing sound effect by rewinding and then playing
+    blaSFX.currentTime = 0;
+    blaSFX.play();
   }
 }
 ///////// NEW /////////
@@ -60,7 +63,7 @@ Ball.prototype.location = function () {
 // Draw the ball as a rectangle on the screen
 Ball.prototype.display = function () {
   fill(255);
-  image(this.image,this.x,this.y,this.size,this.size);
+  image(this.image,this.x,this.y,this.size,this.size/2);
 }
 ///////// NEW /////////
 // handleCollision(paddle)
@@ -71,7 +74,7 @@ Ball.prototype.handleCollision = function(paddle) {
   // Check if the ball overlaps the paddle on x axis
   if (this.x + this.size/2 > paddle.x - paddle.w/2 && this.x - this.size/2 < paddle.x + paddle.w/2) {
     // Check if the ball overlaps the paddle on y axis
-    if (this.y + this.size/2 > paddle.y - paddle.h/2 && this.y - this.size/2 < paddle.y + paddle.h/2) {
+    if (this.y + this.size/4 > paddle.y - paddle.h/2 && this.y - this.size/4 < paddle.y + paddle.h/2) {
       // If so, move ball back to previous position (by subtracting current velocity)
       this.x -= this.vx;
       this.y -= this.vy;
@@ -91,4 +94,6 @@ Ball.prototype.handleCollision = function(paddle) {
 Ball.prototype.reset = function () {
   this.x = width/2;
   this.y = height/2;
+  // Reverse x velocity to go towards the last side to score
+  this.vx = -this.vx;
 }
