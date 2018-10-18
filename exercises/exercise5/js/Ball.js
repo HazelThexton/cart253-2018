@@ -7,14 +7,17 @@
 // Ball constructor
 //
 // Sets the properties with the provided arguments
-function Ball(x,y,vx,vy,size,speed) {
+function Ball(x,y,vx,vy,size,speed,image) {
   this.x = x;
   this.y = y;
   this.vx = vx;
   this.vy = vy;
   this.size = size;
   this.speed = speed;
+  ///////// NEW /////////
+  this.image = image;
 }
+///////// END NEW /////////
 
 // update()
 //
@@ -57,26 +60,30 @@ Ball.prototype.location = function () {
 // Draw the ball as a rectangle on the screen
 Ball.prototype.display = function () {
   fill(255);
-  rect(this.x,this.y,this.size,this.size);
+  image(this.image,this.x,this.y,this.size,this.size);
 }
-
+///////// NEW /////////
 // handleCollision(paddle)
 //
 // Check if this ball overlaps the paddle passed as an argument
 // and if so reverse x velocity to bounce
 Ball.prototype.handleCollision = function(paddle) {
   // Check if the ball overlaps the paddle on x axis
-  if (this.x + this.size > paddle.x && this.x < paddle.x + paddle.w) {
+  if (this.x + this.size/2 > paddle.x - paddle.w/2 && this.x - this.size/2 < paddle.x + paddle.w/2) {
     // Check if the ball overlaps the paddle on y axis
-    if (this.y + this.size > paddle.y && this.y < paddle.y + paddle.h) {
+    if (this.y + this.size/2 > paddle.y - paddle.h/2 && this.y - this.size/2 < paddle.y + paddle.h/2) {
       // If so, move ball back to previous position (by subtracting current velocity)
       this.x -= this.vx;
       this.y -= this.vy;
       // Reverse x velocity to bounce
       this.vx = -this.vx;
+      // Play our bouncing sound effect by rewinding and then playing
+      blaSFX.currentTime = 0;
+      blaSFX.play();
     }
   }
 }
+///////// END NEW /////////
 
 // reset()
 //
