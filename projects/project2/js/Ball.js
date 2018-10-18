@@ -81,4 +81,7 @@ Ball.prototype.handleCollision = function(paddle) {
 Ball.prototype.reset = function () {
   this.x = width/2;
   this.y = height/2;
+  // Reverse x velocity to go towards the last side to score and randomize y velocity
+this.vx = -this.vx;
+this.vy = random(-10,10);
 }
