@@ -9,8 +9,12 @@
 //
 // Written with JavaScript OOP.
 //
-// Sound source:
+// Sound sources:
 // https://www.freesoundeffects.com/free-track/smoochy-kiss-428522/
+// https://www.partnersinrhyme.com/soundfx/human_sounds/human_kiss2_wav.shtml
+//
+// Font source:
+// https://www.dafont.com/minecraft.font
 
 // Variable to contain the objects representing our ball and paddles
 var ball;
@@ -34,6 +38,8 @@ var scoreText;
 var winText;
 var win2Text;
 
+var pixelFont;
+
 // preload()
 //
 // Loads the bla audio for the sound of bouncing and images for the ball and paddles
@@ -45,6 +51,8 @@ function preload() {
 
   kissSound = new Audio("assets/sounds/kiss.mp3");
   winSound = new Audio("assets/sounds/win.mp3");
+
+  pixelFont = loadFont('assets/fonts/pixelfont.ttf');
 }
 ///////// END NEW /////////
 // setup()
@@ -61,10 +69,10 @@ function setup() {
   // Keycodes 83 and 87 are W and S respectively
   leftPaddle = new Paddle(20,height/2,30,70,5,83,87,leftImage);
   // Creates the score text object
-  scoreText = new OnscreenText(width/2,50,30);
+  scoreText = new OnscreenText(width/2,70,30,pixelFont);
   // Creates the win text objects
-  winText = new OnscreenText(width/2,50,50);
-  win2Text = new OnscreenText(width/2,height - 50,30);
+  winText = new OnscreenText(width/2,70,50,pixelFont);
+  win2Text = new OnscreenText(width/2,height - 70,30,pixelFont);
 }
 
 // draw()

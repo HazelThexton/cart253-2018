@@ -4,10 +4,11 @@
 // Text constructor
 //
 // Sets the properties with the provided arguments
-function OnscreenText(x,y,size) {
+function OnscreenText(x,y,size,font) {
   this.x = x;
   this.y = y;
   this.size = size;
+  this.font = font;
 }
 
 // display()
@@ -23,7 +24,7 @@ OnscreenText.prototype.display = function (string) {
 // Text size, color, etc.
 OnscreenText.prototype.format = function () {
   textAlign(CENTER,CENTER);
-  textFont('Helvetica bold');
+  textFont(this.font);
   textSize(this.size);
   fill(255);
 }
