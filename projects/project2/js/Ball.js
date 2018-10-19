@@ -1,13 +1,13 @@
 // Ball
 //
-// A class to define how a ball behaves. Including bouncing on the top
+// A class to define how a ball behaves including bouncing on the top
 // and bottom edges of the canvas, going off the left and right sides,
 // and bouncing off paddles.
 
 // Ball constructor
 //
 // Sets the properties with the provided arguments
-function Ball(x,y,vx,vy,size,speed,image) {
+function Ball(x,y,vx,vy,size,speed,image,sound) {
   this.x = x;
   this.y = y;
   this.vx = vx;
@@ -15,6 +15,7 @@ function Ball(x,y,vx,vy,size,speed,image) {
   this.size = size;
   this.speed = speed;
   this.image = image;
+  this.sound = sound;
 }
 
 // update()
@@ -70,6 +71,8 @@ Ball.prototype.handleCollision = function(paddle) {
       // Reverse x velocity to bounce
       this.vx = -this.vx;
       scoring();
+      this.sound.currentTime = 0;
+      this.sound.play();
   }
 }
 

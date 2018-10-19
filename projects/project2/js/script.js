@@ -8,6 +8,9 @@
 // the left hand paddle.
 //
 // Written with JavaScript OOP.
+//
+// Sound source:
+// https://www.freesoundeffects.com/free-track/smoochy-kiss-428522/
 
 // Variable to contain the objects representing our ball and paddles
 var ball;
@@ -18,12 +21,18 @@ var rightPaddle;
 // successful bounces, NOT misses by the other side.
 var score = 0;
 var gameOver = false;
+
 var leftImage;
 var rightImage;
 var ballImage;
 var winImage;
+
+var kissSound;
+var winSound;
+
 var scoreText;
 var winText;
+var win2Text;
 
 // preload()
 //
@@ -33,6 +42,9 @@ function preload() {
   rightImage = loadImage("assets/images/right.png");
   ballImage = loadImage("assets/images/ball.png");
   winImage = loadImage("assets/images/win.png");
+
+  kissSound = new Audio("assets/sounds/kiss.mp3");
+  winSound = new Audio("assets/sounds/win.mp3");
 }
 ///////// END NEW /////////
 // setup()
@@ -42,7 +54,7 @@ function setup() {
   createCanvas(640,480);
   imageMode(CENTER);
   // Create a ball
-  ball = new Ball(width/2,height/2,5,5,20,5,ballImage);
+  ball = new Ball(width/2,height/2,5,5,20,5,ballImage,kissSound);
   // Create the right paddle with UP and DOWN as controls
   rightPaddle = new Paddle(width-20,height/2,30,70,5,DOWN_ARROW,UP_ARROW,rightImage);
   // Create the left paddle with W and S as controls
@@ -50,8 +62,9 @@ function setup() {
   leftPaddle = new Paddle(20,height/2,30,70,5,83,87,leftImage);
   // Creates the score text object
   scoreText = new OnscreenText(width/2,50,30);
-  // Creates the win text object
+  // Creates the win text objects
   winText = new OnscreenText(width/2,50,50);
+  win2Text = new OnscreenText(width/2,height - 50,30);
 }
 
 // draw()
@@ -107,6 +120,8 @@ function win() {
   background(0);
   image(winImage,width/2,height/2);
   winText.display("LOVE WINS!!!");
+  win2Text.display("PRESS ENTER TO PLAY AGAIN");
+  winSound.play();
   // Reloads the page if the player presses enter
   if (keyIsDown(ENTER)) {
     location.reload();
