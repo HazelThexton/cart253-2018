@@ -25,6 +25,7 @@ var rightPaddle;
 // successful bounces, NOT misses by the other side.
 var score = 0;
 var gameOver = false;
+var startScreen = true;
 
 var leftImage;
 var rightImage;
@@ -37,12 +38,13 @@ var winSound;
 var scoreText;
 var winText;
 var win2Text;
+var startText;
 
 var pixelFont;
 
 // preload()
 //
-// Loads the bla audio for the sound of bouncing and images for the ball and paddles
+// Loads the kiss audio, text font, and images for the ball and paddles
 function preload() {
   leftImage = loadImage("assets/images/left.png");
   rightImage = loadImage("assets/images/right.png");
@@ -73,6 +75,8 @@ function setup() {
   // Creates the win text objects
   winText = new OnscreenText(width/2,70,50,pixelFont);
   win2Text = new OnscreenText(width/2,height - 70,30,pixelFont);
+  startText = new OnscreenText(width/2,height/2 - 20,80,pixelFont);
+  start2Text = new OnscreenText(width/2,height/2 + 40,30,pixelFont);
 }
 
 // draw()
@@ -81,8 +85,10 @@ function setup() {
 // and displays everything.
 function draw() {
   background(0);
-
-  if (!gameOver){
+if (startScreen === true){
+  start();
+}
+  else if (!gameOver){
     leftPaddle.handleInput();
     rightPaddle.handleInput();
 
@@ -100,7 +106,7 @@ function draw() {
     ball.display();
     leftPaddle.display();
     rightPaddle.display();
-    scoreText.display("BUDDY POINTS: " + score + "!");
+    scoreText.display("KISS POINTS: " + score + "!");
 
     checkWin();
   }
@@ -118,12 +124,18 @@ function scoring() {
   rightPaddle.distanceChange(-1);
 }
 
+// checkWin()
+//
+// Check if the game has been won (to go to the win screen)
 function checkWin() {
   if (dist(leftPaddle.x,0,rightPaddle.x,0) <= 20) {
     gameOver = true;
   }
 }
 
+// win()
+//
+// Displays the win screen
 function win() {
   background(0);
   image(winImage,width/2,height/2);
@@ -133,5 +145,18 @@ function win() {
   // Reloads the page if the player presses enter
   if (keyIsDown(ENTER)) {
     location.reload();
+  }
+}
+
+// start()
+//
+// Displays the start screen
+function start() {
+  startText.display("KISS PONG");
+  start2Text.display("PRESS ENTER TO PLAY");
+  // Starts the game if the player presses enter
+  if (keyIsDown(ENTER)) {
+    winSound.play();
+    startScreen = false;
   }
 }
