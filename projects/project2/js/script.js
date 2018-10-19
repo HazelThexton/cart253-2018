@@ -21,6 +21,7 @@ var gameOver = false;
 var leftImage;
 var rightImage;
 var ballImage;
+var winImage;
 var scoreText;
 
 // preload()
@@ -30,6 +31,7 @@ function preload() {
   leftImage = loadImage("assets/images/left.png");
   rightImage = loadImage("assets/images/right.png");
   ballImage = loadImage("assets/images/ball.png");
+  winImage = loadImage("assets/images/win.png");
 }
 ///////// END NEW /////////
 // setup()
@@ -76,12 +78,12 @@ function draw() {
     rightPaddle.display();
     scoreText.display("BUDDY POINTS: " + score + "!");
 
-    win();
+    checkWin();
     console.log(dist(leftPaddle.x,0,rightPaddle.x,0));
     console.log(gameOver);
   }
   else {
-    background(200);
+    win();
   }
 }
 
@@ -94,8 +96,13 @@ function scoring() {
   rightPaddle.distanceChange(-1);
 }
 
-function win() {
+function checkWin() {
   if (dist(leftPaddle.x,0,rightPaddle.x,0) <= 100) {
     gameOver = true;
   }
+}
+
+function win() {
+  background(0);
+  image(winImage,width/2,height/2);
 }
