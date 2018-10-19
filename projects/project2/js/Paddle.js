@@ -6,7 +6,7 @@
 // Paddle constructor
 //
 // Sets the properties with the provided arguments or defaults
-function Paddle(x,y,w,h,speed,downKey,upKey) {
+function Paddle(x,y,w,h,speed,downKey,upKey,image) {
   this.x = x;
   this.y = y;
   this.vx = 0;
@@ -17,6 +17,7 @@ function Paddle(x,y,w,h,speed,downKey,upKey) {
   this.downKey = downKey;
   this.upKey = upKey;
   ///////// NEW /////////
+  this.image = image;
 ///////// END NEW /////////
 }
 
@@ -49,7 +50,7 @@ Paddle.prototype.update = function() {
 // Draw the paddle as a rectangle on the screen
 Paddle.prototype.display = function() {
   fill(255);
-  rect(this.x,this.y,this.w,this.h);
+  image(this.image,this.x,this.y,this.w,this.h);
 }
 ///////// NEW /////////
 // distanceChange()
@@ -57,6 +58,6 @@ Paddle.prototype.display = function() {
 // Makes the specified paddle smaller based on its score
 // (the game gets harder for the winning side)
 Paddle.prototype.distanceChange = function(sign) {
-  this.x = constrain(this.x + (score * sign),0,width);
+  this.x = constrain(this.x + (5 * sign),0,width);
 }
 ///////// END NEW /////////
