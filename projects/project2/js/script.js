@@ -23,6 +23,7 @@ var rightImage;
 var ballImage;
 var winImage;
 var scoreText;
+var winText;
 
 // preload()
 //
@@ -49,6 +50,8 @@ function setup() {
   leftPaddle = new Paddle(20,height/2,30,70,5,83,87,leftImage);
   // Creates the score text object
   scoreText = new OnscreenText(width/2,50,30);
+  // Creates the win text object
+  winText = new OnscreenText(width/2,50,50);
 }
 
 // draw()
@@ -79,8 +82,6 @@ function draw() {
     scoreText.display("BUDDY POINTS: " + score + "!");
 
     checkWin();
-    console.log(dist(leftPaddle.x,0,rightPaddle.x,0));
-    console.log(gameOver);
   }
   else {
     win();
@@ -97,7 +98,7 @@ function scoring() {
 }
 
 function checkWin() {
-  if (dist(leftPaddle.x,0,rightPaddle.x,0) <= 100) {
+  if (dist(leftPaddle.x,0,rightPaddle.x,0) <= 20) {
     gameOver = true;
   }
 }
@@ -105,4 +106,5 @@ function checkWin() {
 function win() {
   background(0);
   image(winImage,width/2,height/2);
+  winText.display("LOVE WINS!!!!");
 }

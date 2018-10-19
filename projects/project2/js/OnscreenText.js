@@ -23,7 +23,7 @@ OnscreenText.prototype.display = function (string) {
 // Text size, color, etc.
 OnscreenText.prototype.format = function () {
   textAlign(CENTER,CENTER);
-  textFont('Helvetica');
+  textFont('Helvetica bold');
   textSize(this.size);
   fill(255);
 }
