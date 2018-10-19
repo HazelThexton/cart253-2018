@@ -106,5 +106,9 @@ function checkWin() {
 function win() {
   background(0);
   image(winImage,width/2,height/2);
-  winText.display("LOVE WINS!!!!");
+  winText.display("LOVE WINS!!!");
+  // Reloads the page if the player presses enter
+  if (keyIsDown(ENTER)) {
+    location.reload();
+  }
 }
