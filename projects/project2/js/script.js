@@ -50,10 +50,10 @@ var pixelFont;
 //
 // Loads the kiss audio, text font, and images for the ball and paddles
 function preload() {
-  for (var i = 0; i < 3; i++) {
+  for (var i = 0; i < 5; i++) {
     leftImageArray[i] = loadImage("assets/images/left" + [i] + ".png");
   }
-  for (var i = 0; i < 3; i++) {
+  for (var i = 0; i < 5; i++) {
     rightImageArray[i] = loadImage("assets/images/right" + [i] + ".png");
   }
 
@@ -167,7 +167,6 @@ function start() {
   start2Text.display("PRESS ENTER TO PLAY");
   // Starts the game if the player presses enter
   if (keyIsDown(ENTER)) {
-    winSound.play();
     startScreen = false;
   }
 }
@@ -176,7 +175,7 @@ function start() {
 //
 // Assigns a random image from the arrays to each paddle
 function assignImage() {
-  var r = random(3);
+  var r = random(5);
   // Shuffles the face image array
 shuffledRightImageArray = shuffle(rightImageArray);
 shuffledLeftImageArray = shuffle(leftImageArray);
