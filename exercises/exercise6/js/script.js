@@ -50,13 +50,13 @@ function draw() {
   //////////////// FIXED
   if (ball.isOffScreen());
   reset();
-}
+  //////////////// FIXED
 
-ball.handleCollision(leftPaddle);
-ball.handleCollision(rightPaddle);
+  ball.handleCollision(leftPaddle);
+  ball.handleCollision(rightPaddle);
 
-ball.display();
-leftPaddle.display();
-//////////////// FIXED
-rightPaddle.display();
+  ball.display();
+  leftPaddle.display();
+  //////////////// FIXED
+  rightPaddle.display();
 }
