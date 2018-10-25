@@ -1,13 +1,13 @@
-// Ball
+// Heart
 //
-// A class to define how a ball behaves including bouncing on the top
+// A class to define how a heart behaves including bouncing on the top
 // and bottom edges of the canvas, going off the left and right sides,
 // and bouncing off paddles.
 
-// Ball constructor
+// Heart constructor
 //
 // Sets the properties with the provided arguments
-function Ball(x,y,vx,vy,size,speed,image,sound) {
+function Heart(x,y,vx,vy,size,speed,image,sound) {
   this.x = x;
   this.y = y;
   this.vx = vx;
@@ -23,7 +23,7 @@ function Ball(x,y,vx,vy,size,speed,image,sound) {
 // Moves according to velocity, constrains y to be on screen,
 // checks for bouncing on upper or lower edgs, checks for going
 // off left or right side.
-Ball.prototype.update = function () {
+Heart.prototype.update = function () {
   // Update position with velocity
   this.x += this.vx;
   this.y += this.vy;
@@ -39,9 +39,9 @@ Ball.prototype.update = function () {
 
 // isOffScreen()
 //
-// Checks if the ball has moved off the screen and, if so, returns true.
+// Checks if the heart has moved off the screen and, if so, returns true.
 // Otherwise it returns false.
-Ball.prototype.isOffScreen = function () {
+Heart.prototype.isOffScreen = function () {
   // Check for going off screen and reset if so
   if (this.x + this.size < 0 || this.x > width) {
     return true;
@@ -53,19 +53,19 @@ Ball.prototype.isOffScreen = function () {
 
 // display()
 //
-// Draw the ball as a rectangle on the screen
-Ball.prototype.display = function () {
+// Draw the heart as a rectangle on the screen
+Heart.prototype.display = function () {
   image(this.image,this.x,this.y,this.size,this.size);
 }
 
 // handleCollision(paddle)
 //
-// Check if this ball overlaps the paddle passed as an argument
+// Check if this heart overlaps the paddle passed as an argument
 // and if so reverse x velocity to bounce
-Ball.prototype.handleCollision = function(paddle) {
-  // Check if the ball overlaps the paddle on x and y axis
+Heart.prototype.handleCollision = function(paddle) {
+  // Check if the heart overlaps the paddle on x and y axis
   if (this.x + this.size > paddle.x && this.x < paddle.x + paddle.w && this.y + this.size > paddle.y && this.y < paddle.y + paddle.h) {
-      // If so, move ball back to previous position (by subtracting current velocity)
+      // If so, move heart back to previous position (by subtracting current velocity)
       this.x -= this.vx;
       this.y -= this.vy;
       // Reverse x velocity to bounce
@@ -79,7 +79,7 @@ Ball.prototype.handleCollision = function(paddle) {
 // reset()
 //
 // Set position back to the middle of the screen
-Ball.prototype.reset = function () {
+Heart.prototype.reset = function () {
   this.x = width/2;
   this.y = height/2;
   // Reverse x velocity to go towards the last side to score and randomize y velocity

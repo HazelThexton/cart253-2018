@@ -1,13 +1,13 @@
-// EvilBall
+// EvilHeart
 //
-// A class to define how an evil ball behaves including bouncing on the top
+// A class to define how an evil heart behaves including bouncing on the top
 // and bottom edges of the canvas, making the paddles not receive kisses (bounce
-// the ball)
+// the heart)
 
-// EvilBall constructor
+// EvilHeart constructor
 //
 // Sets the properties with the provided arguments
-function EvilBall(x,y,vx,vy,size,speed,image,sound) {
+function EvilHeart(x,y,vx,vy,size,speed,image,sound) {
   this.x = x;
   this.y = y;
   this.vx = vx;
@@ -23,7 +23,7 @@ function EvilBall(x,y,vx,vy,size,speed,image,sound) {
 // Moves according to velocity, constrains y to be on screen,
 // checks for bouncing on upper or lower edges, checks for going
 // off left or right side.
-EvilBall.prototype.update = function () {
+EvilHeart.prototype.update = function () {
   if (random() < 0.05) {
     // Set velocity based on random values to get a new direction
     // and speed of movement
@@ -60,19 +60,19 @@ EvilBall.prototype.update = function () {
 
   // display()
   //
-  // Draw the ball as a rectangle on the screen
-  EvilBall.prototype.display = function () {
+  // Draw the heart as a rectangle on the screen
+  EvilHeart.prototype.display = function () {
     image(this.image,this.x,this.y,this.size,this.size);
   }
 
   // handleCollision(paddle)
   //
-  // Check if this ball overlaps the paddle passed as an argument
+  // Check if this heart overlaps the paddle passed as an argument
   // and if so reverse x velocity to bounce
-  EvilBall.prototype.handleCollision = function(paddle) {
-    // Check if the ball overlaps the paddle on x and y axis
+  EvilHeart.prototype.handleCollision = function(paddle) {
+    // Check if the heart overlaps the paddle on x and y axis
     if (this.x + this.size > paddle.x && this.x < paddle.x + paddle.w && this.y + this.size > paddle.y && this.y < paddle.y + paddle.h) {
-      // If so, move ball back to previous position (by subtracting current velocity)
+      // If so, move heart back to previous position (by subtracting current velocity)
       this.x -= this.vx;
       this.y -= this.vy;
       // Reverse x velocity to bounce
@@ -86,7 +86,7 @@ EvilBall.prototype.update = function () {
   // reset()
   //
   // Set position back to the middle of the screen
-  EvilBall.prototype.reset = function () {
+  EvilHeart.prototype.reset = function () {
     this.x = width/2;
     this.y = height/2;
     // Reverse x velocity to go towards the last side to score and randomize y velocity

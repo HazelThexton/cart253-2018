@@ -16,11 +16,11 @@
 // Font source:
 // https://www.dafont.com/minecraft.font
 
-// Variable to contain the objects representing our ball and paddles
-var ball;
+// Variable to contain the objects representing our heart and paddles
+var heart;
 var leftPaddle;
 var rightPaddle;
-var evilBall;
+var evilHeart;
 ///////// NEW /////////
 // This version of Pong is collaborative, so score is based on the number of
 // successful bounces, NOT misses by the other side.
@@ -30,7 +30,7 @@ var startScreen = true;
 
 var leftImage;
 var rightImage;
-var ballImage;
+var heartImage;
 var winImage;
 
 var kissSound;
@@ -45,16 +45,16 @@ var pixelFont;
 
 // preload()
 //
-// Loads the kiss audio, text font, and images for the ball and paddles
+// Loads the kiss audio, text font, and images for the heart and paddles
 function preload() {
 
   leftImage = loadImage("assets/images/left" + int(random(5)) + ".png");
   rightImage = loadImage("assets/images/right" + int(random(5)) + ".png");
 
-  ballImage = loadImage("assets/images/ball.png");
+  heartImage = loadImage("assets/images/heart.png");
   winImage = loadImage("assets/images/win.png");
 
-  evilBallImage = loadImage("assets/images/evilBall.png");
+  evilHeartImage = loadImage("assets/images/evilHeart.png");
 
   kissSound = new Audio("assets/sounds/kiss.mp3");
   winSound = new Audio("assets/sounds/win.mp3");
@@ -64,15 +64,15 @@ function preload() {
 ///////// END NEW /////////
 // setup()
 //
-// Creates the ball and paddles
+// Creates the heart and paddles
 function setup() {
   createCanvas(640,480);
   imageMode(CENTER);
 
-  // Create a ball
-  ball = new Ball(width/2,height/2,5,5,20,5,ballImage,kissSound);
-  // Create a ball
-  evilBall = new EvilBall(random(width),random(height),5,5,20,5,evilBallImage,kissSound);
+  // Create a heart
+  heart = new Heart(width/2,height/2,5,5,20,5,heartImage,kissSound);
+  // Create a heart
+  evilHeart = new EvilHeart(random(width),random(height),5,5,20,5,evilHeartImage,kissSound);
   // Create the right paddle with UP and DOWN as controls
   rightPaddle = new Paddle(width-20,height/2,30,70,5,DOWN_ARROW,UP_ARROW,rightImage);
   // Create the left paddle with W and S as controls
@@ -100,20 +100,20 @@ function draw() {
     leftPaddle.handleInput();
     rightPaddle.handleInput();
 
-    ball.update();
-    evilBall.update();
+    heart.update();
+    evilHeart.update();
     leftPaddle.update();
     rightPaddle.update();
 
-    if (ball.isOffScreen()) {
-      ball.reset();
+    if (heart.isOffScreen()) {
+      heart.reset();
     }
 
-    ball.handleCollision(leftPaddle);
-    ball.handleCollision(rightPaddle);
+    heart.handleCollision(leftPaddle);
+    heart.handleCollision(rightPaddle);
 
-    evilBall.display();
-    ball.display();
+    evilHeart.display();
+    heart.display();
     leftPaddle.display();
     rightPaddle.display();
     scoreText.display("KISS POINTS: " + score + "!");
