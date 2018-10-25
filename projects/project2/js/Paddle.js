@@ -75,9 +75,9 @@ Paddle.prototype.distanceChange = function(sign) {
 // Makes the paddles get closer as they score
 Paddle.prototype.unhappinessTimer = function() {
   if (this.unhappy === true) {
-if (millis() >= this.timer){
-    this.unhappy = false;
+    if (millis() >= this.timer){
+      this.unhappy = false;
+    }
   }
-}
 }
 ///////// END NEW /////////

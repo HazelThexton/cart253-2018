@@ -107,7 +107,6 @@ function draw() {
     leftPaddle.update();
     rightPaddle.update();
 
-
     if (heart.isOffScreen()) {
       heart.reset();
     }
