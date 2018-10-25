@@ -20,6 +20,7 @@
 var ball;
 var leftPaddle;
 var rightPaddle;
+var evilBall;
 ///////// NEW /////////
 // This version of Pong is collaborative, so score is based on the number of
 // successful bounces, NOT misses by the other side.
@@ -27,8 +28,6 @@ var score = 0;
 var gameOver = false;
 var startScreen = true;
 
-var leftImageArray = [];
-var rightImageArray = [];
 var leftImage;
 var rightImage;
 var ballImage;
@@ -55,6 +54,8 @@ function preload() {
   ballImage = loadImage("assets/images/ball.png");
   winImage = loadImage("assets/images/win.png");
 
+  evilBallImage = loadImage("assets/images/evilBall.png");
+
   kissSound = new Audio("assets/sounds/kiss.mp3");
   winSound = new Audio("assets/sounds/win.mp3");
 
@@ -70,6 +71,8 @@ function setup() {
 
   // Create a ball
   ball = new Ball(width/2,height/2,5,5,20,5,ballImage,kissSound);
+  // Create a ball
+  evilBall = new EvilBall(random(width),random(height),5,5,20,5,evilBallImage,kissSound);
   // Create the right paddle with UP and DOWN as controls
   rightPaddle = new Paddle(width-20,height/2,30,70,5,DOWN_ARROW,UP_ARROW,rightImage);
   // Create the left paddle with W and S as controls
@@ -98,6 +101,7 @@ function draw() {
     rightPaddle.handleInput();
 
     ball.update();
+    evilBall.update();
     leftPaddle.update();
     rightPaddle.update();
 
@@ -108,6 +112,7 @@ function draw() {
     ball.handleCollision(leftPaddle);
     ball.handleCollision(rightPaddle);
 
+    evilBall.display();
     ball.display();
     leftPaddle.display();
     rightPaddle.display();
