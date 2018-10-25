@@ -29,8 +29,6 @@ var startScreen = true;
 
 var leftImageArray = [];
 var rightImageArray = [];
-var shuffledLeftImageArray = [];
-var shuffledRightImageArray = [];
 var leftImage;
 var rightImage;
 var ballImage;
@@ -50,12 +48,9 @@ var pixelFont;
 //
 // Loads the kiss audio, text font, and images for the ball and paddles
 function preload() {
-  for (var i = 0; i < 5; i++) {
-    leftImageArray[i] = loadImage("assets/images/left" + [i] + ".png");
-  }
-  for (var i = 0; i < 5; i++) {
-    rightImageArray[i] = loadImage("assets/images/right" + [i] + ".png");
-  }
+
+  leftImage = loadImage("assets/images/left" + int(random(5)) + ".png");
+  rightImage = loadImage("assets/images/right" + int(random(5)) + ".png");
 
   ballImage = loadImage("assets/images/ball.png");
   winImage = loadImage("assets/images/win.png");
@@ -73,7 +68,6 @@ function setup() {
   createCanvas(640,480);
   imageMode(CENTER);
 
-assignImage();
   // Create a ball
   ball = new Ball(width/2,height/2,5,5,20,5,ballImage,kissSound);
   // Create the right paddle with UP and DOWN as controls
@@ -96,9 +90,9 @@ assignImage();
 // and displays everything.
 function draw() {
   background(0);
-if (startScreen === true){
-  start();
-}
+  if (startScreen === true){
+    start();
+  }
   else if (!gameOver){
     leftPaddle.handleInput();
     rightPaddle.handleInput();
@@ -170,15 +164,3 @@ function start() {
     startScreen = false;
   }
 }
-
-// assignImage()
-//
-// Assigns a random image from the arrays to each paddle
-function assignImage() {
-  var r = random(5);
-  // Shuffles the face image array
-shuffledRightImageArray = shuffle(rightImageArray);
-shuffledLeftImageArray = shuffle(leftImageArray);
-  rightImage = shuffledRightImageArray[0];
-  leftImage = shuffledLeftImageArray[0];
-  }
