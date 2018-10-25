@@ -28,6 +28,7 @@ Ball.prototype.update = function () {
   this.x += this.vx;
   this.y += this.vy;
 
+
   // Constrain y position to be on screen
   this.y = constrain(this.y,0,height-this.size);
 
