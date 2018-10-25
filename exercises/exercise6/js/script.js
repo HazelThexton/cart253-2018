@@ -43,15 +43,15 @@ function draw() {
   background(0);
   leftPaddle.handleInput();
   rightPaddle.handleInput();
-//////////////// FIXED
+  //////////////// FIXED
   ball.update();
   leftPaddle.update();
   rightPaddle.update();
   //////////////// FIXED
   if (ball.isOffScreen()) {
-  //////////////// FIXED
-  ball.reset();
-}
+    //////////////// FIXED
+    ball.reset();
+  }
   //////////////// FIXED
   ball.handleCollision(leftPaddle);
   ball.handleCollision(rightPaddle);
