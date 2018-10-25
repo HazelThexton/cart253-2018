@@ -18,7 +18,9 @@ function Paddle(x,y,w,h,speed,downKey,upKey,image) {
   this.upKey = upKey;
   ///////// NEW /////////
   this.image = image;
-///////// END NEW /////////
+  this.unhappy = false;
+  this.timer = 0;
+  ///////// END NEW /////////
 }
 
 // handleInput()
@@ -43,20 +45,39 @@ Paddle.prototype.handleInput = function() {
 Paddle.prototype.update = function() {
   this.y += this.vy;
   this.y = constrain(this.y,0,height-this.h);
+  this.unhappinessTimer();
 }
 
 // display()
 //
 // Draw the paddle as a rectangle on the screen
 Paddle.prototype.display = function() {
-  image(this.image,this.x,this.y,this.w,this.h);
+
+  if (this.unhappy === true){
+    push();
+    tint(255,50);
+    image(this.image,this.x,this.y,this.w,this.h);
+    pop();
+  }
+  else {
+    image(this.image,this.x,this.y,this.w,this.h);
+  }
 }
 ///////// NEW /////////
 // distanceChange()
 //
-// Makes the specified paddle smaller based on its score
-// (the game gets harder for the winning side)
+// Makes the paddles get closer as they score
 Paddle.prototype.distanceChange = function(sign) {
   this.x = constrain(this.x + (5 * sign),0,width);
+}
+// unhappinessTimer()
+//
+// Makes the paddles get closer as they score
+Paddle.prototype.unhappinessTimer = function() {
+  if (this.unhappy === true) {
+if (millis() >= this.timer){
+    this.unhappy = false;
+  }
+}
 }
 ///////// END NEW /////////

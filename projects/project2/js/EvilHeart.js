@@ -16,6 +16,9 @@ function EvilHeart(x,y,vx,vy,size,speed,image,sound) {
   this.speed = speed;
   this.image = image;
   this.sound = sound;
+  this.active = true;
+  // Property which controls when the evil heart will become active again
+  this.timer = 0;
 }
 
 // update()
@@ -62,7 +65,9 @@ EvilHeart.prototype.update = function () {
   //
   // Draw the heart as a rectangle on the screen
   EvilHeart.prototype.display = function () {
-    image(this.image,this.x,this.y,this.size,this.size);
+    if (evilHeart.active === true) {
+      image(this.image,this.x,this.y,this.size,this.size);
+    }
   }
 
   // handleCollision(paddle)
@@ -71,25 +76,27 @@ EvilHeart.prototype.update = function () {
   // and if so reverse x velocity to bounce
   EvilHeart.prototype.handleCollision = function(paddle) {
     // Check if the heart overlaps the paddle on x and y axis
-    if (this.x + this.size > paddle.x && this.x < paddle.x + paddle.w && this.y + this.size > paddle.y && this.y < paddle.y + paddle.h) {
+    if (evilHeart.active === true && this.x + this.size > paddle.x && this.x < paddle.x + paddle.w && this.y + this.size > paddle.y && this.y < paddle.y + paddle.h) {
       // If so, move heart back to previous position (by subtracting current velocity)
       this.x -= this.vx;
       this.y -= this.vy;
-      // Reverse x velocity to bounce
-      this.vx = -this.vx;
-      scoring();
-      this.sound.currentTime = 0;
-      this.sound.play();
+      paddle.unhappy = true;
+      this.active = false;
+      paddle.timer = millis() + 1000;
     }
   }
 
   // reset()
   //
   // Set position back to the middle of the screen
-  EvilHeart.prototype.reset = function () {
-    this.x = width/2;
-    this.y = height/2;
-    // Reverse x velocity to go towards the last side to score and randomize y velocity
-    this.vx = -this.vx;
-    this.vy = random(-10,10);
+  EvilHeart.prototype.isActive = function () {
+    if (this.active === true) {
+        this.timer = millis() + 5000;
+      }
+      // If evil heart is inactive, waits 5 seconds and then resets it
+      else if (millis() >= this.timer) {
+        evilHeart.active = true
+        this.x = random(width);
+        this.y = random(height);
+      }
   }

@@ -42,7 +42,6 @@ var win2Text;
 var startText;
 
 var pixelFont;
-
 // preload()
 //
 // Loads the kiss audio, text font, and images for the heart and paddles
@@ -100,10 +99,14 @@ function draw() {
     leftPaddle.handleInput();
     rightPaddle.handleInput();
 
+    evilHeart.isActive();
+
+
     heart.update();
     evilHeart.update();
     leftPaddle.update();
     rightPaddle.update();
+
 
     if (heart.isOffScreen()) {
       heart.reset();
@@ -111,9 +114,11 @@ function draw() {
 
     heart.handleCollision(leftPaddle);
     heart.handleCollision(rightPaddle);
+    evilHeart.handleCollision(leftPaddle);
+    evilHeart.handleCollision(rightPaddle);
 
-    evilHeart.display();
     heart.display();
+    evilHeart.display();
     leftPaddle.display();
     rightPaddle.display();
     scoreText.display("KISS POINTS: " + score + "!");
