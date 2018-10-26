@@ -53,7 +53,7 @@ function preload() {
   heartImage = loadImage("assets/images/heart.png");
   winImage = loadImage("assets/images/win.png");
 
-  evilHeartImage = loadImage("assets/images/evilHeart.png");
+  evilHeartImage = loadImage("assets/images/evilheart.png");
 
   kissSound = new Audio("assets/sounds/kiss.mp3");
   winSound = new Audio("assets/sounds/win.mp3");
