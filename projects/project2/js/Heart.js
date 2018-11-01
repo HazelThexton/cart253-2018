@@ -66,14 +66,14 @@ Heart.prototype.display = function () {
 Heart.prototype.handleCollision = function(paddle) {
   // Check if the heart overlaps the paddle on x and y axis
   if (paddle.unhappy === false && this.x + this.size > paddle.x && this.x < paddle.x + paddle.w && this.y + this.size > paddle.y && this.y < paddle.y + paddle.h) {
-      // If so, move heart back to previous position (by subtracting current velocity)
-      this.x -= this.vx;
-      this.y -= this.vy;
-      // Reverse x velocity to bounce
-      this.vx = -this.vx;
-      scoring();
-      this.sound.currentTime = 0;
-      this.sound.play();
+    // If so, move heart back to previous position (by subtracting current velocity)
+    this.x -= this.vx;
+    this.y -= this.vy;
+    // Reverse x velocity to bounce
+    this.vx = -this.vx;
+    scoring();
+    this.sound.currentTime = 0;
+    this.sound.play();
   }
 }
 
@@ -84,6 +84,6 @@ Heart.prototype.reset = function () {
   this.x = width/2;
   this.y = height/2;
   // Reverse x velocity to go towards the last side to score and randomize y velocity
-this.vx = -this.vx;
-this.vy = random(-10,10);
+  this.vx = -this.vx;
+  this.vy = random(-10,10);
 }

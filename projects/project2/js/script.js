@@ -70,7 +70,7 @@ function preload() {
 function setup() {
   createCanvas(640,480);
   imageMode(CENTER);
-assignImage();
+  assignImage();
   // Create a heart
   heart = new Heart(width/2,height/2,5,5,20,5,heartImage,kissSound);
   // Create a heart
@@ -181,8 +181,8 @@ function start() {
 //
 // Assigns a random image from the arrays to each paddle
 function assignImage() {
-// Shuffles the face image array
-shuffledPaddleArray = shuffle(paddleArray);
-rightImage = shuffledPaddleArray[0];
-leftImage = shuffledPaddleArray[1];
-  }
+  // Shuffles the face image array
+  shuffledPaddleArray = shuffle(paddleArray);
+  rightImage = shuffledPaddleArray[0];
+  leftImage = shuffledPaddleArray[1];
+}
