@@ -83,6 +83,8 @@ EvilHeart.prototype.handleCollision = function(paddle) {
     paddle.heartbroken = true;
     this.active = false;
     paddle.timer = millis() + 4000;
+    this.sound.currentTime = 0;
+    this.sound.play();
   }
 }
 
