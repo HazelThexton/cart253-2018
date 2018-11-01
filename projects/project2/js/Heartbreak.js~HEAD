@@ -65,7 +65,7 @@ Heartbreak.prototype.update = function () {
 //
 // Draw the heart as a rectangle on the screen
 Heartbreak.prototype.display = function () {
-  if (this.active === true) {
+  if (heartbreak.active === true) {
     image(this.image,this.x,this.y,this.size,this.size);
   }
 }
@@ -76,15 +76,13 @@ Heartbreak.prototype.display = function () {
 // and if so reverse x velocity to bounce
 Heartbreak.prototype.handleCollision = function(paddle) {
   // Check if the heart overlaps the paddle on x and y axis
-  if (this.active === true && this.x + this.size > paddle.x && this.x < paddle.x + paddle.w && this.y + this.size > paddle.y && this.y < paddle.y + paddle.h) {
+  if (heartbreak.active === true && this.x + this.size > paddle.x && this.x < paddle.x + paddle.w && this.y + this.size > paddle.y && this.y < paddle.y + paddle.h) {
     // If so, move heart back to previous position (by subtracting current velocity)
     this.x -= this.vx;
     this.y -= this.vy;
     paddle.heartbroken = true;
     this.active = false;
     paddle.timer = millis() + 4000;
-    this.sound.currentTime = 0;
-    this.sound.play();
   }
 }
 
@@ -97,7 +95,7 @@ Heartbreak.prototype.isActive = function () {
   }
   // If heartbreak is inactive, waits 5 seconds and then resets it
   else if (millis() >= this.timer) {
-    this.active = true
+    heartbreak.active = true
     this.x = random(width);
     this.y = random(height);
   }

@@ -10,12 +10,11 @@
 // Written with JavaScript OOP.
 //
 // Sound sources:
-// www.freesoundeffects.com/free-track/smoochy-kiss-428522/
-// www.partnersinrhyme.com/soundfx/human_sounds/human_kiss2_wav.shtml
-// www.partnersinrhyme.com/soundfx/WEB-DESIGN-SOUNDS/SPOKEN_sounds/spoken_oh-ho_wav.shtml
+// https://www.freesoundeffects.com/free-track/smoochy-kiss-428522/
+// https://www.partnersinrhyme.com/soundfx/human_sounds/human_kiss2_wav.shtml
 //
 // Font source:
-// www.dafont.com/minecraft.font
+// https://www.dafont.com/minecraft.font
 
 // Variable to contain the objects representing our heart and paddles
 var heart;
@@ -39,7 +38,6 @@ var winImage;
 
 var kissSound;
 var winSound;
-var ohNoSound;
 
 var scoreText;
 var winText;
@@ -64,7 +62,6 @@ function preload() {
 
   kissSound = new Audio("assets/sounds/kiss.mp3");
   winSound = new Audio("assets/sounds/win.mp3");
-  ohNoSound = new Audio("assets/sounds/ohno.mp3");
 
   pixelFont = loadFont('assets/fonts/pixelfont.ttf');
 }
@@ -79,7 +76,11 @@ function setup() {
   // Create a heart
   heart = new Heart(width/2,height/2,5,5,20,5,heartImage,kissSound);
   // Create an evil heart
+<<<<<<< HEAD
   evilHeart = new Heartbreak(random(width),random(height),5,5,20,5,evilHeartImage,ohNoSound);
+=======
+  evilHeart = new EvilHeart(random(width),random(height),5,5,20,5,evilHeartImage,kissSound);
+>>>>>>> parent of 089b061... P2: Added new class, added sound effect
   // Create the right paddle with UP and DOWN as controls
   rightPaddle = new Paddle(width-20,height/2,30,70,5,DOWN_ARROW,UP_ARROW,rightImage);
   // Create the left paddle with W and S as controls
