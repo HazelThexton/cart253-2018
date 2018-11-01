@@ -50,18 +50,22 @@ Paddle.prototype.update = function() {
 
 // display()
 //
-// Draw the paddle as a rectangle on the screen
+// Draw the paddle as the selected face, flips it if it is the right paddle
 Paddle.prototype.display = function(paddle) {
-
+  push();
   if (this.unhappy === true){
-    push();
     tint(255,50);
-    image(this.image,this.x,this.y,this.w,this.h);
-    pop();
+  }
+  if (paddle === rightPaddle) {
+    push();
+    translate(this.x,this.y);
+    scale(-1,1);
+    image(this.image,0,0,this.w,this.h);
   }
   else {
     image(this.image,this.x,this.y,this.w,this.h);
   }
+  pop();
 }
 ///////// NEW /////////
 // distanceChange()

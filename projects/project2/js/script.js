@@ -73,7 +73,7 @@ function setup() {
   assignImage();
   // Create a heart
   heart = new Heart(width/2,height/2,5,5,20,5,heartImage,kissSound);
-  // Create a heart
+  // Create an evil heart
   evilHeart = new EvilHeart(random(width),random(height),5,5,20,5,evilHeartImage,kissSound);
   // Create the right paddle with UP and DOWN as controls
   rightPaddle = new Paddle(width-20,height/2,30,70,5,DOWN_ARROW,UP_ARROW,rightImage);
@@ -85,6 +85,7 @@ function setup() {
   // Creates the win text objects
   winText = new OnscreenText(width/2,70,50,pixelFont);
   win2Text = new OnscreenText(width/2,height - 70,30,pixelFont);
+  // Creates the start screen text objects
   startText = new OnscreenText(width/2,height/2 - 20,80,pixelFont);
   start2Text = new OnscreenText(width/2,height/2 + 40,30,pixelFont);
 }
