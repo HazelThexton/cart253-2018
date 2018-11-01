@@ -86,4 +86,5 @@ Heart.prototype.reset = function () {
   // Reverse x velocity to go towards the last side to score and randomize y velocity
   this.vx = -this.vx;
   this.vy = random(-10,10);
+  score = 0;
 }

@@ -25,6 +25,7 @@ var evilHeart;
 // This version of Pong is collaborative, so score is based on the number of
 // successful bounces, NOT misses by the other side.
 var score = 0;
+var maxScore = 0;
 var gameOver = false;
 var startScreen = true;
 
@@ -41,6 +42,7 @@ var winSound;
 var scoreText;
 var winText;
 var win2Text;
+var win3Text;
 var startText;
 
 var pixelFont;
@@ -85,6 +87,7 @@ function setup() {
   // Creates the win text objects
   winText = new OnscreenText(width/2,70,50,pixelFont);
   win2Text = new OnscreenText(width/2,height - 70,30,pixelFont);
+  win3Text = new OnscreenText(width/2,130,30,pixelFont);
   // Creates the start screen text objects
   startText = new OnscreenText(width/2,height/2 - 20,80,pixelFont);
   start2Text = new OnscreenText(width/2,height/2 + 40,30,pixelFont);
@@ -124,7 +127,7 @@ function draw() {
     evilHeart.display();
     leftPaddle.display(leftPaddle);
     rightPaddle.display(rightPaddle);
-    scoreText.display("KISS POINTS: " + score + "!");
+    scoreText.display("KISS COMBO: " + score + " !");
 
     checkWin();
   }
@@ -140,6 +143,11 @@ function scoring() {
   score += 1;
   leftPaddle.distanceChange(1);
   rightPaddle.distanceChange(-1);
+  if (score > maxScore){
+    maxScore = score;
+  }
+  console.log("score: " + score);
+  console.log("max score: " + maxScore);
 }
 
 // checkWin()
@@ -156,9 +164,10 @@ function checkWin() {
 // Displays the win screen
 function win() {
   background(0);
-  image(winImage,width/2,height/2);
+  image(winImage,width/2,height/2 + 20);
   winText.display("LOVE WINS!!!");
   win2Text.display("PRESS ENTER TO PLAY AGAIN");
+  win3Text.display("MAX KISS COMBO: " + maxScore);
   winSound.play();
   // Reloads the page if the player presses enter
   if (keyIsDown(ENTER)) {
