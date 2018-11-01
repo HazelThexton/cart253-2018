@@ -79,7 +79,7 @@ function setup() {
   // Create a heart
   heart = new Heart(width/2,height/2,5,5,20,5,heartImage,kissSound);
   // Create an evil heart
-  evilHeart = new EvilHeart(random(width),random(height),5,5,20,5,evilHeartImage,ohNoSound);
+  evilHeart = new Heartbreak(random(width),random(height),5,5,20,5,evilHeartImage,ohNoSound);
   // Create the right paddle with UP and DOWN as controls
   rightPaddle = new Paddle(width-20,height/2,30,70,5,DOWN_ARROW,UP_ARROW,rightImage);
   // Create the left paddle with W and S as controls
