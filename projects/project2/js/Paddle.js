@@ -18,7 +18,7 @@ function Paddle(x,y,w,h,speed,downKey,upKey,image) {
   this.upKey = upKey;
   ///////// NEW /////////
   this.image = image;
-  this.unhappy = false;
+  this.heartbroken = false;
   this.timer = 0;
   ///////// END NEW /////////
 }
@@ -53,7 +53,7 @@ Paddle.prototype.update = function() {
 // Draw the paddle as the selected face, flips it if it is the right paddle
 Paddle.prototype.display = function(paddle) {
   push();
-  if (this.unhappy === true){
+  if (this.heartbroken === true){
     tint(255,50);
   }
   else {
@@ -80,9 +80,9 @@ Paddle.prototype.distanceChange = function(sign) {
 //
 // Makes the paddles get closer as they score
 Paddle.prototype.unhappinessTimer = function() {
-  if (this.unhappy === true) {
+  if (this.heartbroken === true) {
     if (millis() >= this.timer){
-      this.unhappy = false;
+      this.heartbroken = false;
     }
   }
 }
