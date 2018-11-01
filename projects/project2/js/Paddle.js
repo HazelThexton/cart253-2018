@@ -51,7 +51,7 @@ Paddle.prototype.update = function() {
 // display()
 //
 // Draw the paddle as a rectangle on the screen
-Paddle.prototype.display = function() {
+Paddle.prototype.display = function(paddle) {
 
   if (this.unhappy === true){
     push();

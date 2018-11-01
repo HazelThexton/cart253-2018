@@ -30,6 +30,8 @@ var startScreen = true;
 
 var leftImage;
 var rightImage;
+var paddleArray = [];
+var shuffledPaddleArray = [];
 var heartImage;
 var winImage;
 
@@ -47,8 +49,9 @@ var pixelFont;
 // Loads the kiss audio, text font, and images for the heart and paddles
 function preload() {
 
-  leftImage = loadImage("assets/images/left" + int(random(5)) + ".png");
-  rightImage = loadImage("assets/images/right" + int(random(5)) + ".png");
+  for (var i = 0; i < 5; i++) {
+    paddleArray[i] = loadImage("assets/images/paddle" + [i] + ".png");
+  }
 
   heartImage = loadImage("assets/images/heart.png");
   winImage = loadImage("assets/images/win.png");
@@ -67,7 +70,7 @@ function preload() {
 function setup() {
   createCanvas(640,480);
   imageMode(CENTER);
-
+assignImage();
   // Create a heart
   heart = new Heart(width/2,height/2,5,5,20,5,heartImage,kissSound);
   // Create a heart
@@ -118,8 +121,8 @@ function draw() {
 
     heart.display();
     evilHeart.display();
-    leftPaddle.display();
-    rightPaddle.display();
+    leftPaddle.display(leftPaddle);
+    rightPaddle.display(rightPaddle);
     scoreText.display("KISS POINTS: " + score + "!");
 
     checkWin();
@@ -173,3 +176,13 @@ function start() {
     startScreen = false;
   }
 }
+
+// assignImage()
+//
+// Assigns a random image from the arrays to each paddle
+function assignImage() {
+// Shuffles the face image array
+shuffledPaddleArray = shuffle(paddleArray);
+rightImage = shuffledPaddleArray[0];
+leftImage = shuffledPaddleArray[1];
+  }

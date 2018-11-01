@@ -1,3 +1,4 @@
+///////// NEW /////////
 // OnscreenText
 //
 // A class to define how displayed text looks and changes.
@@ -28,3 +29,5 @@ OnscreenText.prototype.format = function () {
   textSize(this.size);
   fill(255);
 }
+
+///////// END NEW /////////
