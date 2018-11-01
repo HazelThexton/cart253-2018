@@ -1,13 +1,13 @@
-// Heartbreak
+// EvilHeart
 //
-// A class to define how a heartbreak behaves including bouncing on the top
+// A class to define how an evil heart behaves including bouncing on the top
 // and bottom edges of the canvas, making the paddles not receive kisses (bounce
 // the heart)
 
-// Heartbreak constructor
+// EvilHeart constructor
 //
 // Sets the properties with the provided arguments
-function Heartbreak(x,y,vx,vy,size,speed,image,sound) {
+function EvilHeart(x,y,vx,vy,size,speed,image,sound) {
   this.x = x;
   this.y = y;
   this.vx = vx;
@@ -17,7 +17,7 @@ function Heartbreak(x,y,vx,vy,size,speed,image,sound) {
   this.image = image;
   this.sound = sound;
   this.active = true;
-  // Property which controls when the heartbreak will become active again
+  // Property which controls when the evil heart will become active again
   this.timer = 0;
 }
 
@@ -26,7 +26,7 @@ function Heartbreak(x,y,vx,vy,size,speed,image,sound) {
 // Moves according to velocity, constrains y to be on screen,
 // checks for bouncing on upper or lower edges, checks for going
 // off left or right side.
-Heartbreak.prototype.update = function () {
+EvilHeart.prototype.update = function () {
   if (random() < 0.05) {
     // Set velocity based on random values to get a new direction
     // and speed of movement
@@ -64,8 +64,8 @@ Heartbreak.prototype.update = function () {
 // display()
 //
 // Draw the heart as a rectangle on the screen
-Heartbreak.prototype.display = function () {
-  if (heartbreak.active === true) {
+EvilHeart.prototype.display = function () {
+  if (evilHeart.active === true) {
     image(this.image,this.x,this.y,this.size,this.size);
   }
 }
@@ -74,9 +74,9 @@ Heartbreak.prototype.display = function () {
 //
 // Check if this heart overlaps the paddle passed as an argument
 // and if so reverse x velocity to bounce
-Heartbreak.prototype.handleCollision = function(paddle) {
+EvilHeart.prototype.handleCollision = function(paddle) {
   // Check if the heart overlaps the paddle on x and y axis
-  if (heartbreak.active === true && this.x + this.size > paddle.x && this.x < paddle.x + paddle.w && this.y + this.size > paddle.y && this.y < paddle.y + paddle.h) {
+  if (evilHeart.active === true && this.x + this.size > paddle.x && this.x < paddle.x + paddle.w && this.y + this.size > paddle.y && this.y < paddle.y + paddle.h) {
     // If so, move heart back to previous position (by subtracting current velocity)
     this.x -= this.vx;
     this.y -= this.vy;
@@ -89,13 +89,13 @@ Heartbreak.prototype.handleCollision = function(paddle) {
 // reset()
 //
 // Set position back to the middle of the screen
-Heartbreak.prototype.isActive = function () {
+EvilHeart.prototype.isActive = function () {
   if (this.active === true) {
     this.timer = millis() + 10000;
   }
-  // If heartbreak is inactive, waits 5 seconds and then resets it
+  // If evil heart is inactive, waits 5 seconds and then resets it
   else if (millis() >= this.timer) {
-    heartbreak.active = true
+    evilHeart.active = true
     this.x = random(width);
     this.y = random(height);
   }

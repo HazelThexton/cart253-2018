@@ -65,7 +65,7 @@ Heart.prototype.display = function () {
 // and if so reverse x velocity to bounce
 Heart.prototype.handleCollision = function(paddle) {
   // Check if the heart overlaps the paddle on x and y axis
-  if (paddle.unhappy === false && this.x + this.size > paddle.x && this.x < paddle.x + paddle.w && this.y + this.size > paddle.y && this.y < paddle.y + paddle.h) {
+  if (paddle.heartbroken === false && this.x + this.size > paddle.x && this.x < paddle.x + paddle.w && this.y + this.size > paddle.y && this.y < paddle.y + paddle.h) {
     // If so, move heart back to previous position (by subtracting current velocity)
     this.x -= this.vx;
     this.y -= this.vy;
