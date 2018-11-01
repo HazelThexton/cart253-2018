@@ -1,6 +1,6 @@
 // Heartbreak
 //
-// A class to define how a heartbreak behaves including bouncing on the top
+// A class to define how an evil heart behaves including bouncing on the top
 // and bottom edges of the canvas, making the paddles not receive kisses (bounce
 // the heart)
 
@@ -17,7 +17,7 @@ function Heartbreak(x,y,vx,vy,size,speed,image,sound) {
   this.image = image;
   this.sound = sound;
   this.active = true;
-  // Property which controls when the heartbreak will become active again
+  // Property which controls when the evil heart will become active again
   this.timer = 0;
 }
 
@@ -83,6 +83,8 @@ Heartbreak.prototype.handleCollision = function(paddle) {
     paddle.heartbroken = true;
     this.active = false;
     paddle.timer = millis() + 4000;
+    this.sound.currentTime = 0;
+    this.sound.play();
   }
 }
 
@@ -93,7 +95,7 @@ Heartbreak.prototype.isActive = function () {
   if (this.active === true) {
     this.timer = millis() + 10000;
   }
-  // If heartbreak is inactive, waits 5 seconds and then resets it
+  // If evil heart is inactive, waits 5 seconds and then resets it
   else if (millis() >= this.timer) {
     heartbreak.active = true
     this.x = random(width);

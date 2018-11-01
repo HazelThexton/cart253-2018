@@ -21,7 +21,7 @@
 var heart;
 var leftPaddle;
 var rightPaddle;
-var evilHeart;
+var heartbreak;
 ///////// NEW /////////
 // This version of Pong is collaborative, so score is based on the number of
 // successful bounces, NOT misses by the other side.
@@ -60,7 +60,7 @@ function preload() {
   heartImage = loadImage("assets/images/heart.png");
   winImage = loadImage("assets/images/win.png");
 
-  evilHeartImage = loadImage("assets/images/evilheart.png");
+  heartbreakImage = loadImage("assets/images/evilheart.png");
 
   kissSound = new Audio("assets/sounds/kiss.mp3");
   winSound = new Audio("assets/sounds/win.mp3");
@@ -79,7 +79,7 @@ function setup() {
   // Create a heart
   heart = new Heart(width/2,height/2,5,5,20,5,heartImage,kissSound);
   // Create an evil heart
-  evilHeart = new EvilHeart(random(width),random(height),5,5,20,5,evilHeartImage,ohNoSound);
+  heartbreak = new Heartbreak(random(width),random(height),5,5,20,5,heartbreakImage,ohNoSound);
   // Create the right paddle with UP and DOWN as controls
   rightPaddle = new Paddle(width-20,height/2,30,70,5,DOWN_ARROW,UP_ARROW,rightImage);
   // Create the left paddle with W and S as controls
@@ -109,11 +109,11 @@ function draw() {
     leftPaddle.handleInput();
     rightPaddle.handleInput();
 
-    evilHeart.isActive();
+    heartbreak.isActive();
 
 
     heart.update();
-    evilHeart.update();
+    heartbreak.update();
     leftPaddle.update();
     rightPaddle.update();
 
@@ -123,11 +123,11 @@ function draw() {
 
     heart.handleCollision(leftPaddle);
     heart.handleCollision(rightPaddle);
-    evilHeart.handleCollision(leftPaddle);
-    evilHeart.handleCollision(rightPaddle);
+    heartbreak.handleCollision(leftPaddle);
+    heartbreak.handleCollision(rightPaddle);
 
     heart.display();
-    evilHeart.display();
+    heartbreak.display();
     leftPaddle.display(leftPaddle);
     rightPaddle.display(rightPaddle);
     scoreText.display("KISS COMBO: " + score + " !");
