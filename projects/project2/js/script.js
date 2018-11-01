@@ -1,4 +1,4 @@
-// Basic OOP Pong
+// Kiss Pong
 // by Hazel Thexton
 //
 // A primitive implementation of Pong with no scoring system
@@ -180,7 +180,8 @@ function start() {
 
 // assignImage()
 //
-// Assigns a random image from the arrays to each paddle
+// Assigns a random image from the arrays to each paddle, ensures both paddles
+// never share an image
 function assignImage() {
   // Shuffles the face image array
   shuffledPaddleArray = shuffle(paddleArray);

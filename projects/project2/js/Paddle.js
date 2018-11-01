@@ -56,8 +56,10 @@ Paddle.prototype.display = function(paddle) {
   if (this.unhappy === true){
     tint(255,50);
   }
+  else {
+    tint(255);
+  }
   if (paddle === rightPaddle) {
-    push();
     translate(this.x,this.y);
     scale(-1,1);
     image(this.image,0,0,this.w,this.h);
