@@ -1,7 +1,8 @@
+///////// NEW /////////
 // Doubler
 //
-// A class to define how a doubler behaves including when it appears and
-// how it doubles the kisses
+// A class to define how a doubler (lipstick) behaves, including when and where
+// it appears and how it doubles the hearts onscreen
 
 // Doubler constructor
 //
@@ -20,35 +21,37 @@ function Doubler(x,y,width,height,image,sound) {
 
 // display()
 //
-// Draw the doubler as a rectangle on the screen
+// Draw the doubler as an image on the screen (if it is active)
 Doubler.prototype.display = function () {
   if (doubler.active === true) {
     image(this.image,this.x,this.y,this.width,this.height);
   }
 }
 
-// handleCollision(paddle)
+// handleCollision()
 //
-// Check if this doubler overlaps the paddle passed as an argument
-// and if so reverse x velocity to bounce
+// Check if the doubler overlaps the heart
+// and if so disappears and enables an extra heart onscreen
 Doubler.prototype.handleCollision = function() {
   // Check if the doubler overlaps the paddle on x and y axis
   if (doubler.active === true && this.x + this.width > heart.x && this.x < heart.x + heart.size && this.y + this.height > heart.y && this.y < heart.y + heart.size) {
-    // If so, move doubler back
+    // If so, activate extra heart and disable doubler
     extraHeartActive = true;
     this.active = false;
   }
-  console.log(this.x + this.width > heart.x && this.x < heart.x + heart.size && this.y + this.height > heart.y && this.y < heart.y + heart.size);
 }
 
 // reset()
 //
-// Set position back to the middle of the screen
+// If doubler is inactive, waits 10 seconds and then resets it to a random
+// location
 Doubler.prototype.isActive = function () {
+  // Sets timer value
   if (this.active === true) {
     this.timer = millis() + 10000;
   }
-  // If doubler is inactive, waits 5 seconds and then resets it
+// Checks timer value against current time and activates the doubler at a
+// random spot/disables the extra heart if the time is up
   else if (millis() >= this.timer) {
     doubler.active = true;
     this.x = random(width);
@@ -56,3 +59,4 @@ Doubler.prototype.isActive = function () {
     extraHeartActive = false;
   }
 }
+///////// END NEW /////////

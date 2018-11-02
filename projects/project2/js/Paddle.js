@@ -6,7 +6,9 @@
 // Paddle constructor
 //
 // Sets the properties with the provided arguments or defaults
+///////// NEW /////////
 function Paddle(x,y,w,h,speed,downKey,upKey,image,lipstickImage) {
+  ///////// END NEW /////////
   this.x = x;
   this.y = y;
   this.vx = 0;
@@ -46,20 +48,26 @@ Paddle.prototype.handleInput = function() {
 Paddle.prototype.update = function() {
   this.y += this.vy;
   this.y = constrain(this.y,0,height-this.h);
-  this.unhappinessTimer();
+  ///////// NEW /////////
+  // Checks if the paddle should currently be heartbroken
+  this.heartbrokenTimer();
+  ///////// END NEW /////////
 }
 
 // display()
 //
 // Draw the paddle as the selected face, flips it if it is the right paddle
+///////// NEW /////////
 Paddle.prototype.display = function(paddle) {
   push();
+  // If the paddle is heartbroken, it is displayed at lowered opacity
   if (this.heartbroken === true){
     tint(255,50);
   }
   else {
     tint(255);
   }
+  // If the paddle is on the right, its image is flipped horizontally
   if (paddle === rightPaddle) {
     translate(this.x,this.y);
     scale(-1,1);
@@ -70,17 +78,19 @@ Paddle.prototype.display = function(paddle) {
   }
   pop();
 }
-///////// NEW /////////
+
 // distanceChange()
 //
 // Makes the paddles get closer as they score
 Paddle.prototype.distanceChange = function(sign) {
   this.x = constrain(this.x + (5 * sign),0,width);
 }
-// unhappinessTimer()
+
+// heartbrokenTimer()
 //
-// Makes the paddles get closer as they score
-Paddle.prototype.unhappinessTimer = function() {
+// Tracks whether the heartbroken effect should be currently active or not
+// based on the time limit set in the heartbreak object
+Paddle.prototype.heartbrokenTimer = function() {
   if (this.heartbroken === true) {
     if (millis() >= this.timer){
       this.heartbroken = false;
@@ -88,10 +98,10 @@ Paddle.prototype.unhappinessTimer = function() {
   }
 }
 
-// distanceChange()
+// lipstickDisplay()
 //
-// Makes the paddles get closer as they score
-Paddle.prototype.lipstick = function(paddle) {
+// Displays lipstick on the paddles if the extra heart is currently active
+Paddle.prototype.lipstickDisplay = function(paddle) {
   if (extraHeartActive === true){
     image(this.lipstickImage,this.x,this.y,this.w,this.h);
   }

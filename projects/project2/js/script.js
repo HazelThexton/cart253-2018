@@ -202,8 +202,8 @@ function draw() {
     heart.display();
     heartbreak.display();
     doubler.display();
-    leftPaddle.lipstick(leftPaddle);
-    rightPaddle.lipstick(rightPaddle);
+    leftPaddle.lipstickDisplay(leftPaddle);
+    rightPaddle.lipstickDisplay(rightPaddle);
     scoreText.display("KISS COMBO: " + score + " !");
 
     // Checks if the game has been won

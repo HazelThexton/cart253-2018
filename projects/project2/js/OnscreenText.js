@@ -2,6 +2,7 @@
 // OnscreenText
 //
 // A class to define how displayed text looks and changes.
+
 // Text constructor
 //
 // Sets the properties with the provided arguments
