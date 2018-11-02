@@ -6,7 +6,7 @@
 // Paddle constructor
 //
 // Sets the properties with the provided arguments or defaults
-function Paddle(x,y,w,h,speed,downKey,upKey,image) {
+function Paddle(x,y,w,h,speed,downKey,upKey,image,lipstickImage) {
   this.x = x;
   this.y = y;
   this.vx = 0;
@@ -18,6 +18,7 @@ function Paddle(x,y,w,h,speed,downKey,upKey,image) {
   this.upKey = upKey;
   ///////// NEW /////////
   this.image = image;
+  this.lipstickImage = lipstickImage;
   this.heartbroken = false;
   this.timer = 0;
   ///////// END NEW /////////
@@ -84,6 +85,15 @@ Paddle.prototype.unhappinessTimer = function() {
     if (millis() >= this.timer){
       this.heartbroken = false;
     }
+  }
+}
+
+// distanceChange()
+//
+// Makes the paddles get closer as they score
+Paddle.prototype.lipstick = function(paddle) {
+  if (heart2Active === true){
+    image(this.lipstickImage,this.x,this.y,this.w,this.h);
   }
 }
 ///////// END NEW /////////

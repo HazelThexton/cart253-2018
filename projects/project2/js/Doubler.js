@@ -6,10 +6,11 @@
 // Doubler constructor
 //
 // Sets the properties with the provided arguments
-function Doubler(x,y,vx,vy,size,speed,image,sound) {
+function Doubler(x,y,width,height,image,sound) {
   this.x = x;
   this.y = y;
-  this.size = size;
+  this.width = width;
+  this.height = height;
   this.image = image;
   this.sound = sound;
   this.active = true;
@@ -19,27 +20,25 @@ function Doubler(x,y,vx,vy,size,speed,image,sound) {
 
 // display()
 //
-// Draw the heart as a rectangle on the screen
+// Draw the doubler as a rectangle on the screen
 Doubler.prototype.display = function () {
   if (doubler.active === true) {
-    image(this.image,this.x,this.y,this.size,this.size);
+    image(this.image,this.x,this.y,this.width,this.height);
   }
 }
 
 // handleCollision(paddle)
 //
-// Check if this heart overlaps the paddle passed as an argument
+// Check if this doubler overlaps the paddle passed as an argument
 // and if so reverse x velocity to bounce
-Doubler.prototype.handleCollision = function(paddle) {
-  // Check if the heart overlaps the paddle on x and y axis
-  if (doubler.active === true && this.x + this.size > paddle.x && this.x < paddle.x + paddle.w && this.y + this.size > paddle.y && this.y < paddle.y + paddle.h) {
-    // If so, move heart back to previous position (by subtracting current velocity)
-    this.x -= this.vx;
-    this.y -= this.vy;
-    paddle.unhappy = true;
+Doubler.prototype.handleCollision = function() {
+  // Check if the doubler overlaps the paddle on x and y axis
+  if (doubler.active === true && this.x + this.width > heart.x && this.x < heart.x + heart.size && this.y + this.height > heart.y && this.y < heart.y + heart.size) {
+    // If so, move doubler back
+    heart2Active = true;
     this.active = false;
-    paddle.timer = millis() + 4000;
   }
+  console.log(this.x + this.width > heart.x && this.x < heart.x + heart.size && this.y + this.height > heart.y && this.y < heart.y + heart.size);
 }
 
 // reset()
@@ -51,8 +50,9 @@ Doubler.prototype.isActive = function () {
   }
   // If doubler is inactive, waits 5 seconds and then resets it
   else if (millis() >= this.timer) {
-    doubler.active = true
+    doubler.active = true;
     this.x = random(width);
     this.y = random(height);
+    heart2Active = false;
   }
 }

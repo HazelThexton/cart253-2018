@@ -19,9 +19,11 @@
 
 // Variable to contain the objects representing our heart and paddles
 var heart;
+var heart2;
 var leftPaddle;
 var rightPaddle;
 var heartbreak;
+var doubler;
 ///////// NEW /////////
 // This version of Pong is collaborative, so score is based on the number of
 // successful bounces, NOT misses by the other side.
@@ -29,6 +31,7 @@ var score = 0;
 var maxScore = 0;
 var gameOver = false;
 var startScreen = true;
+var heart2Active = false;
 
 var leftImage;
 var rightImage;
@@ -36,6 +39,10 @@ var paddleArray = [];
 var shuffledPaddleArray = [];
 var heartImage;
 var winImage;
+var doublerImage;
+
+var leftPaddleLipstick;
+var rightPaddleLipstick;
 
 var kissSound;
 var winSound;
@@ -59,8 +66,11 @@ function preload() {
 
   heartImage = loadImage("assets/images/heart.png");
   winImage = loadImage("assets/images/win.png");
+  doublerImage = loadImage("assets/images/doubler.png");
+  leftPaddleLipstick = loadImage("assets/images/leftpaddlelipstick.png");
+  rightPaddleLipstick = loadImage("assets/images/rightpaddlelipstick.png");
 
-  heartbreakImage = loadImage("assets/images/evilheart.png");
+  heartbreakImage = loadImage("assets/images/heartbreak.png");
 
   kissSound = new Audio("assets/sounds/kiss.mp3");
   winSound = new Audio("assets/sounds/win.mp3");
@@ -78,13 +88,16 @@ function setup() {
   assignImage();
   // Create a heart
   heart = new Heart(width/2,height/2,5,5,20,5,heartImage,kissSound);
+  heart2 = new Heart(width/2,height/2,5,5,20,5,heartImage,kissSound);
   // Create an evil heart
   heartbreak = new Heartbreak(random(width),random(height),5,5,20,5,heartbreakImage,ohNoSound);
+  // Create an evil heart
+  doubler = new Doubler(random(width),random(height),15,50,doublerImage,ohNoSound);
   // Create the right paddle with UP and DOWN as controls
-  rightPaddle = new Paddle(width-20,height/2,30,70,5,DOWN_ARROW,UP_ARROW,rightImage);
+  rightPaddle = new Paddle(width-20,height/2,30,70,5,DOWN_ARROW,UP_ARROW,rightImage,rightPaddleLipstick);
   // Create the left paddle with W and S as controls
   // Keycodes 83 and 87 are W and S respectively
-  leftPaddle = new Paddle(20,height/2,30,70,5,83,87,leftImage);
+  leftPaddle = new Paddle(20,height/2,30,70,5,83,87,leftImage,leftPaddleLipstick);
   // Creates the score text object
   scoreText = new OnscreenText(width/2,70,30,pixelFont);
   // Creates the win text objects
@@ -106,11 +119,21 @@ function draw() {
     start();
   }
   else if (!gameOver){
+    if (heart2Active === true){
+      heart2.update();
+      heart2.handleCollision(leftPaddle);
+      heart2.handleCollision(rightPaddle);
+      heart2.display();
+      if (heart2.isOffScreen()) {
+        heart2.reset();
+      }
+    }
+
     leftPaddle.handleInput();
     rightPaddle.handleInput();
 
     heartbreak.isActive();
-
+    doubler.isActive();
 
     heart.update();
     heartbreak.update();
@@ -121,6 +144,7 @@ function draw() {
       heart.reset();
     }
 
+    doubler.handleCollision();
     heart.handleCollision(leftPaddle);
     heart.handleCollision(rightPaddle);
     heartbreak.handleCollision(leftPaddle);
@@ -128,8 +152,11 @@ function draw() {
 
     heart.display();
     heartbreak.display();
+    doubler.display();
     leftPaddle.display(leftPaddle);
     rightPaddle.display(rightPaddle);
+    leftPaddle.lipstick(leftPaddle);
+    rightPaddle.lipstick(rightPaddle);
     scoreText.display("KISS COMBO: " + score + " !");
 
     checkWin();
@@ -149,8 +176,6 @@ function scoring() {
   if (score > maxScore){
     maxScore = score;
   }
-  console.log("score: " + score);
-  console.log("max score: " + maxScore);
 }
 
 // checkWin()
