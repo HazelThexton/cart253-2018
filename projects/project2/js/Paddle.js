@@ -92,7 +92,7 @@ Paddle.prototype.unhappinessTimer = function() {
 //
 // Makes the paddles get closer as they score
 Paddle.prototype.lipstick = function(paddle) {
-  if (heart2Active === true){
+  if (extraHeartActive === true){
     image(this.lipstickImage,this.x,this.y,this.w,this.h);
   }
 }

@@ -35,7 +35,7 @@ Doubler.prototype.handleCollision = function() {
   // Check if the doubler overlaps the paddle on x and y axis
   if (doubler.active === true && this.x + this.width > heart.x && this.x < heart.x + heart.size && this.y + this.height > heart.y && this.y < heart.y + heart.size) {
     // If so, move doubler back
-    heart2Active = true;
+    extraHeartActive = true;
     this.active = false;
   }
   console.log(this.x + this.width > heart.x && this.x < heart.x + heart.size && this.y + this.height > heart.y && this.y < heart.y + heart.size);
@@ -53,6 +53,6 @@ Doubler.prototype.isActive = function () {
     doubler.active = true;
     this.x = random(width);
     this.y = random(height);
-    heart2Active = false;
+    extraHeartActive = false;
   }
 }
