@@ -38,6 +38,9 @@ Doubler.prototype.handleCollision = function() {
     // If so, activate extra heart and disable doubler
     extraHeartActive = true;
     this.active = false;
+    // Play the smooch sound effect
+    this.sound.currentTime = 0;
+    this.sound.play();
   }
 }
 
@@ -50,8 +53,8 @@ Doubler.prototype.isActive = function () {
   if (this.active === true) {
     this.timer = millis() + 10000;
   }
-// Checks timer value against current time and activates the doubler at a
-// random spot/disables the extra heart if the time is up
+  // Checks timer value against current time and activates the doubler at a
+  // random spot/disables the extra heart if the time is up
   else if (millis() >= this.timer) {
     doubler.active = true;
     this.x = random(width);

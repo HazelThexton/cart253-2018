@@ -123,7 +123,7 @@ function setup() {
   // Create a heartbreak obstacles
   heartbreak = new Heartbreak(random(width),random(height),5,5,20,5,heartbreakImage,ohNoSound);
   // Create an evil heart
-  doubler = new Doubler(random(width),random(height),15,50,doublerImage,ohNoSound);
+  doubler = new Doubler(random(width),random(height),15,50,doublerImage,winSound);
 
   // Creates the score text object
   scoreText = new OnscreenText(width/2,70,30,pixelFont);
