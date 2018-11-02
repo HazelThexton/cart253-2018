@@ -148,31 +148,37 @@ function assignImage() {
   leftImage = shuffledPaddleArray[1];
 }
 
+///////// END NEW /////////
+
 // draw()
 //
 // Handles input, updates all the elements, checks for collisions
 // and displays everything.
 function draw() {
   background(0);
+  ///////// NEW /////////
   // Checks if the player is on the start screen
   if (startScreen === true){
     start();
   }
   // Checks if the game is over and if not, plays the game
   else if (!gameOver){
-
+    ///////// END NEW /////////
     // Handles player input for the paddles
     leftPaddle.handleInput();
     rightPaddle.handleInput();
 
+    ///////// NEW /////////
     // Checks if power-ups/obstacles are active
     extraHeartIsActive();
     heartbreak.isActive();
     doubler.isActive();
+    ///////// END NEW /////////
 
     // Updates the movement of these objects
     leftPaddle.update();
     rightPaddle.update();
+    ///////// NEW /////////
     heart.update();
     heartbreak.update();
 
@@ -187,10 +193,12 @@ function draw() {
     heartbreak.handleCollision(leftPaddle);
     heartbreak.handleCollision(rightPaddle);
     doubler.handleCollision();
+    ///////// END NEW /////////
 
     // Displays all these objects
     leftPaddle.display(leftPaddle);
     rightPaddle.display(rightPaddle);
+    ///////// NEW /////////
     heart.display();
     heartbreak.display();
     doubler.display();
