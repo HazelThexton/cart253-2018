@@ -1,3 +1,4 @@
+///////// NEW /////////
 // Kiss Pong
 // by Hazel Thexton
 //
@@ -9,11 +10,14 @@
 //
 // At the end of the game, the players can see how many times in a row they
 // successfully managed to exchange kisses.
+/////////// END NEW /////////
 //
 // Arrow keys control the right hand paddle, W and S control
 // the left hand paddle.
 //
 // Written with JavaScript OOP.
+//
+///////// NEW /////////
 //
 // Sound sources:
 // www.freesoundeffects.com/free-track/smoochy-kiss-428522/
@@ -27,8 +31,10 @@
 // and power-ups/obstacles.
 var heart;
 var extraHeart;
+///////// END NEW /////////
 var leftPaddle;
 var rightPaddle;
+///////// NEW /////////
 var heartbreak;
 var doubler;
 
@@ -95,11 +101,14 @@ function preload() {
   pixelFont = loadFont('assets/fonts/pixelfont.ttf');
 }
 
+///////// END NEW /////////
+
 // setup()
 //
-// Creates the heart, paddles
+// Creates the heart, paddles, power-ups and obstacles
 function setup() {
   createCanvas(640,480);
+  ///////// NEW /////////
   imageMode(CENTER);
   // Assigns a random (non-repeating) image to each paddle
   assignImage();
@@ -278,3 +287,5 @@ function win() {
     location.reload();
   }
 }
+
+///////// END NEW /////////
