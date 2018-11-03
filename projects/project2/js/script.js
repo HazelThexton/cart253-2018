@@ -140,9 +140,9 @@ function setup() {
   startText = new OnscreenText(width/2,height/2 - 90,80,pixelFont);
   start2Text = new OnscreenText(width/2,height/2 + 80,30,pixelFont);
   // Creates the instruction screen text objects
-  instructionsText = new OnscreenText(width/4,100,20,pixelFont);
-  instructions2Text = new OnscreenText(width - width/4,100,20,pixelFont);
-  instructions3Text = new OnscreenText(width/2,height - 100,20,pixelFont);
+  instructionsText = new OnscreenText(width/4,150,20,pixelFont);
+  instructions2Text = new OnscreenText(width - width/4,150,20,pixelFont);
+  instructions3Text = new OnscreenText(width/2,height - 50,20,pixelFont);
 }
 
 // assignImage()
@@ -252,16 +252,25 @@ function start() {
 function instructionsScreen() {
   background(0);
 
-  // Shows the instructions screen images
-  image(leftImage,width/4 - 20,height/2)
-  image(heartbreakImage,width/4 + 20,height/2);
-  image(heartImage,3 * width/4 - 20,height/2);
-  image(doublerImage,3 * width/4 + 20,height/2);
+  // Shows the instructions screen images for the controls
+  image(leftImage,width/4,height/2 - 130)
+  // the right paddle image needs to be flipped
+  push();
+  translate(3 * width/4,height/2 - 130);
+  scale(-1,1);
+  image(rightImage,0,0)
+  pop();
+
+  // Shows the instructions screen images for the power-ups/obstacles
+  image(leftImage,width/4 - 20,height/2 + 70)
+  image(heartbreakImage,width/4 + 20,height/2 + 70);
+  image(heartImage,3 * width/4 - 20,height/2 + 70);
+  image(doublerImage,3 * width/4 + 20,height/2 + 70);
 
   // Displays the instructions screen text
-  instructionsText.display("avoid getting hit by\nthe broken hearts...");
-  instructions2Text.display("try to aim the kiss\ninto the lipstick!");
-  instructions3Text.display("press [BACKSPACE] to go back\n\npress [ENTER] to play");
+  instructionsText.display("player 1: W & S\n\n\n\n\n\n\navoid getting hit by\nthe broken hearts...");
+  instructions2Text.display("player 2: UP & DOWN\n\n\n\n\n\n\ntry to aim the kiss\ninto the lipstick!");
+  instructions3Text.display("press [BACKSPACE] to go back           press [ENTER] to play");
 
   // Closes the instructions if the player presses backspace
   if (keyIsDown(BACKSPACE)) {
