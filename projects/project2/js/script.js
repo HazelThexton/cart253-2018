@@ -2,14 +2,15 @@
 // Kiss Pong
 // by Hazel Thexton
 //
-// A collab version of pong where two faces bounce a "kiss" back and forth.
+// A collaborative version of pong where two faces bounce a "kiss" back and forth.
 //
 // Featuring randomized faces for the paddles, a tube of lipstick that doubles
 // the amount of kisses onscreen for a short time, and a broken heart item that
 // prevents one paddle from bouncing a kiss for a short time.
 //
 // At the end of the game, the players can see how many times in a row they
-// successfully managed to exchange kisses.
+// successfully managed to exchange kisses and how long it took them to complete
+// the game.
 /////////// END NEW /////////
 //
 // Arrow keys control the right hand paddle, W and S control
@@ -140,9 +141,9 @@ function setup() {
   startText = new OnscreenText(width/2,height/2 - 90,80,pixelFont);
   start2Text = new OnscreenText(width/2,height/2 + 80,30,pixelFont);
   // Creates the instruction screen text objects
-  instructionsText = new OnscreenText(width/4,150,20,pixelFont);
-  instructions2Text = new OnscreenText(width - width/4,150,20,pixelFont);
-  instructions3Text = new OnscreenText(width/2,height - 50,20,pixelFont);
+  instructionsText = new OnscreenText(width/4,160,20,pixelFont);
+  instructions2Text = new OnscreenText(width - width/4,160,20,pixelFont);
+  instructions3Text = new OnscreenText(width/2,height - 40,20,pixelFont);
 }
 
 // assignImage()
@@ -253,19 +254,19 @@ function instructionsScreen() {
   background(0);
 
   // Shows the instructions screen images for the controls
-  image(leftImage,width/4,height/2 - 130)
+  image(leftImage,width/4,height/2 - 120)
   // the right paddle image needs to be flipped
   push();
-  translate(3 * width/4,height/2 - 130);
+  translate(3 * width/4,height/2 - 120);
   scale(-1,1);
   image(rightImage,0,0)
   pop();
 
   // Shows the instructions screen images for the power-ups/obstacles
-  image(leftImage,width/4 - 20,height/2 + 70)
-  image(heartbreakImage,width/4 + 20,height/2 + 70);
-  image(heartImage,3 * width/4 - 20,height/2 + 70);
-  image(doublerImage,3 * width/4 + 20,height/2 + 70);
+  image(leftImage,width/4 - 20,height/2 + 80)
+  image(heartbreakImage,width/4 + 20,height/2 + 80);
+  image(heartImage,3 * width/4 - 20,height/2 + 80);
+  image(doublerImage,3 * width/4 + 20,height/2 + 80);
 
   // Displays the instructions screen text
   instructionsText.display("player 1: W & S\n\n\n\n\n\n\navoid getting hit by\nthe broken hearts...");
