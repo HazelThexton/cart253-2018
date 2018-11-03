@@ -8,7 +8,7 @@
 // Heartbreak constructor
 //
 // Sets the properties with the provided arguments
-function Heartbreak(x,y,vx,vy,size,speed,image,sound) {
+function Heartbreak(x,y,vx,vy,size,speed,image) {
   this.x = x;
   this.y = y;
   this.vx = vx;
@@ -16,7 +16,6 @@ function Heartbreak(x,y,vx,vy,size,speed,image,sound) {
   this.size = size;
   this.speed = speed;
   this.image = image;
-  this.sound = sound;
   this.active = true;
   // Property which controls when the evil heart will become active again
   this.timer = 0;
@@ -82,9 +81,6 @@ Heartbreak.prototype.handleCollision = function(paddle) {
     paddle.heartbroken = true;
     this.active = false;
     paddle.timer = millis() + 4000;
-    // Play the heartbreak sound effect
-    this.sound.currentTime = 0;
-    this.sound.play();
   }
 }
 

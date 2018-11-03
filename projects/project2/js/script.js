@@ -121,7 +121,7 @@ function setup() {
   heart = new Heart(width/2,height/2,5,5,20,5,heartImage,kissSound);
   extraHeart = new Heart(width/2,height/2,5,5,20,5,heartImage,kissSound);
   // Create a heartbreak obstacles
-  heartbreak = new Heartbreak(random(width),random(height),5,5,20,5,heartbreakImage,ohNoSound);
+  heartbreak = new Heartbreak(random(width),random(height),5,5,20,5,heartbreakImage);
   // Create an evil heart
   doubler = new Doubler(random(width),random(height),15,50,doublerImage,winSound);
 
