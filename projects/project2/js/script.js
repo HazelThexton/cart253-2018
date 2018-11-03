@@ -166,7 +166,8 @@ function assignImage() {
 function draw() {
   background(0);
   ///////// NEW /////////
-  // Checks if the player is on the start screen
+  // Checks if the player is on the start screen, and if so checks if they're
+  // on the start menu's instructions screen.
   if (startScreen === true){
     start();
     if (instructionsScreenActive === true){
@@ -251,13 +252,13 @@ function start() {
 function instructionsScreen() {
   background(0);
 
-  // Shows the instruction screen images
+  // Shows the instructions screen images
   image(leftImage,width/4 - 20,height/2)
   image(heartbreakImage,width/4 + 20,height/2);
   image(heartImage,3 * width/4 - 20,height/2);
   image(doublerImage,3 * width/4 + 20,height/2);
 
-  // Displays the instruction screen text
+  // Displays the instructions screen text
   instructionsText.display("avoid getting hit by\nthe broken hearts...");
   instructions2Text.display("try to aim the kiss\ninto the lipstick!");
   instructions3Text.display("press [BACKSPACE] to go back\n\npress [ENTER] to play");
@@ -318,7 +319,7 @@ function checkWin() {
 function win() {
   background(0);
 
-// Sets the amount of time it took the player to complete the game (only once)
+  // Sets the amount of time it took the player to complete the game (only once)
   if (playerTimeSet === false){
     playerTime = second();
     playerTimeSet = true;
