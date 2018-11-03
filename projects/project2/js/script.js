@@ -45,8 +45,13 @@ var maxScore = 0;
 var gameOver = false;
 // Variable tracking whether the game has started
 var startScreen = true;
+// Variable tracking whether the game has started
+var instructionsScreenActive = false;
 // Variable tracking whether the extra heart is active
 var extraHeartActive = false;
+
+var playerTimeSet = false;
+var playerTime = 0;
 
 // Variables for our various images
 var leftImage;
@@ -63,7 +68,6 @@ var winImage;
 // Variables for our various sounds
 var kissSound;
 var winSound;
-var ohNoSound;
 
 // Variables for our various text elements
 var scoreText;
@@ -71,6 +75,8 @@ var winText;
 var win2Text;
 var win3Text;
 var startText;
+var instructionsText;
+var instructions2Text;
 
 // Variable for our font
 var pixelFont;
@@ -116,7 +122,7 @@ function setup() {
   // Keycodes 83 and 87 are W and S respectively
   leftPaddle = new Paddle(20,height/2,30,70,5,83,87,leftImage,leftPaddleLipstick);
   // Create hearts
-  for (var i = 0; i < 5; i++) {
+  for (var i = 0; i < 2; i++) {
     heart[i] = new Heart(width/2,height/2,5,5,20,5,heartImage,kissSound);
   }
   // Create a heartbreak obstacles
@@ -128,11 +134,15 @@ function setup() {
   scoreText = new OnscreenText(width/2,70,30,pixelFont);
   // Creates the win screen text objects
   winText = new OnscreenText(width/2,70,50,pixelFont);
-  win2Text = new OnscreenText(width/2,height - 70,30,pixelFont);
-  win3Text = new OnscreenText(width/2,130,30,pixelFont);
+  win2Text = new OnscreenText(width/2,height - 155,30,pixelFont);
+  win3Text = new OnscreenText(width/2,height - 70,25,pixelFont);
   // Creates the start screen text objects
-  startText = new OnscreenText(width/2,height/2 - 20,80,pixelFont);
-  start2Text = new OnscreenText(width/2,height/2 + 40,30,pixelFont);
+  startText = new OnscreenText(width/2,height/2 - 90,80,pixelFont);
+  start2Text = new OnscreenText(width/2,height/2 + 80,30,pixelFont);
+  // Creates the instruction screen text objects
+  instructionsText = new OnscreenText(width/4,100,20,pixelFont);
+  instructions2Text = new OnscreenText(width - width/4,100,20,pixelFont);
+  instructions3Text = new OnscreenText(width/2,height - 100,20,pixelFont);
 }
 
 // assignImage()
@@ -159,6 +169,9 @@ function draw() {
   // Checks if the player is on the start screen
   if (startScreen === true){
     start();
+    if (instructionsScreenActive === true){
+      instructionsScreen();
+    }
   }
   // Checks if the game is over and if not, plays the game
   else if (!gameOver){
@@ -220,11 +233,36 @@ function draw() {
 function start() {
   // Displays the start screen text
   startText.display("KISS PONG");
-  start2Text.display("PRESS ENTER TO PLAY");
+  start2Text.display("press [ENTER]\nto play\n\npress [SHIFT]\nfor instructions");
 
   // Starts the game if the player presses enter
   if (keyIsDown(ENTER)) {
     startScreen = false;
+  }
+  // Shows the instructions if the player presses shift
+  if (keyIsDown(SHIFT)) {
+    instructionsScreenActive = true;
+  }
+}
+
+// instructionsScreen()
+//
+// Displays the instructions screen
+function instructionsScreen() {
+  background(0);
+
+  // Shows the instruction screen images
+  image(heartbreakImage,width/4,height/2);
+  image(doublerImage,3 * width/4,height/2);
+
+  // Displays the instruction screen text
+  instructionsText.display("avoid getting hit by\nthe broken hearts...");
+  instructions2Text.display("try to aim the kiss\ninto the lipstick!");
+  instructions3Text.display("press [BACKSPACE] to go back\n\npress [ENTER] to play");
+
+  // Closes the instructions if the player presses backspace
+  if (keyIsDown(BACKSPACE)) {
+    instructionsScreenActive = false;
   }
 }
 
@@ -278,13 +316,19 @@ function checkWin() {
 function win() {
   background(0);
 
+// Sets the amount of time it took the player to complete the game (only once)
+  if (playerTimeSet === false){
+    playerTime = second();
+    playerTimeSet = true;
+  }
+
   // Shows the win screen image
-  image(winImage,width/2,height/2 + 20);
+  image(winImage,width/2,height/2 - 50);
 
   // Displays the win screen text
   winText.display("LOVE WINS!!!");
-  win2Text.display("PRESS ENTER TO PLAY AGAIN");
-  win3Text.display("MAX KISS COMBO: " + maxScore);
+  win2Text.display("YOU TOOK " + playerTime + " SECONDS!\nMAX KISS COMBO: " + maxScore);
+  win3Text.display("press [ENTER] to play again");
 
   // Plays the win screen kissing sound effect
   winSound.play();
