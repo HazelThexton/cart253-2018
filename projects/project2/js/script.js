@@ -252,8 +252,10 @@ function instructionsScreen() {
   background(0);
 
   // Shows the instruction screen images
-  image(heartbreakImage,width/4,height/2);
-  image(doublerImage,3 * width/4,height/2);
+  image(leftImage,width/4 - 20,height/2)
+  image(heartbreakImage,width/4 + 20,height/2);
+  image(heartImage,3 * width/4 - 20,height/2);
+  image(doublerImage,3 * width/4 + 20,height/2);
 
   // Displays the instruction screen text
   instructionsText.display("avoid getting hit by\nthe broken hearts...");
