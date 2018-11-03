@@ -34,7 +34,7 @@ Doubler.prototype.display = function () {
 // and if so disappears and enables an extra heart onscreen
 Doubler.prototype.handleCollision = function() {
   // Check if the doubler overlaps the paddle on x and y axis
-  if (doubler.active === true && this.x + this.width > heart.x && this.x < heart.x + heart.size && this.y + this.height > heart.y && this.y < heart.y + heart.size) {
+  if (doubler.active === true && this.x + this.width > heart[0].x && this.x < heart[0].x + heart[0].size && this.y + this.height > heart[0].y && this.y < heart[0].y + heart[0].size) {
     // If so, activate extra heart and disable doubler
     extraHeartActive = true;
     this.active = false;

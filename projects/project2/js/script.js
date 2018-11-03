@@ -29,8 +29,7 @@
 
 // Variables to contain the objects representing our hearts, paddles,
 // and power-ups/obstacles.
-var heart;
-var extraHeart;
+var heart = [];
 ///////// END NEW /////////
 var leftPaddle;
 var rightPaddle;
@@ -95,7 +94,6 @@ function preload() {
   // Assigns the sounds to their respective variables
   kissSound = new Audio("assets/sounds/kiss.mp3");
   winSound = new Audio("assets/sounds/win.mp3");
-  ohNoSound = new Audio("assets/sounds/ohno.mp3");
 
   // Assigns the font to its variable
   pixelFont = loadFont('assets/fonts/pixelfont.ttf');
@@ -118,8 +116,9 @@ function setup() {
   // Keycodes 83 and 87 are W and S respectively
   leftPaddle = new Paddle(20,height/2,30,70,5,83,87,leftImage,leftPaddleLipstick);
   // Create hearts
-  heart = new Heart(width/2,height/2,5,5,20,5,heartImage,kissSound);
-  extraHeart = new Heart(width/2,height/2,5,5,20,5,heartImage,kissSound);
+  for (var i = 0; i < 5; i++) {
+    heart[i] = new Heart(width/2,height/2,5,5,20,5,heartImage,kissSound);
+  }
   // Create a heartbreak obstacles
   heartbreak = new Heartbreak(random(width),random(height),5,5,20,5,heartbreakImage);
   // Create an evil heart
@@ -179,17 +178,17 @@ function draw() {
     leftPaddle.update();
     rightPaddle.update();
     ///////// NEW /////////
-    heart.update();
+    heart[0].update();
     heartbreak.update();
 
     // Checks if the heart is offscreen, and if so resets it
-    if (heart.isOffScreen()) {
-      heart.reset();
+    if (heart[0].isOffScreen()) {
+      heart[0].reset();
     }
 
     // Handles collisions between all these objects
-    heart.handleCollision(leftPaddle);
-    heart.handleCollision(rightPaddle);
+    heart[0].handleCollision(leftPaddle);
+    heart[0].handleCollision(rightPaddle);
     heartbreak.handleCollision(leftPaddle);
     heartbreak.handleCollision(rightPaddle);
     doubler.handleCollision();
@@ -199,7 +198,7 @@ function draw() {
     leftPaddle.display(leftPaddle);
     rightPaddle.display(rightPaddle);
     ///////// NEW /////////
-    heart.display();
+    heart[0].display();
     heartbreak.display();
     doubler.display();
     leftPaddle.lipstickDisplay(leftPaddle);
@@ -234,13 +233,13 @@ function start() {
 // Checks if the extra heart is active and if so, enables all its functions
 function extraHeartIsActive(){
   if (extraHeartActive === true){
-    extraHeart.update();
-    extraHeart.handleCollision(leftPaddle);
-    extraHeart.handleCollision(rightPaddle);
-    extraHeart.display();
+    heart[1].update();
+    heart[1].handleCollision(leftPaddle);
+    heart[1].handleCollision(rightPaddle);
+    heart[1].display();
 
-    if (extraHeart.isOffScreen()) {
-      extraHeart.reset();
+    if (heart[1].isOffScreen()) {
+      heart[1].reset();
     }
   }
 }
