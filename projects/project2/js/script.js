@@ -70,7 +70,6 @@ var winImage;
 var kissSound;
 var winSound;
 var bgMusic;
-var musicSpeed = 1;
 
 // Variables for our various text elements
 var scoreText;
@@ -103,6 +102,9 @@ function preload() {
   // Assigns the sounds to their respective variables
   kissSound = new Audio("assets/sounds/kiss.mp3");
   winSound = new Audio("assets/sounds/win.mp3");
+  // I ended up scrapping what i was using the p5 sound library for, but I kept
+  // it because it allows me to loop the background music directly rather than
+  // making it play and THEN loop.
   bgMusic = loadSound("assets/sounds/bgmusic.wav");
 
   // Assigns the font to its variable
