@@ -16,7 +16,7 @@
 // Arrow keys control the right hand paddle, W and S control
 // the left hand paddle.
 //
-// Written with JavaScript OOP.
+// Written with JavaScript OOP. Music and art by me.
 //
 ///////// NEW /////////
 //
