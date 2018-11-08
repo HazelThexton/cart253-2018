@@ -69,6 +69,8 @@ var winImage;
 // Variables for our various sounds
 var kissSound;
 var winSound;
+var bgMusic;
+var musicSpeed = 1;
 
 // Variables for our various text elements
 var scoreText;
@@ -87,7 +89,7 @@ var pixelFont;
 // Loads the audio, text font, and images for the heart, paddles, power up and obstacle
 function preload() {
   // Assigns each of the paddle images to a spot in the image array
-  for (var i = 0; i < 9; i++) {
+  for (var i = 0; i < 10; i++) {
     paddleArray[i] = loadImage("assets/images/paddle" + [i] + ".png");
   }
   // Assigns images to all the other visual elements besides the paddles
@@ -101,6 +103,7 @@ function preload() {
   // Assigns the sounds to their respective variables
   kissSound = new Audio("assets/sounds/kiss.mp3");
   winSound = new Audio("assets/sounds/win.mp3");
+  bgMusic = loadSound("assets/sounds/bgmusic.wav");
 
   // Assigns the font to its variable
   pixelFont = loadFont('assets/fonts/pixelfont.ttf');
@@ -115,6 +118,8 @@ function setup() {
   createCanvas(640,480);
   ///////// NEW /////////
   imageMode(CENTER);
+  // Plays the background music
+  bgMusic.loop();
   // Assigns a random (non-repeating) image to each paddle
   assignImage();
   // Create the right paddle with UP and DOWN as controls
@@ -218,7 +223,8 @@ function draw() {
     doubler.display();
     leftPaddle.lipstickDisplay(leftPaddle);
     rightPaddle.lipstickDisplay(rightPaddle);
-    scoreText.display("KISS COMBO: " + score + " !");
+    // Displays the score onscreen
+    displayScore();
 
     // Checks if the game has been won
     checkWin();
@@ -310,6 +316,23 @@ function scoring() {
   // Tracks the top score attained by the player
   if (score > maxScore){
     maxScore = score;
+  }
+}
+
+// displayScore()
+//
+// Displays the start screen
+function displayScore() {
+  // Displays the score on the game screen with more exclamation points the higher
+  // the score
+  if (score < 2) {
+    scoreText.display("KISS COMBO: " + score);
+  }
+  else if (score >= 2 && score < 5) {
+    scoreText.display("KISS COMBO: " + score + " !");
+  }
+  else if (score >= 5) {
+    scoreText.display("KISS COMBO: " + score + " !!!");
   }
 }
 
