@@ -87,7 +87,7 @@ var pixelFont;
 // Loads the audio, text font, and images for the heart, paddles, power up and obstacle
 function preload() {
   // Assigns each of the paddle images to a spot in the image array
-  for (var i = 0; i < 5; i++) {
+  for (var i = 0; i < 9; i++) {
     paddleArray[i] = loadImage("assets/images/paddle" + [i] + ".png");
   }
   // Assigns images to all the other visual elements besides the paddles
