@@ -80,7 +80,12 @@ Building.prototype.display = function () {
 //////////////// FIXED
 Building.prototype.reset = function () {
   this.x = width + 100;
+  if (this.position === 1){
   this.y = height/2 + 80;
+}
+else {
+  this.y = height/2 + 60;
+}
   this.width = random(30,180);
   this.height = random(80,400);
 }

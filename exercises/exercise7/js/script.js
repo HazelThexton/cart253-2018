@@ -26,7 +26,7 @@ function setup() {
   // Create a building
   //////////////// FIXED
   for (var i = 0; i < 7; i++) {
-    bgBuilding[i] = new Building(width - 120*[i],height/2 + 80,0,random(30,180),random(80,400),5,RIGHT_ARROW,2);
+    bgBuilding[i] = new Building(width - 120*[i],height/2 + 60,0,random(30,180),random(80,400),3,RIGHT_ARROW,2);
   }
   for (var i = 0; i < 7; i++) {
     building[i] = new Building(width - 100*[i],height/2 + 80,0,random(30,180),random(80,400),5,RIGHT_ARROW,1);
