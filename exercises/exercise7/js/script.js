@@ -13,6 +13,7 @@
 //////////////// FIXED
 var building = [];
 var bgBuilding = [];
+var frontBuilding = [];
 
 
 
@@ -21,15 +22,14 @@ var bgBuilding = [];
 // Creates the building and paddles
 function setup() {
   //////////////// FIXED
-  createCanvas(640,480);
+  createCanvas(windowWidth,windowHeight);
   noStroke();
   // Create a building
   //////////////// FIXED
-  for (var i = 0; i < 7; i++) {
-    bgBuilding[i] = new Building(width - 120*[i],height/2 + 60,0,random(30,180),random(80,400),3,RIGHT_ARROW,2);
-  }
-  for (var i = 0; i < 7; i++) {
-    building[i] = new Building(width - 100*[i],height/2 + 80,0,random(30,180),random(80,400),5,RIGHT_ARROW,1);
+  for (var i = 0; i < 15; i++) {
+    bgBuilding[i] = new Building(width - width/15*[i],height/2 + 150,0,random(30,180),random(80,400),3,RIGHT_ARROW,3,int(random(4)));
+    building[i] = new Building(width - width/15*[i],height/2 + 170,0,random(30,180),random(80,400),4.5,RIGHT_ARROW,2,int(random(4)));
+    frontBuilding[i] = new Building(width - width/15*[i],height/2 + 190,0,random(30,180),random(80,400),6,RIGHT_ARROW,1,int(random(4)));
   }
 }
 
@@ -40,38 +40,54 @@ function setup() {
 // and displays everything.
 function draw() {
   background(0);
-  for (var i = 0; i < 7; i++) {
+  for (var i = 0; i < 15; i++) {
     bgBuilding[i].handleInput();
   }
-  for (var i = 0; i < 7; i++) {
+  for (var i = 0; i < 15; i++) {
     bgBuilding[i].update();
   }
-  for (var i = 0; i < 7; i++) {
+  for (var i = 0; i < 15; i++) {
     if (bgBuilding[i].isOffScreen()) {
       //////////////// FIXED
       bgBuilding[i].reset();
     }
   }
-  for (var i = 0; i < 6; i++) {
+  for (var i = 0; i < 15; i++) {
     bgBuilding[i].display();
   }
-  for (var i = 0; i < 7; i++) {
+  for (var i = 0; i < 15; i++) {
     building[i].handleInput();
   }
-  for (var i = 0; i < 7; i++) {
+  for (var i = 0; i < 15; i++) {
     building[i].update();
   }
 
-  for (var i = 0; i < 7; i++) {
+  for (var i = 0; i < 15; i++) {
     if (building[i].isOffScreen()) {
       //////////////// FIXED
       building[i].reset();
     }
   }
 
-  for (var i = 0; i < 6; i++) {
+  for (var i = 0; i < 15; i++) {
     building[i].display();
   }
+  for (var i = 0; i < 15; i++) {
+    frontBuilding[i].handleInput();
+  }
+  for (var i = 0; i < 15; i++) {
+    frontBuilding[i].update();
+  }
 
+  for (var i = 0; i < 15; i++) {
+    if (frontBuilding[i].isOffScreen()) {
+      //////////////// FIXED
+      frontBuilding[i].reset();
+    }
+  }
+
+  for (var i = 0; i < 15; i++) {
+    frontBuilding[i].display();
+  }
 
 }
