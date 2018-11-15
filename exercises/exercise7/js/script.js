@@ -2,6 +2,9 @@
 // by Hazel Thexton
 //
 // An interactive "experience" that shows a randomly generated scrolling city.
+// Intended to be part of a series of connected semi-autobiographical interactive
+// vignettes/scenes using different modes of interaction in each scene.
+// In the style of/inspired by Dys4ia by Anna Anthropy.
 //
 // Right arrow key to move.
 //

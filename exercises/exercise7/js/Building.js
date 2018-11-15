@@ -16,8 +16,8 @@ function Building(x,y,vx,width,height,speed,position,windowColumns,windowRows,ri
   this.position = position;
   this.windowColumns = windowColumns;
   this.windowRows = windowRows;
-  this.color = 255;
   this.rightKey = rightKey;
+  this.color = 255;
 }
 
 // update()
@@ -46,7 +46,7 @@ Building.prototype.handleInput = function() {
 // Otherwise it returns false.
 Building.prototype.isOffScreen = function () {
   // Check for going off screen and reset if so
-  if (this.x < 20) {
+  if (this.x + this.width < 0) {
     return true;
   }
   else {
