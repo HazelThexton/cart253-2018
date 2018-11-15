@@ -75,8 +75,8 @@ Building.prototype.display = function () {
   // Add some shading on either side for depth/to distinguish it from
   // surrounding buildings
   fill(0,80);
-  rect(this.width - this.width/4,0,this.width/4,1000);
-  rect(0,0,this.width/25,1000);
+  rect(this.width - this.width/4,0,this.width/4,this.height);
+  rect(0,0,this.width/25,this.height);
   // Draw the windows
   this.windows();
   pop();

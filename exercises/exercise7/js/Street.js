@@ -58,7 +58,7 @@ Street.prototype.isOffScreen = function () {
 // Draw the building as a rectangle on the screen
 Street.prototype.display = function () {
   push();
-  fill(100);
+  fill(80);
   rect(this.x, this.y, this.width, this.height);
   pop();
 }

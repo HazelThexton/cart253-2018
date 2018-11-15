@@ -51,7 +51,7 @@ function setup() {
   for (var i = 0; i < 200; i++) {
     star[i] = new Star(random(width),random(height/2),2);
   }
-  street = new Street(0,height/2 + 185,0,windowWidth,20,3,RIGHT_ARROW);
+  street = new Street(0,height/2 + 150,0,windowWidth,60,3,RIGHT_ARROW);
 }
 
 // draw()
@@ -63,6 +63,9 @@ function draw() {
 
   // Display the moon
   moon();
+
+  // Displays the street
+  street.display();
 
   // Display the 200 stars
   for (var i = 0; i < 200; i++) {
@@ -123,11 +126,10 @@ function draw() {
     frontBuilding[i].display();
   }
 
-  // Displays the street
-  street.display();
-
   // Displays the text
   onscreenText();
+  // Plays the music
+  music();
 }
 
 // moon()
@@ -145,16 +147,26 @@ function moon() {
 // Handles the onscreen text and when it appears
 function onscreenText() {
   if (keyIsDown(RIGHT_ARROW) || mouseIsPressed) {
-    bgMusic.play();
-    bgMusic.loop = true;
   }
   else {
-    bgMusic.pause();
     var continueText = "continue?\n>>";
     textAlign(CENTER,CENTER);
     textFont(pixelFont);
     textSize(40);
     fill(255);
     text(continueText, width/2, height/2 + 260);
+  }
+}
+
+// music()
+//
+// Handles the music and when it plays
+function music() {
+  if (keyIsDown(RIGHT_ARROW) || mouseIsPressed) {
+    bgMusic.play();
+    bgMusic.loop = true;
+  }
+  else {
+    bgMusic.pause();
   }
 }
