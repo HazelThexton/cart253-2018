@@ -1,7 +1,7 @@
 // Star
 //
-// A class to define how stars behave. All they do is be displayed at
-// random locations.
+// A class to define how stars behave. Just randomly placed rectangles that change
+// size at certain intervals to simulate twinkling
 
 // Star constructor
 //

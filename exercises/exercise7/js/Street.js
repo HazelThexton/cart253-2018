@@ -1,6 +1,7 @@
 // Street
 //
-// A class to define the street behaves. Not much here right now.
+// A class to define the street behaves. The "street" is composed of the sidewalk
+// area, but mainly individual segments that loop around much like the buildings.
 
 // Street constructor
 //
@@ -17,22 +18,20 @@ function Street(x,y,vx,width,height,speed,rightKey) {
 
 // update()
 //
-// Moves according to velocity, constrains y to be on screen,
-// checks for bouncing on upper or lower edges, checks for going
-// off left or right side.
-//////////////// FIXED
+// Moves according to velocity
 Street.prototype.update = function () {
   // Update position with velocity
-  //////////////// FIXED
   this.x += this.vx;
 }
 
+// handleInput()
+//
+// Handles input for movement
 Street.prototype.handleInput = function() {
-  //////////////// FIXED
+
   if (keyIsDown(this.rightKey) || mouseIsPressed) {
     this.vx = -this.speed;
   }
-  //////////////// FIXED
   else {
     this.vx = 0;
   }
@@ -40,12 +39,11 @@ Street.prototype.handleInput = function() {
 
 // isOffScreen()
 //
-// Checks if the building has moved off the screen and, if so, returns true.
+// Checks if the street segment has moved off the screen and, if so, returns true.
 // Otherwise it returns false.
 Street.prototype.isOffScreen = function () {
   // Check for going off screen and reset if so
-  //////////////// FIXED
-  if (this.x + this.size < -50 || this.x > width + 50) {
+  if (this.x + this.width < -50) {
     return true;
   }
   else {
@@ -55,10 +53,14 @@ Street.prototype.isOffScreen = function () {
 
 // display()
 //
-// Draw the building as a rectangle on the screen
+// Draw the street segment and sidewalk as a rectangle on the screen
 Street.prototype.display = function () {
   push();
   fill(80);
+  rect(0,height/2 + 150,windowWidth,60);
+  pop();
+  push();
+  fill(255);
   rect(this.x, this.y, this.width, this.height);
   pop();
 }
@@ -66,8 +68,7 @@ Street.prototype.display = function () {
 
 // reset()
 //
-// Set position back
+// Set position back to right
 Street.prototype.reset = function () {
-  this.x = width;
-  this.y = height/2;
+  this.x = width + 50;
 }

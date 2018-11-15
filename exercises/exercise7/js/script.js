@@ -19,7 +19,7 @@ var backBuilding = [];
 var midBuilding = [];
 var frontBuilding = [];
 var star = [];
-var street;
+var street = [];
 
 // Variable to contain our font
 var pixelFont;
@@ -45,17 +45,20 @@ function setup() {
   noStroke();
   // Create buildings. Each building has a random size, random number of window columns/rows within a range.
   for (var i = 0; i < 18; i++) {
-    midBuilding[i] = new Building(width/15*[i],height/2 + 170,0,random(30,180),random(80,400),2,2,int(random(4)),int(random(3)),RIGHT_ARROW);
-    frontBuilding[i] = new Building(width/15*[i],height/2 + 190,0,random(30,180),random(80,400),3,1,int(random(4)),int(random(3)),RIGHT_ARROW);
+    midBuilding[i] = new Building(width/15*[i],height/2 + 170,0,random(30,180),random(80,400),2,2,int(random(4)),int(random(3)),RIGHT_ARROW,180);
+    frontBuilding[i] = new Building(width/15*[i],height/2 + 190,0,random(30,180),random(80,400),3,1,int(random(4)),int(random(3)),RIGHT_ARROW,250);
   }
   for (var i = 0; i < 25; i++) {
-    backBuilding[i] = new Building(width/19*[i],height/2 + 150,0,random(30,180),random(80,400),1,3,int(random(4)),int(random(3)),RIGHT_ARROW);
+    backBuilding[i] = new Building(width/19*[i],height/2 + 150,0,random(30,180),random(80,400),1,3,int(random(4)),int(random(3)),RIGHT_ARROW,90);
   }
   // Create stars. Each star is randomly placed in the sky.
   for (var i = 0; i < 200; i++) {
     star[i] = new Star(random(width),random(height/2),2,RIGHT_ARROW);
   }
-  street = new Street(0,height/2 + 150,0,windowWidth,60,3,RIGHT_ARROW);
+  // Creates 15 individual street segments
+  for (var i = 0; i < 15; i++) {
+    street[i] = new Street(width/12.5*[i],height/2 + 250,0,width/20,10,3,RIGHT_ARROW);
+  }
 }
 
 // draw()
@@ -65,82 +68,64 @@ function setup() {
 function draw() {
   background(0);
 
+  // Displays the text
+  onscreenText();
+
+  // Plays the music
+  music();
+
   // Display the moon
   moon();
 
-  // Displays the street
-  street.display();
-
-  // Display the 200 stars
+  // Displays the 200 stars
   for (var i = 0; i < 200; i++) {
     star[i].display();
-  }
-  // Display the 200 stars
-  for (var i = 0; i < 200; i++) {
     star[i].twinkle();
+  }
+
+  // Handles the input, updates, and displays the street
+  for (var i = 0; i < 15; i++) {
+    street[i].handleInput();
+
+    street[i].update();
+
+    if (street[i].isOffScreen()) {
+      street[i].reset();
+    }
+
+    street[i].display();
   }
 
   // Handles the input, updates, and displays the background buildings
   for (var i = 0; i < 25; i++) {
     backBuilding[i].handleInput();
-  }
-  for (var i = 0; i < 25; i++) {
     backBuilding[i].update();
-  }
-  for (var i = 0; i < 25; i++) {
     if (backBuilding[i].isOffScreen()) {
-
       backBuilding[i].reset();
     }
-  }
-
-  for (var i = 0; i < 25; i++) {
     backBuilding[i].display();
   }
+
 
   // Handles the input, updates, and displays the midground buildings
   for (var i = 0; i < 18; i++) {
     midBuilding[i].handleInput();
-  }
-  for (var i = 0; i < 18; i++) {
     midBuilding[i].update();
-  }
-
-  for (var i = 0; i < 18; i++) {
     if (midBuilding[i].isOffScreen()) {
-
       midBuilding[i].reset();
     }
-  }
-
-  for (var i = 0; i < 18; i++) {
     midBuilding[i].display();
   }
 
   // Handles the input, updates, and displays the foreground buildings
-
   for (var i = 0; i < 18; i++) {
     frontBuilding[i].handleInput();
-  }
-  for (var i = 0; i < 18; i++) {
     frontBuilding[i].update();
-  }
-
-  for (var i = 0; i < 18; i++) {
     if (frontBuilding[i].isOffScreen()) {
-
       frontBuilding[i].reset();
     }
-  }
-
-  for (var i = 0; i < 18; i++) {
     frontBuilding[i].display();
   }
-
-  // Displays the text
-  onscreenText();
-  // Plays the music
-  music();
 }
 
 // moon()
@@ -165,7 +150,7 @@ function onscreenText() {
     textFont(pixelFont);
     textSize(40);
     fill(255);
-    text(continueText, width/2, height/2 + 260);
+    text(continueText, width/2, height/2 + 250);
   }
 }
 

@@ -1,12 +1,12 @@
 // Building
 //
 // A class to define how a building behaves. Randomized # of windows, size, etc.
-// Resets to the right when it scrolls off screen.
+// Resets to the right with new random values when it scrolls off screen.
 
 // Building constructor
 //
 // Sets the properties with the provided arguments
-function Building(x,y,vx,width,height,speed,position,windowColumns,windowRows,rightKey) {
+function Building(x,y,vx,width,height,speed,position,windowColumns,windowRows,rightKey,color) {
   this.x = x;
   this.y = y;
   this.vx = vx;
@@ -17,7 +17,7 @@ function Building(x,y,vx,width,height,speed,position,windowColumns,windowRows,ri
   this.windowColumns = windowColumns;
   this.windowRows = windowRows;
   this.rightKey = rightKey;
-  this.color = 255;
+  this.color = color;
 }
 
 // update()
@@ -58,8 +58,6 @@ Building.prototype.isOffScreen = function () {
 //
 // Draw the building as a rectangle on the screen, with other rectangles for windows.
 Building.prototype.display = function () {
-  // Sets the variables that relate to the building's position
-  this.positionVariables();
 
   // Mirror the shapes vertically so we can draw buildings from the ground up
   push();
@@ -80,21 +78,6 @@ Building.prototype.display = function () {
   // Draw the windows
   this.windows();
   pop();
-}
-
-// positionVariables()
-//
-// Set building color based on relative position of the building
-Building.prototype.positionVariables = function () {
-  if (this.position === 3) {
-    this.color = 90;
-  }
-  else if (this.position === 2){
-    this.color = 180;
-  }
-  else {
-    this.color = 255;
-  }
 }
 
 // windows()
