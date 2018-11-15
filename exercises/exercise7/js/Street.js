@@ -29,7 +29,7 @@ Street.prototype.update = function () {
 
 Street.prototype.handleInput = function() {
   //////////////// FIXED
-  if (keyIsDown(this.rightKey)) {
+  if (keyIsDown(this.rightKey) || mouseIsPressed) {
     this.vx = -this.speed;
   }
   //////////////// FIXED

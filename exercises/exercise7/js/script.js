@@ -34,9 +34,9 @@ function setup() {
   noStroke();
   // Create buildings. Each building has a random size, random number of window columns/rows within a range.
   for (var i = 0; i < 18; i++) {
-    backBuilding[i] = new Building(width/15*[i],height/2 + 150,0,random(30,180),random(80,400),1,3,int(random(4)),int(random(3)));
-    midBuilding[i] = new Building(width/15*[i],height/2 + 170,0,random(30,180),random(80,400),2,2,int(random(4)),int(random(3)));
-    frontBuilding[i] = new Building(width/15*[i],height/2 + 190,0,random(30,180),random(80,400),3,1,int(random(4)),int(random(3)));
+    backBuilding[i] = new Building(width/15*[i],height/2 + 150,0,random(30,180),random(80,400),1,3,int(random(4)),int(random(3)),RIGHT_ARROW);
+    midBuilding[i] = new Building(width/15*[i],height/2 + 170,0,random(30,180),random(80,400),2,2,int(random(4)),int(random(3)),RIGHT_ARROW);
+    frontBuilding[i] = new Building(width/15*[i],height/2 + 190,0,random(30,180),random(80,400),3,1,int(random(4)),int(random(3)),RIGHT_ARROW);
   }
 
   // Create stars. Each star is randomly placed in the sky.

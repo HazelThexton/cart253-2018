@@ -6,7 +6,7 @@
 // Building constructor
 //
 // Sets the properties with the provided arguments
-function Building(x,y,vx,width,height,speed,position,windowColumns,windowRows) {
+function Building(x,y,vx,width,height,speed,position,windowColumns,windowRows,rightKey) {
   this.x = x;
   this.y = y;
   this.vx = vx;
@@ -17,7 +17,7 @@ function Building(x,y,vx,width,height,speed,position,windowColumns,windowRows) {
   this.windowColumns = windowColumns;
   this.windowRows = windowRows;
   this.color = 255;
-  this.rightKey = RIGHT_ARROW;
+  this.rightKey = rightKey;
 }
 
 // update()
@@ -32,7 +32,7 @@ Building.prototype.update = function () {
 //
 // Handles keyboard input
 Building.prototype.handleInput = function() {
-  if (keyIsDown(this.rightKey)) {
+  if (keyIsDown(this.rightKey) || mouseIsPressed) {
     this.vx = -this.speed;
   }
   else {
