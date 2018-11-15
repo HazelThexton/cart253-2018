@@ -52,7 +52,6 @@ Building.prototype.isOffScreen = function () {
   //////////////// FIXED
   if (this.x < 20) {
     return true;
-    this.reset();
   }
   else {
     return false;

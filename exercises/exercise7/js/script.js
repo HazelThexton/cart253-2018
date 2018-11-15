@@ -9,8 +9,8 @@
 
 // Variables to contain the objects representing our buildings, stars, and street
 
-var bgBuilding = [];
-var building = [];
+var backBuilding = [];
+var midBuilding = [];
 var frontBuilding = [];
 var star = [];
 var street;
@@ -34,8 +34,8 @@ function setup() {
   noStroke();
   // Create buildings. Each building has a random size, random number of window columns/rows within a range.
   for (var i = 0; i < 15; i++) {
-    bgBuilding[i] = new Building(width - width/15*[i],height/2 + 150,0,random(30,180),random(80,400),1,RIGHT_ARROW,3,int(random(4)),int(random(3)));
-    building[i] = new Building(width - width/15*[i],height/2 + 170,0,random(30,180),random(80,400),2,RIGHT_ARROW,2,int(random(4)),int(random(3)));
+    backBuilding[i] = new Building(width - width/15*[i],height/2 + 150,0,random(30,180),random(80,400),1,RIGHT_ARROW,3,int(random(4)),int(random(3)));
+    midBuilding[i] = new Building(width - width/15*[i],height/2 + 170,0,random(30,180),random(80,400),2,RIGHT_ARROW,2,int(random(4)),int(random(3)));
     frontBuilding[i] = new Building(width - width/15*[i],height/2 + 190,0,random(30,180),random(80,400),3,RIGHT_ARROW,1,int(random(4)),int(random(3)));
   }
 
@@ -63,34 +63,39 @@ function draw() {
 
   // Handles the input, updates, and displays the background buildings
   for (var i = 0; i < 15; i++) {
-    bgBuilding[i].handleInput();
+    backBuilding[i].handleInput();
   }
   for (var i = 0; i < 15; i++) {
-    bgBuilding[i].update();
+    backBuilding[i].update();
   }
   for (var i = 0; i < 15; i++) {
-    (bgBuilding[i].isOffScreen();
-  }
+    if (backBuilding[i].isOffScreen()) {
 
+      backBuilding[i].reset();
+    }
+  }
   // Handles the input, updates, and displays the midground buildings
   for (var i = 0; i < 15; i++) {
-    bgBuilding[i].display();
+    backBuilding[i].display();
   }
   for (var i = 0; i < 15; i++) {
-    building[i].handleInput();
+    midBuilding[i].handleInput();
   }
   for (var i = 0; i < 15; i++) {
-    building[i].update();
+    midBuilding[i].update();
   }
 
   for (var i = 0; i < 15; i++) {
-    (building[i].isOffScreen();
+    if (midBuilding[i].isOffScreen()) {
+
+      midBuilding[i].reset();
+    }
   }
 
   // Handles the input, updates, and displays the foreground buildings
 
   for (var i = 0; i < 15; i++) {
-    building[i].display();
+    midBuilding[i].display();
   }
   for (var i = 0; i < 15; i++) {
     frontBuilding[i].handleInput();
@@ -98,9 +103,12 @@ function draw() {
   for (var i = 0; i < 15; i++) {
     frontBuilding[i].update();
   }
-  
+
   for (var i = 0; i < 15; i++) {
-    (frontBuilding[i].isOffScreen()
+    if (frontBuilding[i].isOffScreen()) {
+
+      frontBuilding[i].reset();
+    }
   }
 
   for (var i = 0; i < 15; i++) {

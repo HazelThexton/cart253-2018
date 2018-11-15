@@ -63,8 +63,9 @@ Street.prototype.display = function () {
 push();
   fill(100);
   rect(this.x, this.y, this.width, this.height);
+  pop();
 }
-pop();
+
 
 // reset()
 //
