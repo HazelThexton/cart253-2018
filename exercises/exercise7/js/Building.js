@@ -84,19 +84,16 @@ Building.prototype.display = function () {
 
 // positionVariables()
 //
-// Set building color and starting Y based on relative position of the building
+// Set building color based on relative position of the building
 Building.prototype.positionVariables = function () {
   if (this.position === 3) {
     this.color = 90;
-    this.y = height/2 + 150;
   }
   else if (this.position === 2){
     this.color = 180;
-    this.y = height/2 + 170;
   }
   else {
     this.color = 255;
-    this.y = height/2 + 190;
   }
 }
 
