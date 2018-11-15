@@ -92,12 +92,12 @@ Building.prototype.windows = function () {
   fill(this.color);
 
   // Draws window columns based on the randomly chosen variable
-  if (this.windowColumns === 3) {
+  if (this.windowColumns === 2) {
     for (var i = 2; i < 5; i++) {
       rect(this.width/8*[i], this.height/70, this.width/50, this.height/70*69);
     }
   }
-  else if (this.windowColumns === 2) {
+  else if (this.windowColumns === 1) {
     rect(this.width/8*3, this.height/70, this.width/50, this.height/70*69);
   }
 
@@ -121,9 +121,11 @@ Building.prototype.windows = function () {
 
 // reset()
 //
-// Set position back to the right
+// Set position back to the right and randomize size/# of windows
 Building.prototype.reset = function () {
   this.x = width + 300;
   this.width = random(30,180);
   this.height = random(80,400);
+  this.windowRows = int(random(3));
+  this.windowColumns = int(random(3));
 }

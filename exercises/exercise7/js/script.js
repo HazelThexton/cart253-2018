@@ -6,7 +6,7 @@
 // vignettes/scenes using different modes of interaction in each scene.
 // In the style of/inspired by Dys4ia by Anna Anthropy.
 //
-// Right arrow key to move.
+// Right arrow key or click/touch to move.
 //
 // Written with JavaScript OOP.
 //
@@ -14,6 +14,7 @@
 // https://www.dafont.com/minecraft.font
 
 // Variables to contain the objects representing our buildings, stars, and street
+// segments
 
 var backBuilding = [];
 var midBuilding = [];
@@ -29,7 +30,7 @@ var bgMusic;
 
 // preload()
 //
-// Preloads our font
+// Preloads our font and music
 function preload() {
   // Assigns the font to its variable
   pixelFont = loadFont('assets/fonts/pixelfont.ttf');
@@ -45,11 +46,11 @@ function setup() {
   noStroke();
   // Create buildings. Each building has a random size, random number of window columns/rows within a range.
   for (var i = 0; i < 18; i++) {
-    midBuilding[i] = new Building(width/15*[i],height/2 + 170,0,random(30,180),random(80,400),2,2,int(random(4)),int(random(3)),RIGHT_ARROW,180);
-    frontBuilding[i] = new Building(width/15*[i],height/2 + 190,0,random(30,180),random(80,400),3,1,int(random(4)),int(random(3)),RIGHT_ARROW,250);
+    midBuilding[i] = new Building(width/15*[i],height/2 + 170,0,random(30,180),random(80,400),2,2,int(random(3)),int(random(3)),RIGHT_ARROW,180);
+    frontBuilding[i] = new Building(width/15*[i],height/2 + 190,0,random(30,180),random(80,400),3,1,int(random(3)),int(random(3)),RIGHT_ARROW,250);
   }
   for (var i = 0; i < 25; i++) {
-    backBuilding[i] = new Building(width/19*[i],height/2 + 150,0,random(30,180),random(80,400),1,3,int(random(4)),int(random(3)),RIGHT_ARROW,90);
+    backBuilding[i] = new Building(width/19*[i],height/2 + 150,0,random(30,180),random(80,400),1,3,int(random(3)),int(random(3)),RIGHT_ARROW,90);
   }
   // Create stars. Each star is randomly placed in the sky.
   for (var i = 0; i < 200; i++) {
