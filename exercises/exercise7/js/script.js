@@ -21,12 +21,17 @@ var street;
 // Variable to contain our font
 var pixelFont;
 
+// Variable to contain our music
+var bgMusic;
+
 // preload()
 //
 // Preloads our font
 function preload() {
   // Assigns the font to its variable
   pixelFont = loadFont('assets/fonts/pixelfont.ttf');
+
+  bgMusic = new Audio("assets/sounds/bg.mp3");
 }
 
 // setup()
@@ -139,9 +144,12 @@ function moon() {
 //
 // Handles the onscreen text and when it appears
 function onscreenText() {
-  if (keyIsDown(RIGHT_ARROW)) {
+  if (keyIsDown(RIGHT_ARROW) || mouseIsPressed) {
+    bgMusic.play();
+    bgMusic.loop = true;
   }
   else {
+    bgMusic.pause();
     var continueText = "continue?\n>>";
     textAlign(CENTER,CENTER);
     textFont(pixelFont);
