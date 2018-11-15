@@ -1,7 +1,7 @@
 // Star
 //
 // A class to define how stars behave. All they do is be displayed at
-// random locations
+// random locations.
 
 // Star constructor
 //
