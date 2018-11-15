@@ -7,7 +7,7 @@
 // Building constructor
 //
 // Sets the properties with the provided arguments
-function Building(x,y,vx,width,height,speed,rightKey,position,windowColumns) {
+function Building(x,y,vx,width,height,speed,rightKey,position,windowColumns,windowRows) {
   this.x = x;
   this.y = y;
   this.vx = vx;
@@ -17,6 +17,7 @@ function Building(x,y,vx,width,height,speed,rightKey,position,windowColumns) {
   this.rightKey = rightKey;
   this.position = position;
   this.windowColumns = windowColumns;
+  this.windowRows = windowRows;
 }
 
 // update()
@@ -71,6 +72,9 @@ Building.prototype.display = function () {
   if (this.position === 2){
     fill(180);
   }
+  if (this.position === 1){
+    fill(255);
+  }
   rect(0, 0, this.width, this.height);
   fill(0,80);
   rect(this.width - this.width/4,0,this.width/4,1000);
@@ -95,9 +99,23 @@ Building.prototype.display = function () {
   else if (this.windowColumns === 2) {
     rect(this.width/8*3, this.height/70, this.width/50, this.height/70*69);
   }
-  for (var i = 6; i < 70; i += 5) {
-    rect(this.width/8.3, this.height/70*[i], this.width/4*2.5, this.height/60);
+
+  if (this.windowRows === 2) {
+    for (var i = 6; i < 70; i += 5) {
+      rect(this.width/8.3, this.height/70*[i], this.width/4*2.5, this.height/60);
+    }
   }
+ else if (this.windowRows === 1) {
+    for (var i = 9; i < 70; i += 8) {
+      rect(this.width/8.3, this.height/70*[i], this.width/4*2.5, this.height/40);
+    }
+  }
+  else if (this.windowRows === 0) {
+     for (var i = 5; i < 65; i += 5) {
+       rect(this.width/8.3, this.height/70*[i], this.width/4*2.5, this.height/25);
+     }
+   }
+
   pop();
 }
 
