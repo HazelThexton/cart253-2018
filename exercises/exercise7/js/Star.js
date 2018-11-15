@@ -18,5 +18,8 @@ function Star(x,y,size) {
 // Draw the building as a rectangle on the screen
 Star.prototype.display = function () {
   //////////////// FIXED
+  push();
+  fill(255);
   rect(this.x, this.y, this.size, this.size);
+  pop();
 }
