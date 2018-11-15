@@ -1,8 +1,6 @@
 // Street
 //
-// A class to define how a building behaves. Including bouncing on the top
-// and bottom edges of the canvas, going off the left and right sides,
-// and bouncing off paddles.
+// A class to define the street behaves. Not much here right now.
 
 // Street constructor
 //
@@ -59,8 +57,7 @@ Street.prototype.isOffScreen = function () {
 //
 // Draw the building as a rectangle on the screen
 Street.prototype.display = function () {
-  //////////////// FIXED
-push();
+  push();
   fill(100);
   rect(this.x, this.y, this.width, this.height);
   pop();
@@ -69,8 +66,7 @@ push();
 
 // reset()
 //
-// Set position back to the middle of the screen
-//////////////// FIXED
+// Set position back
 Street.prototype.reset = function () {
   this.x = width;
   this.y = height/2;

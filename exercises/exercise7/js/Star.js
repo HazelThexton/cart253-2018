@@ -1,10 +1,9 @@
-// Street
+// Star
 //
-// A class to define how a building behaves. Including bouncing on the top
-// and bottom edges of the canvas, going off the left and right sides,
-// and bouncing off paddles.
+// A class to define how stars behave. All they do is be displayed at
+// random locations
 
-// Street constructor
+// Star constructor
 //
 // Sets the properties with the provided arguments
 function Star(x,y,size) {
@@ -15,9 +14,8 @@ function Star(x,y,size) {
 
 // display()
 //
-// Draw the building as a rectangle on the screen
+// Draw the star as a square on the screen
 Star.prototype.display = function () {
-  //////////////// FIXED
   push();
   fill(255);
   rect(this.x, this.y, this.size, this.size);
