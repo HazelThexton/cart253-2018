@@ -18,7 +18,6 @@ function Building(x,y,vx,width,height,speed,position,windowColumns,windowRows) {
   this.windowRows = windowRows;
   this.color = 255;
   this.rightKey = RIGHT_ARROW;
-  this.startingY = 0;
 }
 
 // update()
@@ -89,15 +88,15 @@ Building.prototype.display = function () {
 Building.prototype.positionVariables = function () {
   if (this.position === 3) {
     this.color = 90;
-    this.startingY = height/2 + 150;
+    this.y = height/2 + 150;
   }
   else if (this.position === 2){
     this.color = 180;
-    this.startingY = height/2 + 170;
+    this.y = height/2 + 170;
   }
   else {
     this.color = 255;
-    this.startingY = height/2 + 190;
+    this.y = height/2 + 190;
   }
 }
 
@@ -121,7 +120,7 @@ Building.prototype.windows = function () {
   else if (this.windowColumns === 2) {
     rect(this.width/8*3, this.height/70, this.width/50, this.height/70*69);
   }
-  
+
   // Draws window rows based on the randomly chosen variable
   if (this.windowRows === 2) {
     for (var i = 6; i < 70; i += 5) {
@@ -144,8 +143,7 @@ Building.prototype.windows = function () {
 //
 // Set position back to the right
 Building.prototype.reset = function () {
-  this.x = width + 150;
-  this.y = this.startingY;
+  this.x = width + 300;
   this.width = random(30,180);
   this.height = random(80,400);
 }

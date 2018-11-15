@@ -33,10 +33,10 @@ function setup() {
   createCanvas(windowWidth,windowHeight);
   noStroke();
   // Create buildings. Each building has a random size, random number of window columns/rows within a range.
-  for (var i = 0; i < 15; i++) {
-    backBuilding[i] = new Building(width - width/15*[i],height/2 + 150,0,random(30,180),random(80,400),1,3,int(random(4)),int(random(3)));
-    midBuilding[i] = new Building(width - width/15*[i],height/2 + 170,0,random(30,180),random(80,400),2,2,int(random(4)),int(random(3)));
-    frontBuilding[i] = new Building(width - width/15*[i],height/2 + 190,0,random(30,180),random(80,400),3,1,int(random(4)),int(random(3)));
+  for (var i = 0; i < 18; i++) {
+    backBuilding[i] = new Building(width/15*[i],height/2 + 150,0,random(30,180),random(80,400),1,3,int(random(4)),int(random(3)));
+    midBuilding[i] = new Building(width/15*[i],height/2 + 170,0,random(30,180),random(80,400),2,2,int(random(4)),int(random(3)));
+    frontBuilding[i] = new Building(width/15*[i],height/2 + 190,0,random(30,180),random(80,400),3,1,int(random(4)),int(random(3)));
   }
 
   // Create stars. Each star is randomly placed in the sky.
@@ -62,30 +62,30 @@ function draw() {
   }
 
   // Handles the input, updates, and displays the background buildings
-  for (var i = 0; i < 15; i++) {
+  for (var i = 0; i < 18; i++) {
     backBuilding[i].handleInput();
   }
-  for (var i = 0; i < 15; i++) {
+  for (var i = 0; i < 18; i++) {
     backBuilding[i].update();
   }
-  for (var i = 0; i < 15; i++) {
+  for (var i = 0; i < 18; i++) {
     if (backBuilding[i].isOffScreen()) {
 
       backBuilding[i].reset();
     }
   }
   // Handles the input, updates, and displays the midground buildings
-  for (var i = 0; i < 15; i++) {
+  for (var i = 0; i < 18; i++) {
     backBuilding[i].display();
   }
-  for (var i = 0; i < 15; i++) {
+  for (var i = 0; i < 18; i++) {
     midBuilding[i].handleInput();
   }
-  for (var i = 0; i < 15; i++) {
+  for (var i = 0; i < 18; i++) {
     midBuilding[i].update();
   }
 
-  for (var i = 0; i < 15; i++) {
+  for (var i = 0; i < 18; i++) {
     if (midBuilding[i].isOffScreen()) {
 
       midBuilding[i].reset();
@@ -94,24 +94,24 @@ function draw() {
 
   // Handles the input, updates, and displays the foreground buildings
 
-  for (var i = 0; i < 15; i++) {
+  for (var i = 0; i < 18; i++) {
     midBuilding[i].display();
   }
-  for (var i = 0; i < 15; i++) {
+  for (var i = 0; i < 18; i++) {
     frontBuilding[i].handleInput();
   }
-  for (var i = 0; i < 15; i++) {
+  for (var i = 0; i < 18; i++) {
     frontBuilding[i].update();
   }
 
-  for (var i = 0; i < 15; i++) {
+  for (var i = 0; i < 18; i++) {
     if (frontBuilding[i].isOffScreen()) {
 
       frontBuilding[i].reset();
     }
   }
 
-  for (var i = 0; i < 15; i++) {
+  for (var i = 0; i < 18; i++) {
     frontBuilding[i].display();
   }
 
