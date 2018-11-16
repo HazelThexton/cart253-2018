@@ -69,9 +69,6 @@ function setup() {
 function draw() {
   background(0);
 
-  // Displays the text
-  onscreenText();
-
   // Plays the music
   music();
 
@@ -127,6 +124,9 @@ function draw() {
     }
     frontBuilding[i].display();
   }
+
+  // Displays the text
+  onscreenText();
 }
 
 // moon()
@@ -146,7 +146,9 @@ function onscreenText() {
   if (keyIsDown(RIGHT_ARROW) || mouseIsPressed) {
   }
   else {
-    var continueText = "continue?\n>>";
+    fill(0);
+    rect(width/2 - 152, height/2 + 220, 303, 500);
+    var continueText = "just keep going";
     textAlign(CENTER,CENTER);
     textFont(pixelFont);
     textSize(40);
