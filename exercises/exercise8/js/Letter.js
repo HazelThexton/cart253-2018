@@ -75,8 +75,8 @@ Letter.prototype.update = function () {
   if (collideLineRect(pmouseX,pmouseY,mouseX,mouseY,this.x,this.y,this.width,this.height)) {
     // If so, set the acceleration to be equivalent to the mouse movement
     // so it conveys a relative force to the speed of movement
-    this.ax += (mouseX - pmouseX);
-    this.ay += (mouseY - pmouseY);
+    this.ax += random(-500,500);
+    this.ay += random(-500,500);
     // And set the letter spinning based on the acceleration too
     // (The 2000 here is just a tested out value)
     this.angleChange = (this.ax + this.ay) / 2000;
@@ -95,16 +95,6 @@ Letter.prototype.update = function () {
   // Set position based on velocity
   this.x += this.vx;
   this.y += this.vy;
-
-  // Bounce off the walls and by reversing velocity and rotation direction
-  if (this.x < 0 || this.x > width) {
-    this.vx = -this.vx;
-    this.angleChange = -this.angleChange;
-  }
-  if (this.y < 0 || this.y > height) {
-    this.vy = -this.vy;
-    this.angleChange = -this.angleChange;
-  }
 
   // Increase the angle of rotation
   this.angle += this.angleChange;

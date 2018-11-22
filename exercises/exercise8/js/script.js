@@ -38,7 +38,7 @@ function preload() {
   // Assigns the font to its variable
   pixelFont = loadFont('assets/fonts/pixelfont.ttf');
 
-    bgMusic = new Audio("assets/sounds/bg.mp3");
+  bgMusic = new Audio("assets/sounds/bg.mp3");
 }
 
 // setup()
