@@ -52,7 +52,7 @@ function setup() {
   input = createInput();
   input.position(width/2 - input.width/2, 200);
   for (var i = 0; i < 10; i++) {
-    fears[i] = new Fear(" ",0,50,5,pixelFont);
+    fears[i] = new Fear(" ",50,pixelFont);
   }
 }
 

@@ -1,32 +1,32 @@
 // Fear
 //
-// A class to define how a fears behaves. Randomized # of windows, size, etc.
-// Resets to the right with new random values when it scrolls off screen.
+// A class to define how fears behave. Words composed of individual letters
+// based on player input and placed at random locations on the screen.
 
 // Fear constructor
 //
 // Sets the properties with the provided arguments
-function Fear(string,vx,size,speed,font) {
+function Fear(string,size,font) {
   this.string = string;
   this.x = 0;
   this.y = 0;
-  this.vx = vx;
   this.size = size;
-  this.speed = speed;
+  // The letters in the string
   this.letters = [];
   this.font = font;
 }
 
 // display()
 //
-// Draw the fears as a rectangle on the screen, with other rectangles for windows.
+// Draw the fears based on the player input at a random location, creates the letters
+//
 Fear.prototype.setup = function (string) {
-  // Create our letter objects by looping through the string and creating new letters
-  // Note that we can treat a string like an array here, with individual characters being
-  // the array elements
+  // Select a random onscreen location
   this.x = random(100,width-100);
   this.y = random(100,height-100);
+  // Assign the player input to the string
   this.string = string;
+  // Create our letter objects by looping through the string and creating new letters
   // Loop through each character in the string
   for (var i = 0; i < this.string.length; i++) {
     // Create a new letter

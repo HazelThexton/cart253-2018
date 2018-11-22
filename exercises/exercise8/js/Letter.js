@@ -3,7 +3,8 @@
 Letter
 
 A class for representing a single character as text on the screen that
-reacts to mouse movement over it and moves and bounces around.
+reacts to mouse movement over it and moves and bounces around. Taken from
+class example and modified.
 
 ************************************************************************/
 
@@ -38,8 +39,9 @@ function Letter(letter,x,y,fontSize,font) {
   this.angleChange = 0;
   ///////// NEW /////////
   this.font = font;
-  // How much the opacity should change per update
-  this.colorChange = -20;
+  // The opacity and how much it should change per update
+  this.opacity = 255;
+  this.opacityChange = -20;
   ///////// END NEW /////////
 }
 
@@ -50,7 +52,7 @@ Letter.prototype.display = function() {
   push();
   ///////// NEW /////////
   // Black stroke with opacity affected by mouse movement
-  stroke(0,this.colorChange);
+  stroke(0,this.opacity);
   strokeWeight(3);
   ///////// END NEW /////////
   // Set the fontSize
@@ -65,7 +67,7 @@ Letter.prototype.display = function() {
   rotate(this.angle);
   ///////// NEW /////////
   // White fill with opacity affected by mouse movement
-  fill(255,this.color);
+  fill(255,this.opacity);
   ///////// END NEW /////////
   // Draw the text
   text(this.letter,0,0);
@@ -91,7 +93,7 @@ Letter.prototype.update = function () {
     this.angleChange = (this.ax + this.ay) / 2000;
     ///////// NEW /////////
     // Color and size changes for the letter (gets smaller/less opaque)
-    this.color += this.colorChange;
+    this.opacity += this.opacityChange;
     this.fontSize += this.sizeChange;
     ///////// END NEW /////////
   }
