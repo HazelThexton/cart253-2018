@@ -7,8 +7,7 @@ reacts to mouse movement over it and moves and bounces around.
 
 ************************************************************************/
 
-
-// Letter(letter,x,y,size)
+// Letter(letter,x,y,fontSize)
 //
 // Construct the letter according to the argument
 // Include various physical properties for moving around
@@ -26,6 +25,9 @@ function Letter(letter,x,y,fontSize,font) {
   this.drag = 0.01;
   // Font size
   this.fontSize = fontSize;
+  ///////// NEW /////////
+  this.sizeChange = -2;
+  ///////// END NEW /////////
   // Dimensions
   textSize(this.fontSize);
   this.width = textWidth(this.letter);
@@ -34,10 +36,11 @@ function Letter(letter,x,y,fontSize,font) {
   this.angle = 0;
   // How much the angle should change per update
   this.angleChange = 0;
+  ///////// NEW /////////
   this.font = font;
+  // How much the opacity should change per update
   this.colorChange = -20;
-  this.color = 255;
-  this.sizeChange = -2;
+  ///////// END NEW /////////
 }
 
 // display()
@@ -45,19 +48,25 @@ function Letter(letter,x,y,fontSize,font) {
 // Draw the letter on screen based on position and rotation
 Letter.prototype.display = function() {
   push();
-  // Set the fontSize
+  ///////// NEW /////////
+  // Black stroke with opacity affected by mouse movement
   stroke(0,this.colorChange);
   strokeWeight(3);
+  ///////// END NEW /////////
+  // Set the fontSize
   textSize(this.fontSize);
+  ///////// NEW /////////
   textFont(this.font);
+  ///////// END NEW /////////
   // Translate to the position of the letter, but add half width and height
   // so that we account for kerning
   translate(this.x + this.width/2,this.y + this.height/2);
   // Rotate
   rotate(this.angle);
-
-  // White fill, why not
+  ///////// NEW /////////
+  // White fill with opacity affected by mouse movement
   fill(255,this.color);
+  ///////// END NEW /////////
   // Draw the text
   text(this.letter,0,0);
   pop();
@@ -75,13 +84,16 @@ Letter.prototype.update = function () {
   if (collideLineRect(pmouseX,pmouseY,mouseX,mouseY,this.x,this.y,this.width,this.height)) {
     // If so, set the acceleration to be equivalent to the mouse movement
     // so it conveys a relative force to the speed of movement
-    this.ax += random(-500,500);
-    this.ay += random(-500,500);
+    this.ax += (mouseX - pmouseX)*5;
+    this.ay += (mouseY - pmouseY)*5;
     // And set the letter spinning based on the acceleration too
     // (The 2000 here is just a tested out value)
     this.angleChange = (this.ax + this.ay) / 2000;
+    ///////// NEW /////////
+    // Color and size changes for the letter (gets smaller/less opaque)
     this.color += this.colorChange;
     this.fontSize += this.sizeChange;
+    ///////// END NEW /////////
   }
 
   // Apply drag to the acceleration so it rapidly approaches 0
