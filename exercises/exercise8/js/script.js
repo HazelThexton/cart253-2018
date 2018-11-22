@@ -18,15 +18,14 @@
 
 var midBuilding = [];
 var fears = [];
-var inputText = [];
 
 // Variable to contain our font
 var pixelFont;
 
-//boolean
-var writingScreen;
 
 var onscreenText;
+
+var input;
 
 // preload()
 //
@@ -44,13 +43,10 @@ function setup() {
   noStroke();
   textAlign(CENTER,CENTER);
   onscreenText = new OnscreenText(width/2,50,50,pixelFont);
-  // Create fears
-  for (var i = 0; i < 20; i++) {
-    fears[i] = new Fear(inputText[i],width/2,height/2,0,textSize(20),5,pixelFont);
-  }
-  // Handles the input, updates, and displays the fears
-  for (var i = 0; i < 18; i++) {
-    fears[i].setup();
+  input = createInput();
+  input.position(width/2, 200);
+  for (var i = 0; i < 10; i++) {
+    fears[i] = new Fear(" ",random(0,width),random(0,height),0,textSize(20),5,pixelFont);
   }
 }
 
@@ -60,15 +56,18 @@ function setup() {
 // and displays everything.
 function draw() {
   background(0);
-
-
-  // Handles the input, updates, and displays the midground buildings
-  for (var i = 0; i < 18; i++) {
-    fears[i].handleInput();
-    fears[i].update();
-    fears[i].display();
+  for (var i = 0; i < 10; i++) {
+    if (keyIsDown(ENTER)){
+      fears[i].setup(input.value());
+      input.value('');
+    }
   }
 
-  onscreenText.display(width/2, 50,"type in your fears.");
+  onscreenText.display("type in your fears.",width/2, 50);
+
+  // Handles the input, updates, and displays the midground buildings
+  for (var i = 0; i < 10; i++) {
+    fears[i].display();
+  }
 
 }

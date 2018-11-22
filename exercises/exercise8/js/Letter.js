@@ -35,6 +35,9 @@ function Letter(letter,x,y,fontSize,font) {
   // How much the angle should change per update
   this.angleChange = 0;
   this.font = font;
+  this.colorChange = -5;
+  this.sizeChange = -1;
+  this.color;
 }
 
 // display()
@@ -54,7 +57,7 @@ Letter.prototype.display = function() {
   rotate(this.angle);
 
   // White fill, why not
-  fill(255);
+  fill(this.color);
   // Draw the text
   text(this.letter,0,0);
   pop();
@@ -90,6 +93,8 @@ Letter.prototype.update = function () {
   // Set position based on velocity
   this.x += this.vx;
   this.y += this.vy;
+
+  color += this.colorChange;
 
   // Bounce off the walls and by reversing velocity and rotation direction
   if (this.x < 0 || this.x > width) {

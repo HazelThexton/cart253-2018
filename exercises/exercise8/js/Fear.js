@@ -19,35 +19,16 @@ function Fear(string,startX,startY,vx,size,speed,font) {
   this.font = font;
 }
 
-// update()
-//
-// Moves fears according to velocity
-Fear.prototype.update = function () {
-  // Update position with velocity
-  this.x += this.vx;
-}
-
-// handleInput()
-//
-// Handles keyboard input
-Fear.prototype.handleInput = function() {
-  if (keyIsDown(this.rightKey) || mouseIsPressed) {
-    this.vx = -this.speed;
-  }
-  else {
-    this.vx = 0;
-  }
-}
-
 // display()
 //
 // Draw the fears as a rectangle on the screen, with other rectangles for windows.
-Fear.prototype.setup = function () {
+Fear.prototype.setup = function (string) {
   // Create our letter objects by looping through the string and creating new letters
 // Note that we can treat a string like an array here, with individual characters being
 // the array elements
 this.x = this.startX;
 this.y = this.startY;
+this.string = string;
 // Loop through each character in the string
 for (var i = 0; i < this.string.length; i++) {
   // Create a new letter
@@ -56,6 +37,7 @@ for (var i = 0; i < this.string.length; i++) {
   this.x += textWidth(this.string[i]);
 }
 }
+
 
 // display()
 //
