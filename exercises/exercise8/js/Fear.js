@@ -19,7 +19,7 @@ function Fear(string,size,font) {
 // display()
 //
 // Draw the fears based on the player input at a random location, creates the letters
-//
+// Taken from physical letters class example
 Fear.prototype.setup = function (string) {
   // Select a random onscreen location
   this.x = random(100,width-100);
