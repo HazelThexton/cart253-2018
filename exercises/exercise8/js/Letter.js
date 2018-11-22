@@ -35,9 +35,9 @@ function Letter(letter,x,y,fontSize,font) {
   // How much the angle should change per update
   this.angleChange = 0;
   this.font = font;
-  this.colorChange = -5;
-  this.sizeChange = -1;
-  this.color;
+  this.colorChange = -20;
+  this.sizeChange = -10;
+  this.color = 255;
 }
 
 // display()
@@ -46,7 +46,7 @@ function Letter(letter,x,y,fontSize,font) {
 Letter.prototype.display = function() {
   push();
   // Set the fontSize
-  stroke(0);
+  stroke(0,this.colorChange);
   strokeWeight(3);
   textSize(this.fontSize);
   textFont(this.font);
@@ -57,7 +57,7 @@ Letter.prototype.display = function() {
   rotate(this.angle);
 
   // White fill, why not
-  fill(this.color);
+  fill(255,this.color);
   // Draw the text
   text(this.letter,0,0);
   pop();
@@ -80,6 +80,8 @@ Letter.prototype.update = function () {
     // And set the letter spinning based on the acceleration too
     // (The 2000 here is just a tested out value)
     this.angleChange = (this.ax + this.ay) / 2000;
+    this.color += this.colorChange;
+    this.fontSize += this.sizeChange;
   }
 
   // Apply drag to the acceleration so it rapidly approaches 0
@@ -94,7 +96,7 @@ Letter.prototype.update = function () {
   this.x += this.vx;
   this.y += this.vy;
 
-  color += this.colorChange;
+
 
   // Bounce off the walls and by reversing velocity and rotation direction
   if (this.x < 0 || this.x > width) {

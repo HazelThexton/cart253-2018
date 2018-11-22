@@ -44,9 +44,9 @@ function setup() {
   textAlign(CENTER,CENTER);
   onscreenText = new OnscreenText(width/2,50,50,pixelFont);
   input = createInput();
-  input.position(width/2, 200);
+  input.position(width/2 - input.width/2, 200);
   for (var i = 0; i < 10; i++) {
-    fears[i] = new Fear(" ",random(0,width),random(0,height),0,textSize(20),5,pixelFont);
+    fears[i] = new Fear(" ",0,textSize(20),5,pixelFont);
   }
 }
 

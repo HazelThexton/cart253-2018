@@ -6,10 +6,8 @@
 // Fear constructor
 //
 // Sets the properties with the provided arguments
-function Fear(string,startX,startY,vx,size,speed,font) {
+function Fear(string,vx,size,speed,font) {
   this.string = string;
-  this.startX = startX;
-  this.startY = startY;
   this.x = 0;
   this.y = 0;
   this.vx = vx;
@@ -26,8 +24,8 @@ Fear.prototype.setup = function (string) {
   // Create our letter objects by looping through the string and creating new letters
 // Note that we can treat a string like an array here, with individual characters being
 // the array elements
-this.x = this.startX;
-this.y = this.startY;
+this.x = random(50,width-50);
+this.y = random(50,height-50);
 this.string = string;
 // Loop through each character in the string
 for (var i = 0; i < this.string.length; i++) {
