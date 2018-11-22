@@ -2,7 +2,6 @@
 //
 // A class to define how displayed text looks and changes. Taken from my
 // Project 2.
-//
 
 // Text constructor
 //
