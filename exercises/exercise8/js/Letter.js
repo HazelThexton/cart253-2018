@@ -36,8 +36,8 @@ function Letter(letter,x,y,fontSize,font) {
   this.angleChange = 0;
   this.font = font;
   this.colorChange = -20;
-  this.sizeChange = -10;
   this.color = 255;
+  this.sizeChange = -2;
 }
 
 // display()
@@ -61,7 +61,6 @@ Letter.prototype.display = function() {
   // Draw the text
   text(this.letter,0,0);
   pop();
-  console.log(textSize);
 }
 
 // update()
