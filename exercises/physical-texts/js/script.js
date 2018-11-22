@@ -26,7 +26,7 @@ function setup() {
   startX = 100;
   startY = height/2;
   // Basic text setup
-  textSize(36);
+  textSize(306);
   textAlign(CENTER,CENTER);
   fill(255);
 

@@ -18,12 +18,10 @@
 
 var midBuilding = [];
 var fears = [];
+var inputText = [];
 
 // Variable to contain our font
 var pixelFont;
-
-// Variable to contain our music
-var bgMusic;
 
 //boolean
 var writingScreen;
@@ -36,8 +34,6 @@ var onscreenText;
 function preload() {
   // Assigns the font to its variable
   pixelFont = loadFont('assets/fonts/pixelfont.ttf');
-
-  bgMusic = new Audio("assets/sounds/bg.mp3");
 }
 
 // setup()
@@ -46,10 +42,15 @@ function preload() {
 function setup() {
   createCanvas(windowWidth,windowHeight);
   noStroke();
-  onscreenText = new OnscreenText(0,0,0,pixelFont);
-  // Create buildings. Each building has a random size, random number of window columns/rows within a range.
+  textAlign(CENTER,CENTER);
+  onscreenText = new OnscreenText(width/2,50,50,pixelFont);
+  // Create fears
+  for (var i = 0; i < 20; i++) {
+    fears[i] = new Fear(inputText[i],width/2,height/2,0,textSize(20),5,pixelFont);
+  }
+  // Handles the input, updates, and displays the fears
   for (var i = 0; i < 18; i++) {
-    fears[i] = new Fear(width/15*[i],height/2 + 170,0,random(30,180),random(80,400),2,2,int(random(3)),int(random(3)),RIGHT_ARROW,180);
+    fears[i].setup();
   }
 }
 
@@ -60,49 +61,14 @@ function setup() {
 function draw() {
   background(0);
 
-  // Plays the music
-  music();
-
 
   // Handles the input, updates, and displays the midground buildings
   for (var i = 0; i < 18; i++) {
-    fear[i].handleInput();
-    fear[i].update();
-    if (fear[i].isOffScreen()) {
-      fear[i].reset();
-    }
-    fear[i].display();
+    fears[i].handleInput();
+    fears[i].update();
+    fears[i].display();
   }
 
-}
+  onscreenText.display(width/2, 50,"type in your fears.");
 
-// onscreenText()
-//
-// Handles the onscreen text and when it appears
-function onscreenText() {
-  if (keyIsDown(RIGHT_ARROW) || mouseIsPressed) {
-  }
-  else {
-    fill(0);
-    rect(width/2 - 152, height/2 + 220, 303, 500);
-    var continueText = "just keep going";
-    textAlign(CENTER,CENTER);
-    textFont(pixelFont);
-    textSize(40);
-    fill(255);
-    text(continueText, width/2, height/2 + 250);
-  }
-}
-
-// music()
-//
-// Handles the music and when it plays
-function music() {
-  if (keyIsDown(RIGHT_ARROW) || mouseIsPressed) {
-    bgMusic.play();
-    bgMusic.loop = true;
-  }
-  else {
-    bgMusic.pause();
-  }
 }
