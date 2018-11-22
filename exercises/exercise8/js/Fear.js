@@ -24,8 +24,8 @@ Fear.prototype.setup = function (string) {
   // Create our letter objects by looping through the string and creating new letters
 // Note that we can treat a string like an array here, with individual characters being
 // the array elements
-this.x = random(50,width-50);
-this.y = random(50,height-50);
+this.x = random(100,width-100);
+this.y = random(100,height-100);
 this.string = string;
 // Loop through each character in the string
 for (var i = 0; i < this.string.length; i++) {

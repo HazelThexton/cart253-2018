@@ -25,9 +25,9 @@ function Letter(letter,x,y,fontSize,font) {
   // Deceleration per frame
   this.drag = 0.01;
   // Font size
-  this.fontSize = size;
+  this.fontSize = fontSize;
   // Dimensions
-  textSize(this.size);
+  textSize(this.fontSize);
   this.width = textWidth(this.letter);
   this.height = textAscent() + textDescent();
   // Angle for rotation
@@ -61,6 +61,7 @@ Letter.prototype.display = function() {
   // Draw the text
   text(this.letter,0,0);
   pop();
+  console.log(textSize);
 }
 
 // update()
@@ -95,8 +96,6 @@ Letter.prototype.update = function () {
   // Set position based on velocity
   this.x += this.vx;
   this.y += this.vy;
-
-
 
   // Bounce off the walls and by reversing velocity and rotation direction
   if (this.x < 0 || this.x > width) {

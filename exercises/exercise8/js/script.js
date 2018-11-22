@@ -27,12 +27,18 @@ var onscreenText;
 
 var input;
 
+// Variable to contain our music
+var bgMusic;
+
+
 // preload()
 //
 // Preloads our font and music
 function preload() {
   // Assigns the font to its variable
   pixelFont = loadFont('assets/fonts/pixelfont.ttf');
+
+    bgMusic = new Audio("assets/sounds/bg.mp3");
 }
 
 // setup()
@@ -56,6 +62,8 @@ function setup() {
 // and displays everything.
 function draw() {
   background(0);
+  bgMusic.play();
+  bgMusic.loop = true;
   for (var i = 0; i < 10; i++) {
     if (keyIsDown(ENTER)){
       fears[i].setup(input.value());
