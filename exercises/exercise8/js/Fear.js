@@ -38,7 +38,7 @@ Fear.prototype.setup = function (string) {
 
 // display()
 //
-// Draw the fears as a rectangle on the screen, with other rectangles for windows.
+// Display the fears by displaying the individual letters and updating them
 Fear.prototype.display = function () {
   push();
   for (var i = 0; i < this.letters.length; i++) {
