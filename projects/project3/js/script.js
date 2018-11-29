@@ -25,12 +25,19 @@ var frontBuilding = [];
 var star = [];
 var street = [];
 var fears = [];
+var input;
+
+// Variables for our buttons
+var fearsButton;
+var continueButton;
+var growthButton;
+var reviewButton;
+
+// Variables for our text
 var fearsGameText;
 var continueGameText;
 var startText;
-var input;
-var fearsButton;
-var continueButton;
+var start2Text;
 
 // Variable to contain our font
 var pixelFont;
@@ -42,6 +49,8 @@ var wooshSound;
 var startScreen = true;
 var fearsActive = false;
 var continueActive = false;
+var growthActive = false;
+var reviewActive = false;
 
 // preload()
 //
@@ -69,7 +78,8 @@ function setup() {
   // Creates the onscreen text
   fearsGameText = new OnscreenText(width/2,height/9,50,pixelFont);
   continueGameText = new OnscreenText(width/2, height/2 + 250,40,pixelFont);
-  startText = new OnscreenText(width/2, height/9,50,pixelFont);
+  startText = new OnscreenText(width/2,height/8,60,pixelFont);
+  start2Text = new OnscreenText(width/2,height/8+50,30,pixelFont);
 
   // Creates blank fears (we will fill them later based on player input)
   for (var i = 0; i < 10; i++) {
@@ -94,8 +104,10 @@ function setup() {
   }
 
   // Create buttons
-  fearsButton = new Button(width/2,height/2 - 50,50,"fears");
-  continueButton = new Button(width/2,height/2 + 50,50,"continue");
+  fearsButton = new Button(width/5*2,height/12*4,50,"fears");
+  continueButton = new Button(width/5*2,height/12*6,50,"continue");
+  growthButton = new Button(width/5*2,height/12*8,50,"growth");
+  reviewButton = new Button(width/5*3,height/12*4,50,"review");
   backButton = new Button(width/15*14,height/12,20,"go back");
 }
 
@@ -113,6 +125,12 @@ function draw() {
   else if (continueActive === true){
     continueGame();
   }
+  else if (growthActive === true){
+    growthGame();
+  }
+  else if (reviewActive === true){
+    reviewGame();
+  }
 }
 // start()
 //
@@ -122,7 +140,9 @@ function start() {
   bgMusic.pause();
   input.hide();
   // Displays the onscreen text
-  startText.display("this is a game or whatever");
+  startText.display("life can wait");
+  start2Text.display("a game for chillin out");
+
   fearsButton.display();
   if (fearsButton.clicked()){
     startScreen = false;
@@ -132,6 +152,16 @@ function start() {
   if (continueButton.clicked()){
     startScreen = false;
     continueActive = true;
+  }
+  growthButton.display();
+  if (growthButton.clicked()){
+    startScreen = false;
+    growthActive = true;
+  }
+  reviewButton.display();
+  if (reviewButton.clicked()){
+    startScreen = false;
+    reviewActive = true;
   }
 }
 
@@ -272,5 +302,29 @@ function music() {
   }
   else {
     bgMusic.pause();
+  }
+}
+
+// growthGame()
+//
+// Plays the fears game
+function growthGame() {
+  background(0);
+  backButton.display();
+  if (backButton.clicked()){
+    startScreen = true;
+    growthActive = false;
+  }
+}
+
+// growthGame()
+//
+// Plays the fears game
+function reviewGame() {
+  background(0);
+  backButton.display();
+  if (backButton.clicked()){
+    startScreen = true;
+    reviewActive = false;
   }
 }
