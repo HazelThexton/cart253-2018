@@ -32,10 +32,12 @@ var fearsButton;
 var continueButton;
 var growthButton;
 var reviewButton;
+var nextButton;
 
 // Variables for our text
 var fearsGameText;
 var continueGameText;
+var reviewGameText;
 var startText;
 var start2Text;
 
@@ -51,6 +53,7 @@ var fearsActive = false;
 var continueActive = false;
 var growthActive = false;
 var reviewActive = false;
+var reviewScreen = 1;
 
 // preload()
 //
@@ -78,8 +81,11 @@ function setup() {
   // Creates the onscreen text
   fearsGameText = new OnscreenText(width/2,height/9,50,pixelFont);
   continueGameText = new OnscreenText(width/2, height/2 + 250,40,pixelFont);
+  reviewGameText = new OnscreenText(width/2,height/9,50,pixelFont);
   startText = new OnscreenText(width/2,height/8,60,pixelFont);
   start2Text = new OnscreenText(width/2,height/8+50,30,pixelFont);
+
+  review = new Review(width/2,height/2,1);
 
   // Creates blank fears (we will fill them later based on player input)
   for (var i = 0; i < 10; i++) {
@@ -109,6 +115,7 @@ function setup() {
   growthButton = new Button(width/5*2,height/12*8,50,"growth");
   reviewButton = new Button(width/5*3,height/12*4,50,"review");
   backButton = new Button(width/15*14,height/12,20,"go back");
+  nextButton = new Button(width/2,height/2,50,"next");
 }
 
 // draw()
@@ -317,14 +324,56 @@ function growthGame() {
   }
 }
 
-// growthGame()
+// reviewGame()
 //
-// Plays the fears game
+// Plays the review game
 function reviewGame() {
   background(0);
+  if (reviewScreen === 1) {
+    reviewScreen1();
+  }
+  else if (reviewScreen === 2) {
+    reviewScreen2();
+  }
+  else if (reviewScreen === 3) {
+    reviewScreen3();
+  }
   backButton.display();
   if (backButton.clicked()){
     startScreen = true;
     reviewActive = false;
   }
 }
+
+function reviewScreen1() {
+  reviewGameText.display("tell me your name:");
+  input.show();
+  if (input.value() === "") {
+  }
+  else{
+    nextButton.display();
+    if (nextButton.clicked()){
+      review.name(input.value());
+      input.value("");
+      reviewScreen = 2;
+    }
+  }
+}
+function reviewScreen2() {
+  reviewGameText.display("tell me your personal pronoun\n(he, she, they, etc.):");
+  if (input.value() === "") {
+  }
+  else {
+    nextButton.display();
+    if (nextButton.clicked()){
+      review.pronoun(input.value());
+      input.value("");
+      reviewScreen = 3;
+    }
+  }
+}
+function reviewScreen3() {
+  reviewGameText.display(": )");
+  review.display();
+  input.hide();
+  }
