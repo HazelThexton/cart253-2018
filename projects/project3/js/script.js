@@ -89,8 +89,8 @@ function setup() {
   }
 
   // Create buttons
-  fearsButton = new Button(width/2,height/2 - 50,50,"fears game");
-  continueButton = new Button(width/2,height/2 + 50,50,"continue game");
+  fearsButton = new Button(width/2,height/2 - 50,50,"fears");
+  continueButton = new Button(width/2,height/2 + 50,50,"continue");
   backButton = new Button(width/15*14,height/12,20,"go back");
 }
 
@@ -136,11 +136,6 @@ function start() {
 function fearsGame() {
   background(0);
 
-  backButton.display();
-  if (backButton.clicked()){
-    startScreen = true;
-    fearsActive = false;
-  }
   // Plays music
   bgMusic.play();
   bgMusic.loop = true;
@@ -162,6 +157,12 @@ function fearsGame() {
   for (var i = 0; i < 10; i++) {
     fears[i].display();
   }
+
+  backButton.display();
+  if (backButton.clicked()){
+    startScreen = true;
+    fearsActive = false;
+  }
 }
 
 // continueGame()
@@ -169,11 +170,7 @@ function fearsGame() {
 // Plays the continue game
 function continueGame() {
   background(0);
-  backButton.display();
-  if (backButton.clicked()){
-    startScreen = true;
-    continueActive = false;
-  }
+
   // Plays the music
   music();
 
@@ -228,6 +225,12 @@ function continueGame() {
       frontBuilding[i].reset();
     }
     frontBuilding[i].display();
+
+    backButton.display();
+    if (backButton.clicked()){
+      startScreen = true;
+      continueActive = false;
+    }
   }
 
   // Displays the text
