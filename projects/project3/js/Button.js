@@ -20,7 +20,7 @@ function Button(x,y,size,string) {
 //
 // Draw the button segment and sidewalk as a rectangle on the screen
 Button.prototype.display = function () {
-  this.assignValues();
+  this.buttonText = new OnscreenText(this.x,this.y,this.size,pixelFont);
   push();
   rectMode(CENTER);
   stroke(255);
@@ -29,13 +29,6 @@ Button.prototype.display = function () {
   rect(this.x, this.y, this.width, this.height, 20);
   pop();
   this.buttonText.display(this.string);
-}
-
-// assignValues()
-//
-// Draw the button segment and sidewalk as a rectangle on the screen
-Button.prototype.assignValues = function () {
-  this.buttonText = new OnscreenText(this.x,this.y,this.size,pixelFont);
   this.width = textWidth(this.string) + 20;
   this.height = this.size + 20;
 }

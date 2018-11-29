@@ -57,8 +57,9 @@ function setup() {
   noStroke();
   textAlign(CENTER,CENTER);
 
-  fearsButton = new Button(width/2,height/2 - 50,50,"fears game");
-  continueButton = new Button(width/2,height/2 + 50,50,"continue game");
+  // Creates the input field
+  input = createInput();
+  input.position(width/2 - input.width/2, 200);
 
   // Creates the onscreen text
   fearsGameText = new OnscreenText(width/2,height/9,50,pixelFont);
@@ -86,6 +87,11 @@ function setup() {
   for (var i = 0; i < 15; i++) {
     street[i] = new Street(width/12.5*[i],height/2 + 250,0,width/20,10,3,RIGHT_ARROW);
   }
+
+  // Create buttons
+  fearsButton = new Button(width/2,height/2 - 50,50,"fears game");
+  continueButton = new Button(width/2,height/2 + 50,50,"continue game");
+  backButton = new Button(width/15*14,height/12,20,"go back");
 }
 
 // draw()
@@ -108,6 +114,8 @@ function draw() {
 // Plays the fears game
 function start() {
   background(0);
+  bgMusic.pause();
+  input.hide();
   // Displays the onscreen text
   startText.display("this is a game or whatever");
   fearsButton.display();
@@ -128,13 +136,16 @@ function start() {
 function fearsGame() {
   background(0);
 
-  // Creates the input field
-  input = createInput();
-  input.position(width/2 - input.width/2, 200);
-
+  backButton.display();
+  if (backButton.clicked()){
+    startScreen = true;
+    fearsActive = false;
+  }
   // Plays music
   bgMusic.play();
   bgMusic.loop = true;
+
+  input.show();
 
   // Displays the onscreen text
   fearsGameText.display("type in your fears,\nthen destroy them.");
@@ -158,7 +169,11 @@ function fearsGame() {
 // Plays the continue game
 function continueGame() {
   background(0);
-
+  backButton.display();
+  if (backButton.clicked()){
+    startScreen = true;
+    continueActive = false;
+  }
   // Plays the music
   music();
 
