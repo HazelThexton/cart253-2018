@@ -39,19 +39,24 @@ Review.prototype.display = function (string) {
 //
 // Text size, color, etc.
 Review.prototype.name = function (name) {
-this.name = name;
+  this.name = name;
 }
 
 // name()
 //
 // Text size, color, etc.
 Review.prototype.pronoun = function (pronoun) {
-this.pronoun = pronoun;
+  this.pronoun = pronoun;
 }
 
 // name()
 //
 // Text size, color, etc.
 Review.prototype.writeReview = function () {
-this.string = this.name + "?? " + this.pronoun + " is so cool!!!";
+  if (this.pronoun === "they") {
+    this.string = this.name + "?? " + this.pronoun + " are so cool!!!";
+  }
+  else {
+    this.string = this.name + "?? " + this.pronoun + " is so cool!!!";
+  }
 }

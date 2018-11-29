@@ -167,6 +167,7 @@ function start() {
   }
   reviewButton.display();
   if (reviewButton.clicked()){
+    reviewScreen = 1;
     startScreen = false;
     reviewActive = true;
   }
