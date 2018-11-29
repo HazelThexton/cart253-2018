@@ -12,6 +12,9 @@
 //
 // Font source:
 // https://www.dafont.com/minecraft.font
+//
+// Sound sources:
+// http://soundbible.com/749-Pitch-Baseball.html
 
 // Variables to contain the objects representing our buildings, stars, and street
 // segments
@@ -34,6 +37,7 @@ var pixelFont;
 
 // Variable to contain our music
 var bgMusic;
+var wooshSound;
 
 var startScreen = true;
 var fearsActive = false;
@@ -47,6 +51,7 @@ function preload() {
   pixelFont = loadFont('assets/fonts/pixelfont.ttf');
 
   bgMusic = new Audio("assets/sounds/bg.mp3");
+  wooshSound = new Audio("assets/sounds/woosh.mp3");
 }
 
 // setup()
@@ -135,10 +140,6 @@ function start() {
 // Plays the fears game
 function fearsGame() {
   background(0);
-
-  // Plays music
-  bgMusic.play();
-  bgMusic.loop = true;
 
   input.show();
 

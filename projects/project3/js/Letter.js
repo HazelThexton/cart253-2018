@@ -95,6 +95,8 @@ Letter.prototype.update = function () {
     // Color and size changes for the letter (gets smaller/less opaque)
     this.opacity += this.opacityChange;
     this.fontSize += this.sizeChange;
+wooshSound.currentTime = 0;
+    wooshSound.play();
     ///////// END NEW /////////
   }
 
