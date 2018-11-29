@@ -24,15 +24,20 @@ var street = [];
 var fears = [];
 var fearsGameText;
 var continueGameText;
-
-// Variable for our input field
+var startText;
 var input;
+var fearsButton;
+var continueButton;
 
 // Variable to contain our font
 var pixelFont;
 
 // Variable to contain our music
 var bgMusic;
+
+var startScreen = true;
+var fearsActive = false;
+var continueActive = false;
 
 // preload()
 //
@@ -52,13 +57,13 @@ function setup() {
   noStroke();
   textAlign(CENTER,CENTER);
 
+  fearsButton = new Button(width/2,height/2 - 50,50,"fears game");
+  continueButton = new Button(width/2,height/2 + 50,50,"continue game");
+
   // Creates the onscreen text
   fearsGameText = new OnscreenText(width/2,height/9,50,pixelFont);
   continueGameText = new OnscreenText(width/2, height/2 + 250,40,pixelFont);
-
-  // Creates the input field
-  input = createInput();
-  input.position(width/2 - input.width/2, 200);
+  startText = new OnscreenText(width/2, height/9,50,pixelFont);
 
   // Creates blank fears (we will fill them later based on player input)
   for (var i = 0; i < 10; i++) {
@@ -88,10 +93,33 @@ function setup() {
 // Handles input, updates all the elements, checks for collisions
 // and displays everything.
 function draw() {
+  if (startScreen === true){
+    start();
+  }
+  else if (fearsActive === true){
+    fearsGame();
+  }
+  else if (continueActive === true){
+    continueGame();
+  }
+}
+// start()
+//
+// Plays the fears game
+function start() {
   background(0);
-
-  fearsGame();
-  continueGame();
+  // Displays the onscreen text
+  startText.display("this is a game or whatever");
+  fearsButton.display();
+  if (fearsButton.clicked()){
+    startScreen = false;
+    fearsActive = true;
+  }
+  continueButton.display();
+  if (continueButton.clicked()){
+    startScreen = false;
+    continueActive = true;
+  }
 }
 
 // fearsGame()
@@ -99,6 +127,10 @@ function draw() {
 // Plays the fears game
 function fearsGame() {
   background(0);
+
+  // Creates the input field
+  input = createInput();
+  input.position(width/2 - input.width/2, 200);
 
   // Plays music
   bgMusic.play();
