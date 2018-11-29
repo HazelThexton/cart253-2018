@@ -5,6 +5,9 @@ In this case it's just padding and margin to 0
 so the canvas is flush with the top left corner.
 
 **********************************************/
+canvas {
+  display: block;
+}
 
 body {
   padding: 0;

@@ -3,16 +3,16 @@
 Letter
 
 A class for representing a single character as text on the screen that
-reacts to mouse movement over it and moves and bounces around.
+reacts to mouse movement over it and moves and bounces around. Taken from
+class example and modified.
 
 ************************************************************************/
 
-
-// Letter(letter,x,y,size)
+// Letter(letter,x,y,fontSize)
 //
 // Construct the letter according to the argument
 // Include various physical properties for moving around
-function Letter(letter,x,y,fontSize) {
+function Letter(letter,x,y,fontSize,font) {
   // The character this object represents
   this.letter = letter;
   // Position, velocity, acceleration
@@ -25,17 +25,24 @@ function Letter(letter,x,y,fontSize) {
   // Deceleration per frame
   this.drag = 0.01;
   // Font size
-  this.fontSize = size;
+  this.fontSize = fontSize;
+  ///////// NEW /////////
+  this.sizeChange = -2;
+  ///////// END NEW /////////
   // Dimensions
-  textSize(this.size);
+  textSize(this.fontSize);
   this.width = textWidth(this.letter);
   this.height = textAscent() + textDescent();
   // Angle for rotation
   this.angle = 0;
   // How much the angle should change per update
   this.angleChange = 0;
-  // Time for Perlin noise
-  this.t = random(1000);
+  ///////// NEW /////////
+  this.font = font;
+  // The opacity and how much it should change per update
+  this.opacity = 255;
+  this.opacityChange = -20;
+  ///////// END NEW /////////
 }
 
 // display()
@@ -43,22 +50,25 @@ function Letter(letter,x,y,fontSize) {
 // Draw the letter on screen based on position and rotation
 Letter.prototype.display = function() {
   push();
+  ///////// NEW /////////
+  // Black stroke with opacity affected by mouse movement
+  stroke(0,this.opacity);
+  strokeWeight(3);
+  ///////// END NEW /////////
   // Set the fontSize
   textSize(this.fontSize);
+  ///////// NEW /////////
+  textFont(this.font);
+  ///////// END NEW /////////
   // Translate to the position of the letter, but add half width and height
   // so that we account for kerning
   translate(this.x + this.width/2,this.y + this.height/2);
   // Rotate
   rotate(this.angle);
-  // Set a stroke based on Perlin noise to create a nice visual effect as
-  // letters move around
-  stroke(map(noise(this.t),0,1,100,255));
-  // Set a stroke weight to make the letters more visible
-  strokeWeight(3);
-  // White fill, why not
-  fill(255);
-  // Update the time parameters for the noise
-  this.t += 0.01;
+  ///////// NEW /////////
+  // White fill with opacity affected by mouse movement
+  fill(255,this.opacity);
+  ///////// END NEW /////////
   // Draw the text
   text(this.letter,0,0);
   pop();
@@ -76,11 +86,16 @@ Letter.prototype.update = function () {
   if (collideLineRect(pmouseX,pmouseY,mouseX,mouseY,this.x,this.y,this.width,this.height)) {
     // If so, set the acceleration to be equivalent to the mouse movement
     // so it conveys a relative force to the speed of movement
-    this.ax += (mouseX - pmouseX);
-    this.ay += (mouseY - pmouseY);
+    this.ax += (mouseX - pmouseX)*5;
+    this.ay += (mouseY - pmouseY)*5;
     // And set the letter spinning based on the acceleration too
     // (The 2000 here is just a tested out value)
     this.angleChange = (this.ax + this.ay) / 2000;
+    ///////// NEW /////////
+    // Color and size changes for the letter (gets smaller/less opaque)
+    this.opacity += this.opacityChange;
+    this.fontSize += this.sizeChange;
+    ///////// END NEW /////////
   }
 
   // Apply drag to the acceleration so it rapidly approaches 0
@@ -94,16 +109,6 @@ Letter.prototype.update = function () {
   // Set position based on velocity
   this.x += this.vx;
   this.y += this.vy;
-
-  // Bounce off the walls and by reversing velocity and rotation direction
-  if (this.x < 0 || this.x > width) {
-    this.vx = -this.vx;
-    this.angleChange = -this.angleChange;
-  }
-  if (this.y < 0 || this.y > height) {
-    this.vy = -this.vy;
-    this.angleChange = -this.angleChange;
-  }
 
   // Increase the angle of rotation
   this.angle += this.angleChange;
