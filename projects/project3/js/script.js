@@ -153,7 +153,7 @@ function start() {
   bgMusic.pause();
   input.hide();
   // Displays the onscreen text
-  startText.display("life can wait");
+  startText.display("take a breath");
   start2Text.display("a game for chillin out");
 
   fearsButton.display();
