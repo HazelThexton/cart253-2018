@@ -18,7 +18,8 @@ function Review(x,y,image) {
   this.string;
   this.author = ["guest_user: \n", "coolguy91: \n", "catgirlnya: \n",
   "king-of-the-internet: \n", "batmanfan85: \n", "neopets-is-life: \n",
-"anon167382: \n", "anon87630: \n", "i_think_dogs_should_vote: \n"]
+"anon167382: \n", "anon87630: \n", "i_think_dogs_should_vote: \n",
+"xX_emo_queen_Xx: \n", "kirby-for-president: \n", "kylo_ren_sucks: \n"]
   this.randomAuthor;
   this.adjectives = ["cool", "awesome", "nice", "talented", "amazing",
   "cute", "badass", "sweet", "thoughtful", "smart",

@@ -2,7 +2,7 @@
 // by Hazel Thexton
 //
 // An interactive "experience" that shows a randomly generated scrolling city.
-// Intended to be part of a series of connected semi-autobiographical interactive
+// Intended to be part of a series of connected calming/therapeutic
 // vignettes/scenes using different modes of interaction in each scene.
 // In the style of/inspired by Dys4ia by Anna Anthropy.
 //
@@ -46,10 +46,11 @@ var start2Text;
 // Variable to contain our font
 var pixelFont;
 
-// Variable to contain our music
+// Variables to contain our sound
 var bgMusic;
 var wooshSound;
 
+// Variables for determining which screen is showing
 var startScreen = true;
 var fearsActive = false;
 var continueActive = false;
@@ -59,13 +60,13 @@ var reviewScreen = 1;
 
 // preload()
 //
-// Preloads our font and music
+// Preloads our font, image and music
 function preload() {
-
+  // Assigns the image to its variable
   fiveStars = loadImage("assets/images/stars.png");
   // Assigns the font to its variable
   pixelFont = loadFont('assets/fonts/pixelfont.ttf');
-
+  // Assigns the sounds to their variables
   bgMusic = new Audio("assets/sounds/bg.mp3");
   wooshSound = new Audio("assets/sounds/woosh.mp3");
 }
@@ -78,17 +79,18 @@ function setup() {
   noStroke();
   textAlign(CENTER,CENTER);
 
-  // Creates the input field
+  // Creates the input field, which we use for fears and review
   input = createInput();
   input.position(width/2 - input.width/2, 200);
 
   // Creates the onscreen text
-  fearsGameText = new OnscreenText(width/2,height/9,50,pixelFont);
-  continueGameText = new OnscreenText(width/2, height/2 + 250,40,pixelFont);
-  reviewGameText = new OnscreenText(width/2,height/9,50,pixelFont);
   startText = new OnscreenText(width/2,height/8,60,pixelFont);
   start2Text = new OnscreenText(width/2,height/8+50,30,pixelFont);
+  fearsGameText = new OnscreenText(width/2,height/9 + 20,50,pixelFont);
+  continueGameText = new OnscreenText(width/2, height/2 + 250,40,pixelFont);
+  reviewGameText = new OnscreenText(width/2,height/9,50,pixelFont);
 
+  // Creates new reviews (we will fill them later based on player input)
   for (var i = 0; i < 3; i++) {
     review[i] = new Review(width/2,height/12*(i*3 + 3.5),fiveStars);
   }
@@ -98,7 +100,7 @@ function setup() {
     fears[i] = new Fear(" ",50,pixelFont);
   }
 
-  // Create buildings. Each building has a random size, random number of window columns/rows within a range.
+  // Creates buildings. Each building has a random size, random number of window columns/rows within a range.
   for (var i = 0; i < 18; i++) {
     midBuilding[i] = new Building(width/15*[i],height/2 + 170,0,random(30,180),random(80,400),2,2,int(random(3)),int(random(3)),RIGHT_ARROW,180);
     frontBuilding[i] = new Building(width/15*[i],height/2 + 190,0,random(30,180),random(80,400),3,1,int(random(3)),int(random(3)),RIGHT_ARROW,250);
@@ -106,16 +108,18 @@ function setup() {
   for (var i = 0; i < 25; i++) {
     backBuilding[i] = new Building(width/19*[i],height/2 + 150,0,random(30,180),random(80,400),1,3,int(random(3)),int(random(3)),RIGHT_ARROW,90);
   }
+
   // Create stars. Each star is randomly placed in the sky.
   for (var i = 0; i < 200; i++) {
     star[i] = new Star(random(width),random(height/2),2,RIGHT_ARROW);
   }
+
   // Creates 15 individual street segments
   for (var i = 0; i < 15; i++) {
     street[i] = new Street(width/12.5*[i],height/2 + 250,0,width/20,10,3,RIGHT_ARROW);
   }
 
-  // Create buttons
+  // Creates buttons
   fearsButton = new Button(width/5*2,height/12*4,50,"fears");
   continueButton = new Button(width/5*2,height/12*6,50,"continue");
   growthButton = new Button(width/5*2,height/12*8,50,"growth");
@@ -145,17 +149,22 @@ function draw() {
     reviewGame();
   }
 }
+
 // start()
 //
-// Plays the fears game
+// Displays the start screen
 function start() {
   background(0);
+  // Stops any music playing from another game
   bgMusic.pause();
+  // Hides the input field
   input.hide();
+
   // Displays the onscreen text
   startText.display("take a breath");
   start2Text.display("a game for chillin out");
 
+  // Displays and handles clicking for the start screen buttons to each game
   fearsButton.display();
   if (fearsButton.clicked()){
     startScreen = false;
@@ -185,6 +194,7 @@ function start() {
 function fearsGame() {
   background(0);
 
+  // Show the input field
   input.show();
 
   // Displays the onscreen text
@@ -203,6 +213,7 @@ function fearsGame() {
     fears[i].display();
   }
 
+  // Displays and handles clicking for the back button
   backButton.display();
   if (backButton.clicked()){
     startScreen = true;
@@ -271,6 +282,7 @@ function continueGame() {
     }
     frontBuilding[i].display();
 
+    // Displays and handles clicking for the back button
     backButton.display();
     if (backButton.clicked()){
       startScreen = true;
@@ -321,9 +333,11 @@ function music() {
 
 // growthGame()
 //
-// Plays the fears game
+// Plays the growth game
 function growthGame() {
   background(0);
+
+  // Displays and handles clicking for the back button
   backButton.display();
   if (backButton.clicked()){
     startScreen = true;
@@ -336,6 +350,8 @@ function growthGame() {
 // Plays the review game
 function reviewGame() {
   background(0);
+
+  // Determines which screen of the review game to be on
   if (reviewScreen === 1) {
     reviewScreen1();
   }
@@ -348,6 +364,8 @@ function reviewGame() {
   else if (reviewScreen === 4) {
     reviewScreen4();
   }
+
+  // Displays and handles clicking for the back button
   backButton.display();
   if (backButton.clicked()){
     startScreen = true;
@@ -355,65 +373,96 @@ function reviewGame() {
   }
 }
 
+// reviewScreen1()
+//
+// Displays the first screen of review
 function reviewScreen1() {
+  // Displays the text at the top of the screen
   reviewGameText.display("tell me your name:");
+  // Shows the input object
   input.show();
-  if (input.value() === "") {
-  }
-  else{
+  // Only shows the next button if the player has input text
+  if (input.value() != "") {
+    // Displays and handles clicking for the next button
     nextButton.display();
     if (nextButton.clicked()){
+      // Assigns the player's name to all the reviews, and assigns each review
+      // a random adjective from the array
       for (var i = 0; i < 3; i++) {
         var r = int(random(20));
         review[i].name = input.value();
         review[i].randomAdjective = r;
       }
-      console.log(review[1].randomAdjective);
+      // Erases the input text
       input.value("");
+      // Goes to the next screen
       reviewScreen = 2;
     }
   }
 }
+
+// reviewScreen2()
+//
+// Displays the second screen of review
 function reviewScreen2() {
+  // Displays the text at the top of the screen
   reviewGameText.display("tell me your personal pronoun\n(he, she, they, etc.):");
-  if (input.value() === "") {
-  }
-  else {
+  // Only shows the next button if the player has input text
+  if (input.value() != "") {
+    // Displays and handles clicking for the next button
     nextButton.display();
     if (nextButton.clicked()){
+      // Assigns the player's pronoun to all the reviews, and assigns each review
+      // a random sentence type from the array
       for (var i = 0; i < 3; i++) {
         var r = int(random(6));
         review[i].pronoun = input.value();
         review[i].randomSentence = r;
       }
+      // Erases the input text
       input.value("");
+      // Goes to the next screen
       reviewScreen = 3;
     }
   }
 }
+
+// reviewScreen3()
+//
+// Displays the third screen of review
 function reviewScreen3() {
+  // Displays the text at the top of the screen
   reviewGameText.display("tell me your occupation:");
-  if (input.value() === "") {
-  }
-  else {
+  // Only shows the next button if the player has input text
+  if (input.value() != "") {
+    // Displays and handles clicking for the next button
     nextButton.display();
     if (nextButton.clicked()){
+      // Assigns the player's occupation to all the reviews, and assigns each review
+      // a random author from the array
       for (var i = 0; i < 3; i++) {
-        var r = int(random(9));
+        var r = int(random(12));
         review[i].randomAuthor = r;
         review[i].occupation = input.value();
       }
+      // Erases the input text
       input.value("");
+      // Goes to the next screen
       reviewScreen = 4;
     }
   }
 }
 
+// reviewScreen4()
+//
+// Displays the last screen of review
 function reviewScreen4() {
+  // Displays the text at the top of the screen with the player's name
   reviewGameText.display(review[1].name + " reviews:");
+  // Hides the input object
   input.hide();
+  // Displays the reviews
   for (var i = 0; i < 3; i++) {
     review[i].display();
   }
-
 }
