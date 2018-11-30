@@ -26,6 +26,8 @@ var star = [];
 var street = [];
 var fears = [];
 var input;
+var fiveStars;
+var review = [];
 
 // Variables for our buttons
 var fearsButton;
@@ -59,6 +61,8 @@ var reviewScreen = 1;
 //
 // Preloads our font and music
 function preload() {
+
+  fiveStars = loadImage("assets/images/stars.png");
   // Assigns the font to its variable
   pixelFont = loadFont('assets/fonts/pixelfont.ttf');
 
@@ -85,7 +89,9 @@ function setup() {
   startText = new OnscreenText(width/2,height/8,60,pixelFont);
   start2Text = new OnscreenText(width/2,height/8+50,30,pixelFont);
 
-  review = new Review(width/2,height/2,1);
+  for (var i = 1; i < 4; i++) {
+    review[i] = new Review(width/2,height/12*(i*2 + 2),fiveStars);
+  }
 
   // Creates blank fears (we will fill them later based on player input)
   for (var i = 0; i < 10; i++) {
@@ -339,6 +345,9 @@ function reviewGame() {
   else if (reviewScreen === 3) {
     reviewScreen3();
   }
+  else if (reviewScreen === 4) {
+    reviewScreen4();
+  }
   backButton.display();
   if (backButton.clicked()){
     startScreen = true;
@@ -354,7 +363,12 @@ function reviewScreen1() {
   else{
     nextButton.display();
     if (nextButton.clicked()){
-      review.name(input.value());
+      for (var i = 1; i < 4; i++) {
+        var r = int(random(10));
+        review[i].name = input.value();
+        review[i].randomAdjective = r;
+      }
+      console.log(review[1].randomAdjective);
       input.value("");
       reviewScreen = 2;
     }
@@ -367,14 +381,37 @@ function reviewScreen2() {
   else {
     nextButton.display();
     if (nextButton.clicked()){
-      review.pronoun(input.value());
+      for (var i = 1; i < 4; i++) {
+        var r = int(random(6));
+        review[i].pronoun = input.value();
+        review[i].randomSentence = r;
+      }
       input.value("");
       reviewScreen = 3;
     }
   }
 }
 function reviewScreen3() {
-  reviewGameText.display(": )");
-  review.display();
-  input.hide();
+  reviewGameText.display("tell me your occupation:");
+  if (input.value() === "") {
   }
+  else {
+    nextButton.display();
+    if (nextButton.clicked()){
+      for (var i = 1; i < 4; i++) {
+        review[i].occupation = input.value();
+      }
+      input.value("");
+      reviewScreen = 4;
+    }
+  }
+}
+
+function reviewScreen4() {
+  reviewGameText.display(review[1].name + " reviews:");
+  input.hide();
+  for (var i = 1; i < 4; i++) {
+    review[i].display();
+  }
+
+}

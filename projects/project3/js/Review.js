@@ -7,20 +7,25 @@
 // Text constructor
 //
 // Sets the properties with the provided arguments
-function Review(x,y,type) {
+function Review(x,y,image) {
   this.x = x;
   this.y = y;
-  this.type = type;
+  this.image = image;
   this.name;
   this.pronoun;
+  this.occupation;
   this.review;
   this.string;
+  this.adjectives = ["cool", "awesome", "nice", "talented", "amazing",
+  "cute", "badass", "sweet", "thoughtful", "smart"];
+  this.randomAdjective;
+  this.randomSentence;
 }
 
 // display()
 //
 // Display the text onscreen
-Review.prototype.display = function (string) {
+Review.prototype.display = function () {
   this.writeReview();
   this.review = new OnscreenText(this.x,this.y,30,pixelFont);
   push();
@@ -28,35 +33,44 @@ Review.prototype.display = function (string) {
   stroke(255);
   strokeWeight(2);
   fill(0);
-  rect(this.x, this.y, this.width, this.height, 20);
+  rect(this.x, this.y - 20, this.width, this.height, 20);
   pop();
+  image(this.image,this.x - this.width/2 + 20,this.y - this.height/2);
   this.review.display(this.string);
   this.width = textWidth(this.string) + 50;
-  this.height = this.size + 50;
-}
-
-// name()
-//
-// Text size, color, etc.
-Review.prototype.name = function (name) {
-  this.name = name;
-}
-
-// name()
-//
-// Text size, color, etc.
-Review.prototype.pronoun = function (pronoun) {
-  this.pronoun = pronoun;
+  this.height = 100;
 }
 
 // name()
 //
 // Text size, color, etc.
 Review.prototype.writeReview = function () {
-  if (this.pronoun === "they") {
-    this.string = this.name + "?? " + this.pronoun + " are so cool!!!";
+  if (this.randomSentence === 0){
+    if (this.pronoun === "they") {
+      this.string = this.name + "? " + this.pronoun + " are so " + this.adjectives[this.randomAdjective] + "!";
+    }
+    else {
+      this.string = this.name + "? " + this.pronoun + " is so " + this.adjectives[this.randomAdjective] + "!";
+    }
   }
-  else {
-    this.string = this.name + "?? " + this.pronoun + " is so cool!!!";
+  else  if (this.randomSentence === 1){
+    this.string = "I think " + this.name + " is super " + this.adjectives[this.randomAdjective] + "...";
+  }
+  else if (this.randomSentence === 2){
+    if (this.pronoun === "they") {
+      this.string = "I met " + this.name + ",  and " + this.pronoun + " were very " + this.adjectives[this.randomAdjective] + "! Five stars!";
+    }
+    else {
+      this.string = "I met " + this.name + ",  and " + this.pronoun + " was very " + this.adjectives[this.randomAdjective] + "! Five stars!";
+    }
+  }
+  else  if (this.randomSentence === 3){
+    this.string = "You know who's " + this.adjectives[this.randomAdjective] + "???? " + this.name + "!!";
+  }
+  else  if (this.randomSentence === 4){
+    this.string = this.name + " is the most " + this.adjectives[this.randomAdjective] + " " + this.occupation + " around!";
+  }
+  else  if (this.randomSentence === 5){
+    this.string = "You wanna know who's one of the best " + this.occupation + "s? I have gotta say " + this.name + ".";
   }
 }
