@@ -89,8 +89,8 @@ function setup() {
   startText = new OnscreenText(width/2,height/8,60,pixelFont);
   start2Text = new OnscreenText(width/2,height/8+50,30,pixelFont);
 
-  for (var i = 1; i < 4; i++) {
-    review[i] = new Review(width/2,height/12*(i*2 + 2),fiveStars);
+  for (var i = 0; i < 3; i++) {
+    review[i] = new Review(width/2,height/12*(i*3 + 3.5),fiveStars);
   }
 
   // Creates blank fears (we will fill them later based on player input)
@@ -363,8 +363,8 @@ function reviewScreen1() {
   else{
     nextButton.display();
     if (nextButton.clicked()){
-      for (var i = 1; i < 4; i++) {
-        var r = int(random(10));
+      for (var i = 0; i < 3; i++) {
+        var r = int(random(20));
         review[i].name = input.value();
         review[i].randomAdjective = r;
       }
@@ -381,7 +381,7 @@ function reviewScreen2() {
   else {
     nextButton.display();
     if (nextButton.clicked()){
-      for (var i = 1; i < 4; i++) {
+      for (var i = 0; i < 3; i++) {
         var r = int(random(6));
         review[i].pronoun = input.value();
         review[i].randomSentence = r;
@@ -398,7 +398,9 @@ function reviewScreen3() {
   else {
     nextButton.display();
     if (nextButton.clicked()){
-      for (var i = 1; i < 4; i++) {
+      for (var i = 0; i < 3; i++) {
+        var r = int(random(9));
+        review[i].randomAuthor = r;
         review[i].occupation = input.value();
       }
       input.value("");
@@ -410,7 +412,7 @@ function reviewScreen3() {
 function reviewScreen4() {
   reviewGameText.display(review[1].name + " reviews:");
   input.hide();
-  for (var i = 1; i < 4; i++) {
+  for (var i = 0; i < 3; i++) {
     review[i].display();
   }
 

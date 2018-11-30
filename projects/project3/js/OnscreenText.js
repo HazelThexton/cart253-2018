@@ -26,7 +26,6 @@ OnscreenText.prototype.display = function (string) {
 //
 // Text size, color, etc.
 OnscreenText.prototype.format = function () {
-  textAlign(CENTER,CENTER);
   textFont(this.font);
   textSize(this.size);
   fill(255);

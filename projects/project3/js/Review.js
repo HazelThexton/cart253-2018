@@ -16,8 +16,14 @@ function Review(x,y,image) {
   this.occupation;
   this.review;
   this.string;
+  this.author = ["guest_user: \n", "coolguy91: \n", "catgirlnya: \n",
+  "king-of-the-internet: \n", "batmanfan85: \n", "neopets-is-life: \n",
+"anon167382: \n", "anon87630: \n", "i_think_dogs_should_vote: \n"]
+  this.randomAuthor;
   this.adjectives = ["cool", "awesome", "nice", "talented", "amazing",
-  "cute", "badass", "sweet", "thoughtful", "smart"];
+  "cute", "badass", "sweet", "thoughtful", "smart",
+  "brilliant", "elegant", "funny", "hilarious", "skilled",
+  "fabulous", "charming", "creative", "imaginative", "kind"];
   this.randomAdjective;
   this.randomSentence;
 }
@@ -27,18 +33,21 @@ function Review(x,y,image) {
 // Display the text onscreen
 Review.prototype.display = function () {
   this.writeReview();
-  this.review = new OnscreenText(this.x,this.y,30,pixelFont);
+  this.review = new OnscreenText(this.x - this.width/2 + 20,this.y,30,pixelFont);
+  this.height = 150;
   push();
   rectMode(CENTER);
   stroke(255);
   strokeWeight(2);
   fill(0);
-  rect(this.x, this.y - 20, this.width, this.height, 20);
+  rect(this.x, this.y + this.height/2 - 60, this.width, this.height, 20);
   pop();
-  image(this.image,this.x - this.width/2 + 20,this.y - this.height/2);
-  this.review.display(this.string);
+  image(this.image,this.x - this.width/2 + 20,this.y - 40);
+  push();
+  textAlign(LEFT, TOP);
+  this.review.display(this.author[this.randomAuthor] + this.string);
   this.width = textWidth(this.string) + 50;
-  this.height = 100;
+  pop();
 }
 
 // name()
@@ -54,7 +63,7 @@ Review.prototype.writeReview = function () {
     }
   }
   else  if (this.randomSentence === 1){
-    this.string = "I think " + this.name + " is super " + this.adjectives[this.randomAdjective] + "...";
+    this.string ="I think " + this.name + " is super " + this.adjectives[this.randomAdjective] + "...";
   }
   else if (this.randomSentence === 2){
     if (this.pronoun === "they") {
