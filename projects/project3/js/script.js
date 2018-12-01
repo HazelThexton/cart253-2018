@@ -90,6 +90,7 @@ function setup() {
   fearsGameText = new OnscreenText(width/2,height/9 + 20,50,pixelFont);
   continueGameText = new OnscreenText(width/2, height/2 + 250,40,pixelFont);
   reviewGameText = new OnscreenText(width/2,height/9,50,pixelFont);
+  growthGameText = new OnscreenText(width/2,height/9,50,pixelFont);
 
   // Creates new reviews (we will fill them later based on player input)
   for (var i = 0; i < 3; i++) {
@@ -338,6 +339,7 @@ function music() {
 // Plays the growth game
 function growthGame() {
   background(0);
+  growthGameText.display("water the tree");
 plant.display();
 plant.handleInput();
   // Displays and handles clicking for the back button
