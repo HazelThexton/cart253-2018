@@ -6,7 +6,7 @@
 // Branch constructor
 //
 // Sets the properties with the provided arguments
-function Branch(x,y,vy,vx,width,height,speed,rotation,color) {
+function Branch(x,y,vy,vx,width,height,speed,rotation,color,maxLength) {
   this.x = x;
   this.y = y;
   this.vy = vy;
@@ -16,6 +16,7 @@ function Branch(x,y,vy,vx,width,height,speed,rotation,color) {
   this.speed = speed;
   this.rotation = rotation;
   this.color = color;
+  this.maxLength = maxLength;
 }
 
 // update()
@@ -23,8 +24,8 @@ function Branch(x,y,vy,vx,width,height,speed,rotation,color) {
 // Moves branch according to velocity
 Branch.prototype.update = function () {
   // Update position with velocity
-  this.height = constrain(this.height + this.vy,0,100);
-  this.y = constrain(this.y - this.vy,height/2, height);
+  this.height = constrain(this.height + this.vy,0,this.maxLength);
+  this.y = constrain(this.y - this.vy,height/2-50, height);
 }
 
 // handleInput()
@@ -54,6 +55,6 @@ Branch.prototype.display = function () {
   fill(this.color);
   translate(this.x,this.y);
   rotate(this.rotation);
-  rect(0,0, this.width, this.height, 20);
+  rect(0,0, this.width, this.height, 50);
   pop();
 }

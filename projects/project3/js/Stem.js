@@ -22,7 +22,7 @@ function Stem(x,y,vy,vx,width,height,speed,color) {
 // Moves stem according to velocity
 Stem.prototype.update = function () {
   // Update position with velocity
-  this.height = constrain(this.height + this.vy,0,height/2);
+  this.height = constrain(this.height + this.vy,0,height/2 +50);
   this.width = constrain(this.width + this.vx,0,30);
   }
 
@@ -48,11 +48,9 @@ Stem.prototype.display = function () {
   rectMode(CORNERS);
   translate(this.x,this.y - this.height);
   scale(-1,1);
-  stroke(255,90);
-  strokeWeight(20);
   // Set the branch color
   fill(this.color);
   // Draw the branch at the new origin (so, up from the ground)
-  rect(0, 0,this.width,this.height);
+  rect(0, 0,this.width,this.height, 50,50,0,0);
   pop();
 }

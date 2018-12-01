@@ -15,21 +15,18 @@ function Plant(x,y,vy,vx,width,height,speed) {
   this.height = height;
   this.speed = speed;
   this.branches = [];
-  this.stem = new Stem(this.x,this.y+20,this.vy,this.vx,0,5,this.speed,255);
+  this.stem = new Stem(this.x,this.y+20,this.vy,this.vx,0,50,this.speed,255);
 }
 
 // handleInput()
 //
 // Handles keyboard input
 Plant.prototype.handleInput = function() {
-  if (mouseIsPressed && random() < 0.05) {
-    var r = radians(random(360));
-    var x = this.x - this.stem.width/2;
-    this.y -= this.stem.height;
+  if (mouseIsPressed && random() < 0.1 && this.stem.height >= height/2) {
     for (var i = 0; i < 10; i++) {
-    this.branches.push(new Branch(x,this.y,this.vy,this.vx,10,0,this.speed,r,random(150,255)));
+      this.branches.push(new Branch(this.x - this.stem.width/2,this.y - this.stem.height +20,this.vy,this.vx,5,0,this.speed,random()+36*i,random(100,255),random(100)));
+    }
   }
-}
 }
 
 // display()

@@ -97,7 +97,7 @@ function setup() {
     review[i] = new Review(width/2,height/12*(i*3 + 3.5),fiveStars);
   }
 
-plant = new Plant(width/2,height,0,0,10,100,0.2);
+plant = new Plant(width/2,height,0,0,10,100,0.06);
   // Creates blank fears (we will fill them later based on player input)
   for (var i = 0; i < 10; i++) {
     fears[i] = new Fear(" ",50,pixelFont);
@@ -339,7 +339,7 @@ function music() {
 // Plays the growth game
 function growthGame() {
   background(0);
-  growthGameText.display("water the tree");
+  growthGameText.display("grow the flower");
 plant.display();
 plant.handleInput();
   // Displays and handles clicking for the back button
