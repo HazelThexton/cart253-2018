@@ -23,8 +23,8 @@ function Branch(x,y,vy,vx,width,height,speed,rotation,color) {
 // Moves branch according to velocity
 Branch.prototype.update = function () {
   // Update position with velocity
-  this.height += this.vy;
-  this.width = constrain(this.width + this.vx,0,30);
+  this.height = constrain(this.height + this.vy,0,100);
+  this.y = constrain(this.y - this.vy,height/2, height);
 }
 
 // handleInput()
@@ -32,8 +32,8 @@ Branch.prototype.update = function () {
 // Handles keyboard input
 Branch.prototype.handleInput = function() {
   if (mouseIsPressed) {
-    this.vy = this.speed;
-    this.vx = this.speed/10;
+    this.vy += this.speed;
+
   }
   else {
     this.vy = 0;
@@ -48,14 +48,12 @@ Branch.prototype.display = function () {
   // Mirror the shapes vertically so we can draw branchs from the ground up
   push();
   rectMode(CORNERS);
-  translate(this.x,this.y - this.height);
-  scale(-1,1);
   stroke(255,90);
   strokeWeight(20);
   // Set the branch color
   fill(this.color);
+  translate(this.x,this.y);
   rotate(this.rotation);
-  // Draw the branch at the new origin (so, up from the ground)
-  rect(0, 0, this.width, this.height, 40,40,40,40);
+  rect(0,0, this.width, this.height, 20);
   pop();
 }
