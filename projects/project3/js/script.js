@@ -28,6 +28,7 @@ var fears = [];
 var input;
 var fiveStars;
 var review = [];
+var plant;
 
 // Variables for our buttons
 var fearsButton;
@@ -95,6 +96,7 @@ function setup() {
     review[i] = new Review(width/2,height/12*(i*3 + 3.5),fiveStars);
   }
 
+plant = new Plant(width/2,height,0,10,100,3);
   // Creates blank fears (we will fill them later based on player input)
   for (var i = 0; i < 10; i++) {
     fears[i] = new Fear(" ",50,pixelFont);
@@ -336,7 +338,9 @@ function music() {
 // Plays the growth game
 function growthGame() {
   background(0);
-
+plant.update();
+plant.display();
+plant.handleInput();
   // Displays and handles clicking for the back button
   backButton.display();
   if (backButton.clicked()){
