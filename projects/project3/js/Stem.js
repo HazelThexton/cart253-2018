@@ -31,8 +31,8 @@ Stem.prototype.update = function () {
 // Handles keyboard input
 Stem.prototype.handleInput = function() {
   if (mouseIsPressed) {
-    this.vy += this.speed;
-    this.vx += this.speed/10;
+    this.vy += this.speed/10;
+    this.vx += this.speed/20;
   }
   else {
     this.vy = 0;

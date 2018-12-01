@@ -97,7 +97,7 @@ function setup() {
     review[i] = new Review(width/2,height/12*(i*3 + 3.5),fiveStars);
   }
 
-plant = new Plant(width/2,height,0,0,10,100,0.06);
+plant = new Plant(width/2,height,0,0,10,100,0.02);
   // Creates blank fears (we will fill them later based on player input)
   for (var i = 0; i < 10; i++) {
     fears[i] = new Fear(" ",50,pixelFont);
