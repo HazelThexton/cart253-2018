@@ -33,14 +33,14 @@ var mic;
 
 // Variables for our buttons
 var fearsButton;
-var continueButton;
-var growthButton;
+var stepsButton;
+var wishesButton;
 var reviewButton;
 var nextButton;
 
 // Variables for our text
 var fearsGameText;
-var continueGameText;
+var stepsGameText;
 var reviewGameText;
 var startText;
 var start2Text;
@@ -55,9 +55,9 @@ var wooshSound;
 // Variables for determining which screen is showing
 var startScreen = true;
 var fearsActive = false;
-var continueActive = false;
-var growthActive = false;
-var growthScreen = 1;
+var stepsActive = false;
+var wishesActive = false;
+var wishesScreen = 1;
 var reviewActive = false;
 var reviewScreen = 1;
 
@@ -82,7 +82,7 @@ function setup() {
   noStroke();
   textAlign(CENTER,CENTER);
 
-  // Creates the input field, which we use for fears and review
+  // Creates the input field, which we use for fears and reviews
   input = createInput();
   input.position(width/2 - input.width/2, 200);
 
@@ -94,9 +94,9 @@ function setup() {
   startText = new OnscreenText(width/2,height/8,60,pixelFont);
   start2Text = new OnscreenText(width/2,height/8+50,30,pixelFont);
   fearsGameText = new OnscreenText(width/2,height/9 + 20,50,pixelFont);
-  continueGameText = new OnscreenText(width/2, height/2 + 250,40,pixelFont);
+  stepsGameText = new OnscreenText(width/2, height/2 + 250,40,pixelFont);
   reviewGameText = new OnscreenText(width/2,height/9,50,pixelFont);
-  growthGameText = new OnscreenText(width/2,height/9,50,pixelFont);
+  wishesGameText = new OnscreenText(width/2,height/9,50,pixelFont);
 
   // Creates new reviews (we will fill them later based on player input)
   for (var i = 0; i < 3; i++) {
@@ -131,9 +131,9 @@ function setup() {
 
   // Creates buttons
   fearsButton = new Button(width/5*2,height/12*5,50,"fears");
-  continueButton = new Button(width/5*3,height/12*5,50,"continue");
-  growthButton = new Button(width/5*2,height/12*8,50,"growth");
-  reviewButton = new Button(width/5*3,height/12*8,50,"review");
+  stepsButton = new Button(width/5*3,height/12*5,50,"steps");
+  wishesButton = new Button(width/5*2,height/12*8,50,"wishes");
+  reviewButton = new Button(width/5*3,height/12*8,50,"reviews");
   backButton = new Button(width/15*14,height/12,20,"go back");
   nextButton = new Button(width/2,height/2,50,"next");
 }
@@ -149,11 +149,11 @@ function draw() {
   else if (fearsActive === true){
     fearsGame();
   }
-  else if (continueActive === true){
-    continueGame();
+  else if (stepsActive === true){
+    stepsGame();
   }
-  else if (growthActive === true){
-    growthGame();
+  else if (wishesActive === true){
+    wishesGame();
   }
   else if (reviewActive === true){
     reviewGame();
@@ -180,16 +180,16 @@ function start() {
     startScreen = false;
     fearsActive = true;
   }
-  continueButton.display();
-  if (continueButton.clicked()){
+  stepsButton.display();
+  if (stepsButton.clicked()){
     startScreen = false;
-    continueActive = true;
+    stepsActive = true;
   }
-  growthButton.display();
-  if (growthButton.clicked()){
-    growthScreen = 1;
+  wishesButton.display();
+  if (wishesButton.clicked()){
+    wishesScreen = 1;
     startScreen = false;
-    growthActive = true;
+    wishesActive = true;
   }
   reviewButton.display();
   if (reviewButton.clicked()){
@@ -232,10 +232,10 @@ function fearsGame() {
   }
 }
 
-// continueGame()
+// stepsGame()
 //
-// Plays the continue game
-function continueGame() {
+// Plays the steps game
+function stepsGame() {
   background(0);
 
   // Plays the music
@@ -297,7 +297,7 @@ function continueGame() {
     backButton.display();
     if (backButton.clicked()){
       startScreen = true;
-      continueActive = false;
+      stepsActive = false;
     }
   }
 
@@ -325,7 +325,7 @@ function onscreenText() {
     fill(0);
     rect(width/2 - 152, height/2 + 220, 303, 500);
     textAlign(CENTER,CENTER);
-    continueGameText.display("just keep going");
+    stepsGameText.display("just keep going");
   }
 }
 
@@ -342,35 +342,35 @@ function music() {
   }
 }
 
-// growthGame()
+// wishesGame()
 //
-// Plays the growth game
-function growthGame() {
+// Plays the wishes game
+function wishesGame() {
   background(0);
-  // Determines which screen of the review game to be on
-  if (growthScreen === 1) {
-    growthGameText.display("\n\n'growth' uses the microphone.\nplease make sure you are in a quiet location\n& that your browser has not blocked permissions");
+  // Determines which screen of the reviews game to be on
+  if (wishesScreen === 1) {
+    wishesGameText.display("\n\n'wishes' uses the microphone.\nplease make sure you are in a quiet location\n& that your browser has not blocked permissions");
     if (backButton.clicked()){
       startScreen = true;
-      growthActive = false;
+      wishesActive = false;
 
     }
     // Displays and handles clicking for the next button
     nextButton.display();
     if (nextButton.clicked()){
       // Goes to the next screen
-      growthScreen = 2;
+      wishesScreen = 2;
     }
     // Displays and handles clicking for the back button
     backButton.display();
     if (backButton.clicked()){
       startScreen = true;
-      growthActive = false;
+      wishesActive = false;
     }
   }
-  else if (growthScreen === 2) {
+  else if (wishesScreen === 2) {
     background(0);
-    growthGameText.display("grow the flower\nand blow to make a wish");
+    wishesGameText.display("grow the flower\nand blow to make a wish");
     plant.display();
     plant.handleInput();
     // Displays and handles clicking for the back button
@@ -378,7 +378,7 @@ function growthGame() {
     if (backButton.clicked()){
       plant.reset();
       startScreen = true;
-      growthActive = false;
+      wishesActive = false;
     }
 
   }
@@ -386,11 +386,11 @@ function growthGame() {
 
 // reviewGame()
 //
-// Plays the review game
+// Plays the reviews game
 function reviewGame() {
   background(0);
 
-  // Determines which screen of the review game to be on
+  // Determines which screen of the reviews game to be on
   if (reviewScreen === 1) {
     reviewScreen1();
   }
@@ -414,7 +414,7 @@ function reviewGame() {
 
 // reviewScreen1()
 //
-// Displays the first screen of review
+// Displays the first screen of reviews
 function reviewScreen1() {
   // Displays the text at the top of the screen
   reviewGameText.display("tell me your name:");
@@ -442,7 +442,7 @@ function reviewScreen1() {
 
 // reviewScreen2()
 //
-// Displays the second screen of review
+// Displays the second screen of reviews
 function reviewScreen2() {
   // Displays the text at the top of the screen
   reviewGameText.display("tell me your personal pronoun\n(he, she, they, etc.):");
@@ -468,7 +468,7 @@ function reviewScreen2() {
 
 // reviewScreen3()
 //
-// Displays the third screen of review
+// Displays the third screen of reviews
 function reviewScreen3() {
   // Displays the text at the top of the screen
   reviewGameText.display("tell me your occupation:");
@@ -494,7 +494,7 @@ function reviewScreen3() {
 
 // reviewScreen4()
 //
-// Displays the last screen of review
+// Displays the last screen of reviews
 function reviewScreen4() {
   // Displays the text at the top of the screen with the player's name
   reviewGameText.display(review[1].name + " reviews:");
