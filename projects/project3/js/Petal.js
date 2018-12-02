@@ -54,7 +54,7 @@ Petal.prototype.blow = function() {
   // start the Audio Input.
   mic.start();
   var micLevel = mic.getLevel();
-  if (micLevel >= 0.25) {
+  if (micLevel >= 0.3) {
     this.ax += random(-micLevel*2,micLevel*2);
     this.ay += random(-micLevel*2,micLevel*2);
   }
