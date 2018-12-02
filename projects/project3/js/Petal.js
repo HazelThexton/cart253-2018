@@ -6,11 +6,14 @@
 // Petal constructor
 //
 // Sets the properties with the provided arguments
-function Petal(x,y,vy,vx,width,height,speed,rotation,color,maxLength) {
+function Petal(x,y,width,height,speed,rotation,color,maxLength) {
   this.x = x;
   this.y = y;
-  this.vy = vy;
-  this.vx = vx;
+  this.vHeight = 0;
+  this.vx = 0;
+  this.vy = 0;
+  this.ax = 0;
+  this.ay = 0;
   this.width = width;
   this.height = height;
   this.speed = speed;
@@ -24,8 +27,11 @@ function Petal(x,y,vy,vx,width,height,speed,rotation,color,maxLength) {
 // Moves petal according to velocity
 Petal.prototype.update = function () {
   // Update position with velocity
-  this.height = constrain(this.height + this.vy,0,this.maxLength);
-  this.y = constrain(this.y - this.vy,height/2-50, height);
+  this.height = constrain(this.height + this.vHeight,0,this.maxLength);
+  //this.y = constrain(this.y - this.vy,height/2-50, height);
+  // Set position based on velocity
+  this.x += this.vx;
+  this.y += this.vy;
 }
 
 // handleInput()
@@ -33,12 +39,11 @@ Petal.prototype.update = function () {
 // Handles keyboard input
 Petal.prototype.handleInput = function() {
   if (mouseIsPressed) {
-    this.vy += this.speed;
+    this.vHeight += this.speed;
 
   }
   else {
-    this.vy = 0;
-    this.vx = 0;
+    this.vHeight = 0;
   }
 }
 
@@ -49,11 +54,14 @@ Petal.prototype.blow = function() {
   // start the Audio Input.
   mic.start();
   var micLevel = mic.getLevel();
-
-  if (micLevel >= 5) {
-    this.color = 0;
-
+  if (micLevel >= 0.25) {
+    this.ax += random(-micLevel*2,micLevel*2);
+    this.ay += random(-micLevel*2,micLevel*2);
   }
+
+  // Apply acceleration to velocity
+  this.vx += this.ax;
+  this.vy += this.ay;
 }
 
 

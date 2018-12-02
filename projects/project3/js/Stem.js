@@ -5,11 +5,11 @@
 // Stem constructor
 //
 // Sets the properties with the provided arguments
-function Stem(x,y,vy,vx,width,height,speed,color) {
+function Stem(x,y,width,height,speed,color) {
   this.x = x;
   this.y = y;
-  this.vy = vy;
-  this.vx = vx;
+  this.vy = 0;
+  this.vx = 0;
   this.width = width;
   this.height = height;
   this.speed = speed;

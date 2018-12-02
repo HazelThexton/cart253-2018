@@ -57,6 +57,7 @@ var startScreen = true;
 var fearsActive = false;
 var continueActive = false;
 var growthActive = false;
+var growthScreen = 1;
 var reviewActive = false;
 var reviewScreen = 1;
 
@@ -102,7 +103,8 @@ function setup() {
     review[i] = new Review(width/2,height/12*(i*3 + 3.5),fiveStars);
   }
 
-  plant = new Plant(width/2,height,0,0,10,100,0.02);
+  plant = new Plant(width/2,height,10,100,0.1);
+
   // Creates blank fears (we will fill them later based on player input)
   for (var i = 0; i < 10; i++) {
     fears[i] = new Fear(" ",50,pixelFont);
@@ -185,6 +187,7 @@ function start() {
   }
   growthButton.display();
   if (growthButton.clicked()){
+    growthScreen = 1;
     startScreen = false;
     growthActive = true;
   }
@@ -344,14 +347,40 @@ function music() {
 // Plays the growth game
 function growthGame() {
   background(0);
-  growthGameText.display("grow the flower");
-  plant.display();
-  plant.handleInput();
-  // Displays and handles clicking for the back button
-  backButton.display();
-  if (backButton.clicked()){
-    startScreen = true;
-    growthActive = false;
+  // Determines which screen of the review game to be on
+  if (growthScreen === 1) {
+    growthGameText.display("\n\n'growth' uses the microphone.\nplease make sure you are in a quiet location\n& that your browser has not blocked permissions");
+    if (backButton.clicked()){
+      startScreen = true;
+      growthActive = false;
+
+    }
+    // Displays and handles clicking for the next button
+    nextButton.display();
+    if (nextButton.clicked()){
+      // Goes to the next screen
+      growthScreen = 2;
+    }
+    // Displays and handles clicking for the back button
+    backButton.display();
+    if (backButton.clicked()){
+      startScreen = true;
+      growthActive = false;
+    }
+  }
+  else if (growthScreen === 2) {
+    background(0);
+    growthGameText.display("grow the flower\nand blow to make a wish");
+    plant.display();
+    plant.handleInput();
+    // Displays and handles clicking for the back button
+    backButton.display();
+    if (backButton.clicked()){
+      plant.reset();
+      startScreen = true;
+      growthActive = false;
+    }
+
   }
 }
 
