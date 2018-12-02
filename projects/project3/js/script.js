@@ -70,8 +70,8 @@ function preload() {
   // Assigns the font to its variable
   pixelFont = loadFont('assets/fonts/pixelfont.ttf');
   // Assigns the sounds to their variables
-  bgMusic = new Audio("assets/sounds/bg.mp3");
-  wooshSound = new Audio("assets/sounds/woosh.mp3");
+  bgMusic = loadSound("assets/sounds/bg.mp3");
+  wooshSound = loadSound("assets/sounds/woosh.mp3");
 }
 
 // setup()
@@ -130,10 +130,10 @@ function setup() {
   }
 
   // Creates buttons
-  fearsButton = new Button(width/5*2,height/12*4,50,"fears");
-  continueButton = new Button(width/5*2,height/12*6,50,"continue");
+  fearsButton = new Button(width/5*2,height/12*5,50,"fears");
+  continueButton = new Button(width/5*3,height/12*5,50,"continue");
   growthButton = new Button(width/5*2,height/12*8,50,"growth");
-  reviewButton = new Button(width/5*3,height/12*4,50,"review");
+  reviewButton = new Button(width/5*3,height/12*8,50,"review");
   backButton = new Button(width/15*14,height/12,20,"go back");
   nextButton = new Button(width/2,height/2,50,"next");
 }
