@@ -70,8 +70,8 @@ function preload() {
   // Assigns the font to its variable
   pixelFont = loadFont('assets/fonts/pixelfont.ttf');
   // Assigns the sounds to their variables
-  bgMusic = loadSound("assets/sounds/bg.mp3");
-  wooshSound = loadSound("assets/sounds/woosh.mp3");
+  bgMusic = new Audio("assets/sounds/bg.mp3");
+  wooshSound = new Audio("assets/sounds/woosh.mp3");
 }
 
 // setup()

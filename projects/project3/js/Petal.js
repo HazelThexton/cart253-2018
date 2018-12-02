@@ -53,10 +53,9 @@ Petal.prototype.handleInput = function() {
 Petal.prototype.blow = function() {
   // start the Audio Input.
   mic.start();
-  var micLevel = mic.getLevel();
-  if (micLevel >= 0.3) {
-    this.ax += random(-micLevel*2,micLevel*2);
-    this.ay += random(-micLevel*2,micLevel*2);
+  if (mic.getLevel() >= 0.4) {
+    this.ax += random(-mic.getLevel()*2,mic.getLevel()*2);
+    this.ay += random(-mic.getLevel()*2,mic.getLevel()*2);
   }
 
   // Apply acceleration to velocity
