@@ -14,7 +14,7 @@ function Plant(x,y,vy,vx,width,height,speed) {
   this.width = width;
   this.height = height;
   this.speed = speed;
-  this.branches = [];
+  this.petals = [];
   this.stem = new Stem(this.x,this.y+20,this.vy,this.vx,0,50,this.speed,255);
 }
 
@@ -22,9 +22,14 @@ function Plant(x,y,vy,vx,width,height,speed) {
 //
 // Handles keyboard input
 Plant.prototype.handleInput = function() {
-  if (mouseIsPressed && random() < 0.1 && this.stem.height >= height/2) {
-    for (var i = 0; i < 10; i++) {
-      this.branches.push(new Branch(this.x - this.stem.width/2,this.y - this.stem.height +20,this.vy,this.vx,5,0,this.speed,random()+36*i,random(100,255),random(100)));
+  if (mouseIsPressed && this.stem.height >= height/2) {
+    for (var i = 0; i < this.petals.length; i++) {
+      this.petals[i].blow();
+    }
+    if (random() < 0.1) {
+      for (var i = 0; i < 10; i++) {
+        this.petals.push(new Petal(this.x - this.stem.width/2,this.y - this.stem.height +20,this.vy,this.vx,5,0,this.speed,random()+36*i,random(100,255),random(100)));
+      }
     }
   }
 }
@@ -37,9 +42,9 @@ Plant.prototype.display = function () {
   this.stem.update();
   this.stem.handleInput();
 
-  for (var i = 0; i < this.branches.length; i++) {
-    this.branches[i].display();
-    this.branches[i].update();
-    this.branches[i].handleInput();
+  for (var i = 0; i < this.petals.length; i++) {
+    this.petals[i].display();
+    this.petals[i].update();
+    this.petals[i].handleInput();
   }
 }

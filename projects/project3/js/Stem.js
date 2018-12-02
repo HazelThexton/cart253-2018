@@ -1,7 +1,6 @@
 // Stem
 //
-// A class to define how a stem behaves. Randomized # of windows, size, etc.
-// Resets to the right with new random values when it scrolls off screen.
+// A class to define how a stem behaves. Grows upwards and in width until limit.
 
 // Stem constructor
 //
@@ -45,12 +44,13 @@ Stem.prototype.handleInput = function() {
 // Draw the stem as a rectangle on the screen.
 Stem.prototype.display = function () {
   push();
+  // Mirror the shape vertically so we can draw the stem from the ground up
   rectMode(CORNERS);
   translate(this.x,this.y - this.height);
   scale(-1,1);
-  // Set the branch color
+  // Set the stem color
   fill(this.color);
-  // Draw the branch at the new origin (so, up from the ground)
+  // Draw the stem at the new origin (so, up from the ground)
   rect(0, 0,this.width,this.height, 50,50,0,0);
   pop();
 }

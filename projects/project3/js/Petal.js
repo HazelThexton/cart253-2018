@@ -1,12 +1,12 @@
-// Branch
+// Petal
 //
-// A class to define how a branch behaves. Randomized # of windows, size, etc.
+// A class to define how a petal behaves. Randomized # of windows, size, etc.
 // Resets to the right with new random values when it scrolls off screen.
 
-// Branch constructor
+// Petal constructor
 //
 // Sets the properties with the provided arguments
-function Branch(x,y,vy,vx,width,height,speed,rotation,color,maxLength) {
+function Petal(x,y,vy,vx,width,height,speed,rotation,color,maxLength) {
   this.x = x;
   this.y = y;
   this.vy = vy;
@@ -21,8 +21,8 @@ function Branch(x,y,vy,vx,width,height,speed,rotation,color,maxLength) {
 
 // update()
 //
-// Moves branch according to velocity
-Branch.prototype.update = function () {
+// Moves petal according to velocity
+Petal.prototype.update = function () {
   // Update position with velocity
   this.height = constrain(this.height + this.vy,0,this.maxLength);
   this.y = constrain(this.y - this.vy,height/2-50, height);
@@ -31,7 +31,7 @@ Branch.prototype.update = function () {
 // handleInput()
 //
 // Handles keyboard input
-Branch.prototype.handleInput = function() {
+Petal.prototype.handleInput = function() {
   if (mouseIsPressed) {
     this.vy += this.speed;
 
@@ -42,16 +42,31 @@ Branch.prototype.handleInput = function() {
   }
 }
 
+// blow()
+//
+// Handles keyboard input
+Petal.prototype.blow = function() {
+  // start the Audio Input.
+  mic.start();
+  var micLevel = mic.getLevel();
+
+  if (micLevel >= 5) {
+    this.color = 0;
+
+  }
+}
+
+
 // display()
 //
-// Draw the branch as a rectangle on the screen.
-Branch.prototype.display = function () {
-  // Mirror the shapes vertically so we can draw branchs from the ground up
+// Draw the petal as a rectangle on the screen.
+Petal.prototype.display = function () {
+  // Mirror the shapes vertically so we can draw petals from the ground up
   push();
   rectMode(CORNERS);
   stroke(255,90);
   strokeWeight(20);
-  // Set the branch color
+  // Set the petal color
   fill(this.color);
   translate(this.x,this.y);
   rotate(this.rotation);

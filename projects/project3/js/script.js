@@ -29,6 +29,7 @@ var input;
 var fiveStars;
 var review = [];
 var plant;
+var mic;
 
 // Variables for our buttons
 var fearsButton;
@@ -84,6 +85,10 @@ function setup() {
   input = createInput();
   input.position(width/2 - input.width/2, 200);
 
+  // Create an Audio input
+  mic = new p5.AudioIn();
+
+
   // Creates the onscreen text
   startText = new OnscreenText(width/2,height/8,60,pixelFont);
   start2Text = new OnscreenText(width/2,height/8+50,30,pixelFont);
@@ -97,7 +102,7 @@ function setup() {
     review[i] = new Review(width/2,height/12*(i*3 + 3.5),fiveStars);
   }
 
-plant = new Plant(width/2,height,0,0,10,100,0.02);
+  plant = new Plant(width/2,height,0,0,10,100,0.02);
   // Creates blank fears (we will fill them later based on player input)
   for (var i = 0; i < 10; i++) {
     fears[i] = new Fear(" ",50,pixelFont);
@@ -340,8 +345,8 @@ function music() {
 function growthGame() {
   background(0);
   growthGameText.display("grow the flower");
-plant.display();
-plant.handleInput();
+  plant.display();
+  plant.handleInput();
   // Displays and handles clicking for the back button
   backButton.display();
   if (backButton.clicked()){
