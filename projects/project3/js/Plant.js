@@ -46,6 +46,7 @@ Plant.prototype.display = function () {
     this.petals[i].update();
     this.petals[i].handleInput();
   }
+
 }
 }
 
@@ -57,6 +58,9 @@ Plant.prototype.reset = function () {
   this.stem.width = 5;
   for (var i = 0; i < this.petals.length; i++) {
     this.petals[i].height = 0;
-    this.petals[i].speed = 0;
+//  this.petals[i].ax = 0;
+    //this.petals[i].ay = 0;
+  this.petals[i].vx = 0;
+    this.petals[i].vy = 0;
   }
 }

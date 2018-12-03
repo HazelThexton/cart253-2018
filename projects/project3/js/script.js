@@ -346,6 +346,7 @@ function music() {
 //
 // Plays the wishes game
 function wishesGame() {
+
   background(0);
   // Determines which screen of the reviews game to be on
   if (wishesScreen === 1) {
@@ -353,8 +354,9 @@ function wishesGame() {
     if (backButton.clicked()){
       startScreen = true;
       wishesActive = false;
-
     }
+    // start the Audio Input.
+    mic.start();
     // Displays and handles clicking for the next button
     nextButton.display();
     if (nextButton.clicked()){
@@ -373,10 +375,12 @@ function wishesGame() {
     wishesGameText.display("grow the flower\nand blow to make a wish");
     plant.display();
     plant.handleInput();
+
     // Displays and handles clicking for the back button
     backButton.display();
     if (backButton.clicked()){
       plant.reset();
+
       startScreen = true;
       wishesActive = false;
     }

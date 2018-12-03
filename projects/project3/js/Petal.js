@@ -40,7 +40,6 @@ Petal.prototype.update = function () {
 Petal.prototype.handleInput = function() {
   if (mouseIsPressed) {
     this.vHeight += this.speed;
-
   }
   else {
     this.vHeight = 0;
@@ -51,17 +50,27 @@ Petal.prototype.handleInput = function() {
 //
 // Handles keyboard input
 Petal.prototype.blow = function() {
-  // start the Audio Input.
-  mic.start();
+
   if (mic.getLevel() >= 0.4) {
     this.ax += random(-mic.getLevel()*2,mic.getLevel()*2);
     this.ay += random(-mic.getLevel()*2,mic.getLevel()*2);
+
+    // Apply acceleration to velocity
+    this.vx += this.ax;
+    this.vy += this.ay;
+    // Apply drag to the acceleration so it rapidly approaches 0
+  //  this.ax = this.ax - this.ax/10;
+  //  this.ay = this.ay - this.ay/10;
   }
 
-  // Apply acceleration to velocity
-  this.vx += this.ax;
-  this.vy += this.ay;
+else {
+  this.ax = 0;
+  this.ay = 0;
 }
+
+
+}
+
 
 
 // display()
