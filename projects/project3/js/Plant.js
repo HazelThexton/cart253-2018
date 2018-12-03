@@ -58,8 +58,8 @@ Plant.prototype.reset = function () {
   this.stem.width = 5;
   for (var i = 0; i < this.petals.length; i++) {
     this.petals[i].height = 0;
-//  this.petals[i].ax = 0;
-    //this.petals[i].ay = 0;
+  this.petals[i].x = width/2 -15;
+    this.petals[i].y = height/2-20;
   this.petals[i].vx = 0;
     this.petals[i].vy = 0;
   }

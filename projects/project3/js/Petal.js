@@ -29,9 +29,17 @@ Petal.prototype.update = function () {
   // Update position with velocity
   this.height = constrain(this.height + this.vHeight,0,this.maxLength);
   //this.y = constrain(this.y - this.vy,height/2-50, height);
+
+
+  // Apply acceleration to velocity
+  this.vx += this.ax;
+  this.vy += this.ay;
   // Set position based on velocity
   this.x += this.vx;
   this.y += this.vy;
+  // Apply drag to the acceleration so it rapidly approaches 0
+  this.ax = constrain(this.ax * 0.01,-1,1);
+  this.ay = constrain(this.ay * 0.01,-1,1);
 }
 
 // handleInput()
@@ -54,20 +62,7 @@ Petal.prototype.blow = function() {
   if (mic.getLevel() >= 0.4) {
     this.ax += random(-mic.getLevel()*2,mic.getLevel()*2);
     this.ay += random(-mic.getLevel()*2,mic.getLevel()*2);
-
-    // Apply acceleration to velocity
-    this.vx += this.ax;
-    this.vy += this.ay;
-    // Apply drag to the acceleration so it rapidly approaches 0
-  //  this.ax = this.ax - this.ax/10;
-  //  this.ay = this.ay - this.ay/10;
   }
-
-else {
-  this.ax = 0;
-  this.ay = 0;
-}
-
 
 }
 
