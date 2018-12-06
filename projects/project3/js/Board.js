@@ -35,3 +35,10 @@ Board.prototype.display = function () {
 Board.prototype.reset = function () {
   background(0);
 }
+// display()
+//
+// Draw the plant as a rectangle on the screen.
+Board.prototype.screenshot = function () {
+  save('bestdrawingever.png');
+  return;
+}
