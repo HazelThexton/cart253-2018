@@ -30,6 +30,7 @@ var fiveStars;
 var review = [];
 var plant;
 var mic;
+var board;
 
 // Variables for our buttons
 var fearsButton;
@@ -60,6 +61,8 @@ var wishesActive = false;
 var wishesScreen = 1;
 var reviewActive = false;
 var reviewScreen = 1;
+var artActive = false;
+var artScreen = 1;
 
 // preload()
 //
@@ -91,12 +94,12 @@ function setup() {
 
 
   // Creates the onscreen text
-  startText = new OnscreenText(width/2,height/8,60,pixelFont);
-  start2Text = new OnscreenText(width/2,height/8+50,30,pixelFont);
-  fearsGameText = new OnscreenText(width/2,height/9 + 20,50,pixelFont);
-  stepsGameText = new OnscreenText(width/2, height/2 + 250,40,pixelFont);
-  reviewGameText = new OnscreenText(width/2,height/9,50,pixelFont);
-  wishesGameText = new OnscreenText(width/2,height/9,50,pixelFont);
+  startText = new OnscreenText(width/2,height/8,60,pixelFont,255);
+  start2Text = new OnscreenText(width/2,height/8+50,30,pixelFont,255);
+  fearsGameText = new OnscreenText(width/2,height/9 + 20,50,pixelFont,255);
+  stepsGameText = new OnscreenText(width/2, height/2 + 250,40,pixelFont,255);
+  reviewGameText = new OnscreenText(width/2,height/9,50,pixelFont,255);
+  wishesGameText = new OnscreenText(width/2,height/9,50,pixelFont,255);
 
   // Creates new reviews (we will fill them later based on player input)
   for (var i = 0; i < 3; i++) {
@@ -104,6 +107,7 @@ function setup() {
   }
 
   plant = new Plant(width/2,height,10,100,0.1);
+
 
   // Creates blank fears (we will fill them later based on player input)
   for (var i = 0; i < 10; i++) {
@@ -129,13 +133,24 @@ function setup() {
     street[i] = new Street(width/12.5*[i],height/2 + 250,0,width/20,10,3,RIGHT_ARROW);
   }
 
+  board = new Board(0,0,0,0,0);
+
   // Creates buttons
-  fearsButton = new Button(width/5*2,height/12*5,50,"fears");
-  stepsButton = new Button(width/5*3,height/12*5,50,"steps");
-  wishesButton = new Button(width/5*2,height/12*8,50,"wishes");
-  reviewButton = new Button(width/5*3,height/12*8,50,"reviews");
-  backButton = new Button(width/15*14,height/12,20,"go back");
-  nextButton = new Button(width/2,height/2,50,"next");
+  fearsButton = new Button(width/5*2,height/12*5,50,"fears",255);
+  stepsButton = new Button(width/5*3,height/12*5,50,"steps",255);
+  wishesButton = new Button(width/5*2,height/12*7,50,"wishes",255);
+  reviewButton = new Button(width/5*3,height/12*7,50,"reviews",255);
+  artButton = new Button(width/5*2,height/12*9,50,"art",255);
+  redButton = new Button(width/9*2,height/12*10,20,"red",'#f44242');
+  purpleButton = new Button(width/9*3,height/12*10,20,"purple",'#b54fff');
+  blueButton = new Button(width/9*4,height/12*10,20,"blue",'#4f5dff');
+  greenButton = new Button(width/9*5,height/12*10,20,"green",'#78f45d');
+  yellowButton = new Button(width/9*6,height/12*10,20,"yellow",'#f4e75d');
+  orangeButton = new Button(width/9*7,height/12*10,20,"orange",'#f7972a');
+  resetButton = new Button(width/9*4.5,height/12*11,20,"clear",255);
+
+  backButton = new Button(width/15*14,height/12,20,"go back",255);
+  nextButton = new Button(width/2,height/2,50,"next",255);
 }
 
 // draw()
@@ -157,6 +172,9 @@ function draw() {
   }
   else if (reviewActive === true){
     reviewGame();
+  }
+  else if (artActive === true){
+    artGame();
   }
 }
 
@@ -196,6 +214,13 @@ function start() {
     reviewScreen = 1;
     startScreen = false;
     reviewActive = true;
+  }
+  artButton.display();
+  if (artButton.clicked()){
+    artScreen = 1;
+    board.reset();
+    startScreen = false;
+    artActive = true;
   }
 }
 
@@ -508,4 +533,52 @@ function reviewScreen4() {
   for (var i = 0; i < 3; i++) {
     review[i].display();
   }
+}
+
+// artGame()
+//
+// Plays the art game
+function artGame() {
+  // Displays and handles clicking for the back button
+  redButton.display();
+  if (redButton.clicked()){
+    board.color = '#f44242';
+  }
+  // Displays and handles clicking for the back button
+  purpleButton.display();
+  if (purpleButton.clicked()){
+    board.color = '#b54fff';
+  }
+  // Displays and handles clicking for the back button
+  blueButton.display();
+  if (blueButton.clicked()){
+    board.color = '#4f5dff';
+  }
+  // Displays and handles clicking for the back button
+  greenButton.display();
+  if (greenButton.clicked()){
+    board.color = '#78f45d';
+  }
+  // Displays and handles clicking for the back button
+  yellowButton.display();
+  if (yellowButton.clicked()){
+    board.color = '#f4e75d';
+  }
+  // Displays and handles clicking for the back button
+  orangeButton.display();
+  if (orangeButton.clicked()){
+    board.color = '#f7972a';
+  }
+  // Displays and handles clicking for the back button
+  backButton.display();
+  if (backButton.clicked()){
+    startScreen = true;
+    reviewActive = false;
+  }
+  // Displays and handles clicking for the back button
+  resetButton.display();
+  if (resetButton.clicked()){
+    board.reset();
+  }
+  board.display();
 }

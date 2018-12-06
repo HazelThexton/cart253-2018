@@ -6,7 +6,7 @@
 // Button constructor
 //
 // Sets the properties with the provided arguments
-function Button(x,y,size,string) {
+function Button(x,y,size,string,color) {
   this.x = x;
   this.y = y;
   this.size = size;
@@ -14,13 +14,14 @@ function Button(x,y,size,string) {
   this.buttonText;
   this.width;
   this.height;
+  this.color = color;
 }
 
 // display()
 //
 // Draw the button segment and sidewalk as a rectangle on the screen
 Button.prototype.display = function () {
-  this.buttonText = new OnscreenText(this.x,this.y,this.size,pixelFont);
+  this.buttonText = new OnscreenText(this.x,this.y,this.size,pixelFont,this.color);
   push();
   rectMode(CENTER);
   stroke(255);
