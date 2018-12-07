@@ -177,14 +177,14 @@ function setup() {
 
   // Creates the board for the drawing game
   board = new Board(0);
-}
 
-// Creates a plant for the wishes game
-plant = new Plant(width/2,height,10,100,0.1);
+  // Creates a plant for the wishes game
+  plant = new Plant(width/2,height,10,100,0.1);
 
-// Creates new reviews (we will fill them later based on player input)
-for (var i = 0; i < 3; i++) {
-  review[i] = new Review(width/2,height/12*(i*3 + 3.5),fiveStars);
+  // Creates new reviews (we will fill them later based on player input)
+  for (var i = 0; i < 3; i++) {
+    review[i] = new Review(width/2,height/12*(i*3 + 3.5),fiveStars);
+  }
 }
 
 // draw()
@@ -237,12 +237,6 @@ function start() {
     startScreen = false;
     stepsActive = true;
   }
-  drawingsButton.display();
-  if (drawingsButton.clicked()){
-    board.reset();
-    startScreen = false;
-    drawingsActive = true;
-  }
   wishesButton.display();
   if (wishesButton.clicked()){
     wishesScreen = 1;
@@ -254,6 +248,12 @@ function start() {
     reviewScreen = 1;
     startScreen = false;
     reviewActive = true;
+  }
+  drawingsButton.display();
+  if (drawingsButton.clicked()){
+    board.reset();
+    startScreen = false;
+    drawingsActive = true;
   }
 }
 
@@ -453,7 +453,7 @@ function drawingsGame() {
   backButton.display();
   if (backButton.clicked()){
     startScreen = true;
-    reviewActive = false;
+    drawingsActive = false;
   }
 
   // Displays and handles clicking for the reset button, which clears the board
