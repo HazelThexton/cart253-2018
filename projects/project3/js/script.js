@@ -1,45 +1,63 @@
-// Cityscape
+// Take a Breath
 // by Hazel Thexton
 //
-// An interactive "experience" that shows a randomly generated scrolling city.
-// Intended to be part of a series of connected calming/therapeutic
-// vignettes/scenes using different modes of interaction in each scene.
-// In the style of/inspired by Dys4ia by Anna Anthropy.
+// A series of interactive experiences meant to be calming/therapeutic to the
+// player.
 //
-// Right arrow key or click/touch to move.
+// Fears: Allows the player to input their fears as text, then whisk them away with the
+// mouse, with visual and sound effects.
+//
+// Steps: Prompts the player to click to maintain the movement of the calming cityscape
+// with randomized buildings and music.
+//
+// Drawings: Lets the player draw in multiple colours and save their image as
+// a screenshot.
+//
+// Wishes: Prompts the player to click to grow a flower, then blow on their microphone
+// to simulate the scattering effect of a dandelion.
+//
+// Reviews: Creates randomized positive "reviews" of the player based on their own input
+//
+// Uses primarily mouse but also keyboard and microphone input.
 //
 // Written with JavaScript OOP.
 //
 // Font source:
 // https://www.dafont.com/minecraft.font
 //
-// Sound sources:
+// Sound source:
 // http://soundbible.com/749-Pitch-Baseball.html
 
-// Variables to contain the objects representing our buildings, stars, and street
-// segments
-
+// Variables to contain all our objects
+// Fears objects
+var fears = [];
+var input;
+// Steps objects
 var backBuilding = [];
 var midBuilding = [];
 var frontBuilding = [];
 var star = [];
 var street = [];
-var fears = [];
-var input;
-var fiveStars;
-var review = [];
+// Drawings object
+var board;
+// Wishes objects
 var plant;
 var mic;
-var board;
-var timer;
-var saveActive = true;
+// Reviews objects
+var fiveStars;
+var review = [];
 
 // Variables for our buttons
+// Global buttons
+var nextButton;
+var backButton;
+// Start screen buttons
 var fearsButton;
 var stepsButton;
+var drawingsButton;
 var wishesButton;
 var reviewButton;
-var drawingsButton;
+// Drawing game buttons
 var redButton;
 var purpleButton;
 var blueButton;
@@ -48,15 +66,17 @@ var yellowButton;
 var orangeButton;
 var resetButton;
 var saveButton;
-var nextButton;
-var backButton;
+// Variables for the timer on our save button (to avoid many simultaneous clicks)
+var timer;
+var saveActive = true;
 
 // Variables for our text
-var fearsGameText;
-var stepsGameText;
-var reviewGameText;
 var startText;
 var start2Text;
+var fearsGameText;
+var stepsGameText;
+var wishesGameText;
+var reviewGameText;
 
 // Variable to contain our font
 var pixelFont;
@@ -69,11 +89,11 @@ var wooshSound;
 var startScreen = true;
 var fearsActive = false;
 var stepsActive = false;
+var drawingsActive = false;
 var wishesActive = false;
 var wishesScreen = 1;
 var reviewActive = false;
 var reviewScreen = 1;
-var drawingsActive = false;
 
 // preload()
 //
@@ -108,17 +128,28 @@ function setup() {
   start2Text = new OnscreenText(width/2,height/8+50,30,pixelFont,255);
   fearsGameText = new OnscreenText(width/2,height/9 + 20,50,pixelFont,255);
   stepsGameText = new OnscreenText(width/2, height/2 + 250,40,pixelFont,255);
-  reviewGameText = new OnscreenText(width/2,height/9,50,pixelFont,255);
   wishesGameText = new OnscreenText(width/2,height/9,50,pixelFont,255);
+  reviewGameText = new OnscreenText(width/2,height/9,50,pixelFont,255);
 
-  // Creates new reviews (we will fill them later based on player input)
-  for (var i = 0; i < 3; i++) {
-    review[i] = new Review(width/2,height/12*(i*3 + 3.5),fiveStars);
-  }
-
-  // Creates a plant for the wishes game
-  plant = new Plant(width/2,height,10,100,0.1);
-
+  // Creates buttons
+  // Global buttons
+  backButton = new Button(width/15*14,height/12,20,"go back",255);
+  nextButton = new Button(width/2,height/2,50,"next",255);
+  // Start screen buttons
+  fearsButton = new Button(width/5*2,height/12*5,50,"fears",255);
+  stepsButton = new Button(width/5*3,height/12*5,50,"steps",255);
+  drawingsButton = new Button(width/5*2.5,height/12*7,50,"drawings",255);
+  wishesButton = new Button(width/5*2,height/12*9,50,"wishes",255);
+  reviewButton = new Button(width/5*3,height/12*9,50,"reviews",255);
+  // Drawing game buttons
+  redButton = new Button(width/9*2,height/12*9,20,"red",'#f44242');
+  purpleButton = new Button(width/9*3,height/12*9,20,"purple",'#b54fff');
+  blueButton = new Button(width/9*4,height/12*9,20,"blue",'#4f5dff');
+  greenButton = new Button(width/9*5,height/12*9,20,"green",'#78f45d');
+  yellowButton = new Button(width/9*6,height/12*9,20,"yellow",'#f4e75d');
+  orangeButton = new Button(width/9*7,height/12*9,20,"orange",'#f7972a');
+  resetButton = new Button(width/9*4,height/12*11,20,"clear",255);
+  saveButton = new Button(width/9*5,height/12*11,20,"save",255);
 
   // Creates blank fears (we will fill them later based on player input)
   for (var i = 0; i < 10; i++) {
@@ -146,23 +177,14 @@ function setup() {
 
   // Creates the board for the drawing game
   board = new Board(0);
+}
 
-  // Creates buttons
-  fearsButton = new Button(width/5*2,height/12*5,50,"fears",255);
-  stepsButton = new Button(width/5*3,height/12*5,50,"steps",255);
-  wishesButton = new Button(width/5*2,height/12*7,50,"wishes",255);
-  reviewButton = new Button(width/5*3,height/12*7,50,"reviews",255);
-  drawingsButton = new Button(width/5*2,height/12*9,50,"drawings",255);
-  redButton = new Button(width/9*2,height/12*9,20,"red",'#f44242');
-  purpleButton = new Button(width/9*3,height/12*9,20,"purple",'#b54fff');
-  blueButton = new Button(width/9*4,height/12*9,20,"blue",'#4f5dff');
-  greenButton = new Button(width/9*5,height/12*9,20,"green",'#78f45d');
-  yellowButton = new Button(width/9*6,height/12*9,20,"yellow",'#f4e75d');
-  orangeButton = new Button(width/9*7,height/12*9,20,"orange",'#f7972a');
-  resetButton = new Button(width/9*4,height/12*11,20,"clear",255);
-  saveButton = new Button(width/9*5,height/12*11,20,"save",255);
-  backButton = new Button(width/15*14,height/12,20,"go back",255);
-  nextButton = new Button(width/2,height/2,50,"next",255);
+// Creates a plant for the wishes game
+plant = new Plant(width/2,height,10,100,0.1);
+
+// Creates new reviews (we will fill them later based on player input)
+for (var i = 0; i < 3; i++) {
+  review[i] = new Review(width/2,height/12*(i*3 + 3.5),fiveStars);
 }
 
 // draw()
@@ -179,14 +201,14 @@ function draw() {
   else if (stepsActive === true){
     stepsGame();
   }
+  else if (drawingsActive === true){
+    drawingsGame();
+  }
   else if (wishesActive === true){
     wishesGame();
   }
   else if (reviewActive === true){
     reviewGame();
-  }
-  else if (drawingsActive === true){
-    drawingsGame();
   }
 }
 
@@ -215,6 +237,12 @@ function start() {
     startScreen = false;
     stepsActive = true;
   }
+  drawingsButton.display();
+  if (drawingsButton.clicked()){
+    board.reset();
+    startScreen = false;
+    drawingsActive = true;
+  }
   wishesButton.display();
   if (wishesButton.clicked()){
     wishesScreen = 1;
@@ -226,12 +254,6 @@ function start() {
     reviewScreen = 1;
     startScreen = false;
     reviewActive = true;
-  }
-  drawingsButton.display();
-  if (drawingsButton.clicked()){
-    board.reset();
-    startScreen = false;
-    drawingsActive = true;
   }
 }
 
@@ -376,6 +398,70 @@ function music() {
   else {
     bgMusic.pause();
   }
+}
+
+// drawingsGame()
+//
+// Plays the drawings game
+function drawingsGame() {
+  // Displays the drawing board
+  board.display();
+
+  // Displays and handles clicking for the save button
+  if (saveActive === true){
+    saveButton.display();
+    if (saveButton.clicked()){
+      // Covers up the buttons and saves the image, then sets a timer to avoid
+      // multiple clicks in a row
+      board.screenshot();
+      timer = millis() + 1000;
+      saveActive = false;
+    }
+  }
+  // Activates the save button again if the time is up
+  else if (millis() >= timer) {
+    saveActive = true;
+  }
+
+  // Displays and handles clicking for the colour buttons, which determine what
+  // colour the player is drawing with
+  redButton.display();
+  if (redButton.clicked()){
+    board.color = '#f44242';
+  }
+  purpleButton.display();
+  if (purpleButton.clicked()){
+    board.color = '#b54fff';
+  }
+  blueButton.display();
+  if (blueButton.clicked()){
+    board.color = '#4f5dff';
+  }
+  greenButton.display();
+  if (greenButton.clicked()){
+    board.color = '#78f45d';
+  }
+  yellowButton.display();
+  if (yellowButton.clicked()){
+    board.color = '#f4e75d';
+  }
+  orangeButton.display();
+  if (orangeButton.clicked()){
+    board.color = '#f7972a';
+  }
+  // Displays and handles clicking for the back button
+  backButton.display();
+  if (backButton.clicked()){
+    startScreen = true;
+    reviewActive = false;
+  }
+
+  // Displays and handles clicking for the reset button, which clears the board
+  resetButton.display();
+  if (resetButton.clicked()){
+    board.reset();
+  }
+
 }
 
 // wishesGame()
@@ -564,67 +650,4 @@ function reviewScreen4() {
   for (var i = 0; i < 3; i++) {
     review[i].display();
   }
-}
-
-// drawingsGame()
-//
-// Plays the drawings game
-function drawingsGame() {
-  // Displays the drawing board
-  board.display();
-
-  // Displays and handles clicking for the save button
-  if (saveActive === true){
-    saveButton.display();
-    if (saveButton.clicked()){
-      // Covers up the buttons and saves the image, then sets a timer to avoid
-      // multiple clicks in a row
-      board.screenshot();
-      timer = millis() + 1000;
-      saveActive = false;
-    }
-  }
-  // Activates the save button again if the time is up
-  else if (millis() >= timer) {
-    saveActive = true;
-  }
-
-  // Displays and handles clicking for the colour buttons, which determine what
-  // colour the player is drawing with
-  redButton.display();
-  if (redButton.clicked()){
-    board.color = '#f44242';
-  }
-  purpleButton.display();
-  if (purpleButton.clicked()){
-    board.color = '#b54fff';
-  }
-  blueButton.display();
-  if (blueButton.clicked()){
-    board.color = '#4f5dff';
-  }
-  greenButton.display();
-  if (greenButton.clicked()){
-    board.color = '#78f45d';
-  }
-  yellowButton.display();
-  if (yellowButton.clicked()){
-    board.color = '#f4e75d';
-  }
-  orangeButton.display();
-  if (orangeButton.clicked()){
-    board.color = '#f7972a';
-  }
-  backButton.display();
-  if (backButton.clicked()){
-    startScreen = true;
-    reviewActive = false;
-  }
-
-  // Displays and handles clicking for the reset button, which clears the board
-  resetButton.display();
-  if (resetButton.clicked()){
-    board.reset();
-  }
-
 }
