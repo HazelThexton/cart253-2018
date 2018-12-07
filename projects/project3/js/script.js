@@ -546,6 +546,11 @@ function drawingsGame() {
   if (saveActive === true){
     saveButton.display();
     if (saveButton.clicked()){
+      push();
+      fill(0);
+      rect(0,height/12*9-30,width,height/2);
+      rect(width/15*13+10,0,300,90);
+      pop();
       board.screenshot();
       timer = millis() + 1000;
       saveActive = false;
