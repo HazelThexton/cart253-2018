@@ -39,7 +39,17 @@ var fearsButton;
 var stepsButton;
 var wishesButton;
 var reviewButton;
+var drawingsButton;
+var redButton;
+var purpleButton;
+var blueButton;
+var greenButton;
+var yellowButton;
+var orangeButton;
+var resetButton;
+var saveButton;
 var nextButton;
+var backButton;
 
 // Variables for our text
 var fearsGameText;
@@ -93,7 +103,6 @@ function setup() {
   // Create an Audio input
   mic = new p5.AudioIn();
 
-
   // Creates the onscreen text
   startText = new OnscreenText(width/2,height/8,60,pixelFont,255);
   start2Text = new OnscreenText(width/2,height/8+50,30,pixelFont,255);
@@ -107,6 +116,7 @@ function setup() {
     review[i] = new Review(width/2,height/12*(i*3 + 3.5),fiveStars);
   }
 
+  // Creates a plant for the wishes game
   plant = new Plant(width/2,height,10,100,0.1);
 
 
@@ -134,7 +144,8 @@ function setup() {
     street[i] = new Street(width/12.5*[i],height/2 + 250,0,width/20,10,3,RIGHT_ARROW);
   }
 
-  board = new Board(0,0,0,0,0);
+  // Creates the board for the drawing game
+  board = new Board(0);
 
   // Creates buttons
   fearsButton = new Button(width/5*2,height/12*5,50,"fears",255);
@@ -150,7 +161,6 @@ function setup() {
   orangeButton = new Button(width/9*7,height/12*9,20,"orange",'#f7972a');
   resetButton = new Button(width/9*4,height/12*11,20,"clear",255);
   saveButton = new Button(width/9*5,height/12*11,20,"save",255);
-
   backButton = new Button(width/15*14,height/12,20,"go back",255);
   nextButton = new Button(width/2,height/2,50,"next",255);
 }
@@ -219,7 +229,6 @@ function start() {
   }
   drawingsButton.display();
   if (drawingsButton.clicked()){
-    drawingsScreen = 1;
     board.reset();
     startScreen = false;
     drawingsActive = true;
@@ -375,43 +384,63 @@ function music() {
 function wishesGame() {
 
   background(0);
-  // Determines which screen of the reviews game to be on
+  // Determines which screen of the wishes game to be on
   if (wishesScreen === 1) {
-    wishesGameText.display("\n\n'wishes' uses the microphone.\nplease make sure you are in a quiet location\n& that your browser has not blocked permissions");
-    if (backButton.clicked()){
-      startScreen = true;
-      wishesActive = false;
-    }
-    // start the Audio Input.
-    mic.start();
-    // Displays and handles clicking for the next button
-    nextButton.display();
-    if (nextButton.clicked()){
-      // Goes to the next screen
-      wishesScreen = 2;
-    }
-    // Displays and handles clicking for the back button
-    backButton.display();
-    if (backButton.clicked()){
-      startScreen = true;
-      wishesActive = false;
-    }
+    wishesScreen1();
   }
   else if (wishesScreen === 2) {
-    background(0);
-    wishesGameText.display("grow the flower\nand blow to make a wish");
-    plant.display();
-    plant.handleInput();
+    wishesScreen2();
+  }
+}
 
-    // Displays and handles clicking for the back button
-    backButton.display();
-    if (backButton.clicked()){
-      plant.reset();
+// wishesScreen1()
+//
+// Displays the first screen of wishes
+function wishesScreen1() {
+  // Displays the text
+  wishesGameText.display("\n\n'wishes' uses the microphone.\nplease make sure you're in a quiet location\n& that your browser hasn't blocked permissions");
 
-      startScreen = true;
-      wishesActive = false;
-    }
+  // Displays and handles clicking for the back button
+  if (backButton.clicked()){
+    startScreen = true;
+    wishesActive = false;
+  }
+  // Start the Audio Input.
+  mic.start();
 
+  // Displays and handles clicking for the next button
+  nextButton.display();
+  if (nextButton.clicked()){
+    // Goes to the next screen
+    wishesScreen = 2;
+  }
+
+  // Displays and handles clicking for the back button
+  backButton.display();
+  if (backButton.clicked()){
+    startScreen = true;
+    wishesActive = false;
+  }
+}
+
+// wishesScreen2()
+//
+// Displays the second screen of wishes
+function wishesScreen2() {
+  background(0);
+  // Display the text
+  wishesGameText.display("grow the flower\nand blow to make a wish");
+
+  // Displays and handles input for the plant
+  plant.display();
+  plant.handleInput();
+
+  // Displays and handles clicking for the back button
+  backButton.display();
+  if (backButton.clicked()){
+    plant.reset();
+    startScreen = true;
+    wishesActive = false;
   }
 }
 
@@ -537,68 +566,65 @@ function reviewScreen4() {
   }
 }
 
-// artGame()
+// drawingsGame()
 //
 // Plays the drawings game
 function drawingsGame() {
+  // Displays the drawing board
   board.display();
-  // Displays and handles clicking for the back button
+
+  // Displays and handles clicking for the save button
   if (saveActive === true){
     saveButton.display();
     if (saveButton.clicked()){
-      push();
-      fill(0);
-      rect(0,height/12*9-30,width,height/2);
-      rect(width/15*13+10,0,300,90);
-      pop();
+      // Covers up the buttons and saves the image, then sets a timer to avoid
+      // multiple clicks in a row
       board.screenshot();
       timer = millis() + 1000;
       saveActive = false;
     }
   }
+  // Activates the save button again if the time is up
   else if (millis() >= timer) {
     saveActive = true;
   }
-    // Displays and handles clicking for the back button
-    redButton.display();
-    if (redButton.clicked()){
-      board.color = '#f44242';
-    }
-    // Displays and handles clicking for the back button
-    purpleButton.display();
-    if (purpleButton.clicked()){
-      board.color = '#b54fff';
-    }
-    // Displays and handles clicking for the back button
-    blueButton.display();
-    if (blueButton.clicked()){
-      board.color = '#4f5dff';
-    }
-    // Displays and handles clicking for the back button
-    greenButton.display();
-    if (greenButton.clicked()){
-      board.color = '#78f45d';
-    }
-    // Displays and handles clicking for the back button
-    yellowButton.display();
-    if (yellowButton.clicked()){
-      board.color = '#f4e75d';
-    }
-    // Displays and handles clicking for the back button
-    orangeButton.display();
-    if (orangeButton.clicked()){
-      board.color = '#f7972a';
-    }
-    // Displays and handles clicking for the back button
-    backButton.display();
-    if (backButton.clicked()){
-      startScreen = true;
-      reviewActive = false;
-    }
-    // Displays and handles clicking for the back button
-    resetButton.display();
-    if (resetButton.clicked()){
-      board.reset();
-    }
+
+  // Displays and handles clicking for the colour buttons, which determine what
+  // colour the player is drawing with
+  redButton.display();
+  if (redButton.clicked()){
+    board.color = '#f44242';
+  }
+  purpleButton.display();
+  if (purpleButton.clicked()){
+    board.color = '#b54fff';
+  }
+  blueButton.display();
+  if (blueButton.clicked()){
+    board.color = '#4f5dff';
+  }
+  greenButton.display();
+  if (greenButton.clicked()){
+    board.color = '#78f45d';
+  }
+  yellowButton.display();
+  if (yellowButton.clicked()){
+    board.color = '#f4e75d';
+  }
+  orangeButton.display();
+  if (orangeButton.clicked()){
+    board.color = '#f7972a';
+  }
+  backButton.display();
+  if (backButton.clicked()){
+    startScreen = true;
+    reviewActive = false;
+  }
+
+  // Displays and handles clicking for the reset button, which clears the board
+  resetButton.display();
+  if (resetButton.clicked()){
+    board.reset();
+  }
 
 }

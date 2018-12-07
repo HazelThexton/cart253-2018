@@ -34,7 +34,7 @@ function Review(x,y,image) {
 // Display the text onscreen
 Review.prototype.display = function () {
   this.writeReview();
-  this.review = new OnscreenText(this.x - this.width/2 + 20,this.y,30,pixelFont);
+  this.review = new OnscreenText(this.x - this.width/2 + 20,this.y,30,pixelFont,255);
   this.height = 150;
   push();
   rectMode(CENTER);

@@ -1,12 +1,12 @@
 // Petal
 //
-// A class to define how a petal behaves. Randomized # of windows, size, etc.
-// Resets to the right with new random values when it scrolls off screen.
+// A class to define how a petal behaves. Grow around a central origin when the
+// mouse is pressed, scatter when the microphone is blown into (or really any noise)
 
 // Petal constructor
 //
 // Sets the properties with the provided arguments
-function Petal(x,y,width,height,speed,rotation,color,maxLength) {
+function Petal(x,y,width,height,speed,rotation,color,maxHeight) {
   this.x = x;
   this.y = y;
   this.vHeight = 0;
@@ -19,24 +19,24 @@ function Petal(x,y,width,height,speed,rotation,color,maxLength) {
   this.speed = speed;
   this.rotation = rotation;
   this.color = color;
-  this.maxLength = maxLength;
+  this.maxHeight = maxHeight;
 }
 
 // update()
 //
-// Moves petal according to velocity
+// Moves/grows petal according to velocity
 Petal.prototype.update = function () {
-  // Update position with velocity
-  this.height = constrain(this.height + this.vHeight,0,this.maxLength);
-  //this.y = constrain(this.y - this.vy,height/2-50, height);
-
+  // Update height with height velocity (affected by mouse input below)
+  this.height = constrain(this.height + this.vHeight,0,this.maxHeight);
 
   // Apply acceleration to velocity
   this.vx += this.ax;
   this.vy += this.ay;
+
   // Set position based on velocity
   this.x += this.vx;
   this.y += this.vy;
+
   // Apply drag to the acceleration so it rapidly approaches 0
   this.ax = constrain(this.ax * 0.01,-1,1);
   this.ay = constrain(this.ay * 0.01,-1,1);
@@ -44,8 +44,9 @@ Petal.prototype.update = function () {
 
 // handleInput()
 //
-// Handles keyboard input
+// Handles mouse input
 Petal.prototype.handleInput = function() {
+  // If the mouse is pressed the petals grow
   if (mouseIsPressed) {
     this.vHeight += this.speed;
   }
@@ -56,31 +57,31 @@ Petal.prototype.handleInput = function() {
 
 // blow()
 //
-// Handles keyboard input
+// Handles mic input
 Petal.prototype.blow = function() {
-
+  // Assigns acceleration to the petal based on the amplitude of the mic's input
+  // (above a 0.4 threshhold to avoid random noise setting it off)
   if (mic.getLevel() >= 0.4) {
     this.ax += random(-mic.getLevel()*2,mic.getLevel()*2);
     this.ay += random(-mic.getLevel()*2,mic.getLevel()*2);
   }
-
 }
-
-
 
 // display()
 //
-// Draw the petal as a rectangle on the screen.
+// Draw the petal as a rounded rectangle on the screen.
 Petal.prototype.display = function () {
-  // Mirror the shapes vertically so we can draw petals from the ground up
+  // Rotates the petals so they grow around the stem's end
   push();
   rectMode(CORNERS);
+  // Applies a nice semi-opaque stroke which creates that dandelion effect
   stroke(255,90);
   strokeWeight(20);
-  // Set the petal color
+  // Sets the petal color
   fill(this.color);
   translate(this.x,this.y);
   rotate(this.rotation);
+  // Draws the petal with rounded edges
   rect(0,0, this.width, this.height, 50);
   pop();
 }
