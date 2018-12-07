@@ -429,7 +429,7 @@ function wishesScreen1() {
 function wishesScreen2() {
   background(0);
   // Display the text
-  wishesGameText.display("grow the flower\nand blow to make a wish");
+  wishesGameText.display("click & hold to grow the flower\nand blow to make a wish");
 
   // Displays and handles input for the plant
   plant.display();

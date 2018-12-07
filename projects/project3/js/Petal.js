@@ -9,7 +9,9 @@
 function Petal(x,y,width,height,speed,rotation,color,maxHeight) {
   this.x = x;
   this.y = y;
-  this.vHeight = 0;
+  // Velocity of the upwards growth of the petals
+  this.vyHeight = 0;
+  // Variables for the blowing movement
   this.vx = 0;
   this.vy = 0;
   this.ax = 0;
@@ -27,7 +29,7 @@ function Petal(x,y,width,height,speed,rotation,color,maxHeight) {
 // Moves/grows petal according to velocity
 Petal.prototype.update = function () {
   // Update height with height velocity (affected by mouse input below)
-  this.height = constrain(this.height + this.vHeight,0,this.maxHeight);
+  this.height = constrain(this.height + this.vyHeight,0,this.maxHeight);
 
   // Apply acceleration to velocity
   this.vx += this.ax;
@@ -48,10 +50,10 @@ Petal.prototype.update = function () {
 Petal.prototype.handleInput = function() {
   // If the mouse is pressed the petals grow
   if (mouseIsPressed) {
-    this.vHeight += this.speed;
+    this.vyHeight += this.speed;
   }
   else {
-    this.vHeight = 0;
+    this.vyHeight = 0;
   }
 }
 

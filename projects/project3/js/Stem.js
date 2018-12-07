@@ -29,6 +29,7 @@ Stem.prototype.update = function () {
 //
 // Handles keyboard input
 Stem.prototype.handleInput = function() {
+  // Stem grows if mouse is clicked
   if (mouseIsPressed) {
     this.vy += this.speed/10;
     this.vx += this.speed/20;
